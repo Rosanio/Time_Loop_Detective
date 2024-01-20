@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://b3c2w6viu71"]
+
+[ext_resource type="Texture2D" uid="uid://dd88ogf10lggw" path="res://scenes/npc/NPC.png" id="1_t2l7o"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p5y6n"]
+size = Vector2(10, 11)
+
+[node name="NPC" type="CharacterBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1.5)
+shape = SubResource("RectangleShape2D_p5y6n")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_t2l7o")
