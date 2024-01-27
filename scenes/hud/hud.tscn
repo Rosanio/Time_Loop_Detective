@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://b1lqpa67x60k5"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_wvll8"]
+font_color = Color(0, 0, 0, 1)
+
+[node name="HUD" type="CanvasLayer"]
+
+[node name="TimeLabel" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -34.0
+offset_right = 35.0
+offset_bottom = 23.0
+grow_horizontal = 2
+size_flags_horizontal = 0
+text = "8:00 AM"
+label_settings = SubResource("LabelSettings_wvll8")

@@ -1,10 +1,13 @@
-[gd_scene load_steps=9 format=3 uid="uid://n534qf2f87p"]
+[gd_scene load_steps=12 format=3 uid="uid://n534qf2f87p"]
 
 [ext_resource type="PackedScene" uid="uid://cam4mlsketva6" path="res://scenes/player/player.tscn" id="1_4jwgh"]
+[ext_resource type="Script" path="res://scenes/main/main.gd" id="1_huir3"]
 [ext_resource type="Texture2D" uid="uid://crekhe06lkxqu" path="res://scenes/main/Grass_Tile.png" id="2_7hpwv"]
 [ext_resource type="Texture2D" uid="uid://do3t7u07jc1hn" path="res://scenes/main/Dirt_Tile.png" id="3_3qm3q"]
 [ext_resource type="PackedScene" uid="uid://b1qk5r7g3ucss" path="res://scenes/house/house.tscn" id="4_732bg"]
 [ext_resource type="PackedScene" uid="uid://b3c2w6viu71" path="res://scenes/npc/npc.tscn" id="5_x5t4j"]
+[ext_resource type="PackedScene" uid="uid://b1lqpa67x60k5" path="res://scenes/hud/hud.tscn" id="6_0d03v"]
+[ext_resource type="Script" path="res://scenes/hud/hud.gd" id="8_m3ty0"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dip5u"]
 texture = ExtResource("2_7hpwv")
@@ -19,6 +22,7 @@ sources/0 = SubResource("TileSetAtlasSource_dip5u")
 sources/1 = SubResource("TileSetAtlasSource_ioubm")
 
 [node name="Main" type="Node"]
+script = ExtResource("1_huir3")
 
 [node name="Player" parent="." instance=ExtResource("1_4jwgh")]
 position = Vector2(230, 259)
@@ -37,3 +41,11 @@ position = Vector2(49, -26)
 
 [node name="NPC" parent="." instance=ExtResource("5_x5t4j")]
 position = Vector2(55, 413)
+
+[node name="WorldClock" type="Timer" parent="."]
+wait_time = 10.0
+
+[node name="HUD" parent="." instance=ExtResource("6_0d03v")]
+script = ExtResource("8_m3ty0")
+
+[connection signal="timeout" from="WorldClock" to="." method="_on_world_clock_timeout"]
