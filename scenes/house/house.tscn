@@ -10,9 +10,9 @@ position = Vector2(0.5, 0)
 scale = Vector2(1.5, 1.5)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, -8)
+position = Vector2(-0.333333, -31.3333)
 texture = ExtResource("1_di6sx")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1.2815e-06, 4.33333)
+position = Vector2(-0.333335, -19)
 shape = SubResource("RectangleShape2D_jymcw")
