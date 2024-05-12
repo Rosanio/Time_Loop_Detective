@@ -48,9 +48,9 @@ func _ready():
 				astar_grid.set_point_solid(tile_position)
 	
 	world_time_manager.on_tick.connect(on_world_time_tick)
+	($InteractableComponent as Interactable).interact.connect(on_interact)
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	if current_id_path.is_empty():
 		return
@@ -62,6 +62,10 @@ func _process(_delta):
 		current_id_path.pop_front()
 
 
+func on_interact():
+	print("NPC interacted with")
+
+
 func on_world_time_tick(time):
 	for event in SCHEDULE:
 		if is_time_equal(time, event["time"]):
@@ -70,6 +74,7 @@ func on_world_time_tick(time):
 
 func is_time_equal(time1, time2):
 	return time1["hour"] == time2["hour"] && time1["minute"] == time2["minute"] && time1["am_pm"] == time2["am_pm"]
+
 
 func move_to(destination: Vector2i):
 	var id_path = astar_grid.get_id_path(

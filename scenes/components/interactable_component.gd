@@ -1,10 +1,10 @@
 extends Node
 class_name Interactable
 
+signal interact
+
 @export var area: Area2D
-
 @onready var texture_rect: TextureRect = $TextureRect
-
 var active: bool = false
 
 
@@ -29,3 +29,7 @@ func set_active():
 func set_inactive():
 	active = false
 	texture_rect.visible = false
+
+
+func emit_interact():
+	interact.emit()

@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://b1qk5r7g3ucss"]
+[gd_scene load_steps=6 format=3 uid="uid://b1qk5r7g3ucss"]
 
-[ext_resource type="Texture2D" uid="uid://bqja0171wsy22" path="res://scenes/house/House.png" id="1_di6sx"]
+[ext_resource type="Script" path="res://scenes/game_object/house/house.gd" id="1_3rkbg"]
+[ext_resource type="Texture2D" uid="uid://bqja0171wsy22" path="res://scenes/game_object/house/House.png" id="1_di6sx"]
 [ext_resource type="PackedScene" uid="uid://bkfcp7snwtu3h" path="res://scenes/components/interactable_component.tscn" id="2_3uig1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jymcw"]
@@ -12,6 +13,7 @@ size = Vector2(20, 8.66667)
 [node name="House" type="StaticBody2D"]
 position = Vector2(0.5, 0)
 scale = Vector2(1.5, 1.5)
+script = ExtResource("1_3rkbg")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(-0.333333, -31.3333)

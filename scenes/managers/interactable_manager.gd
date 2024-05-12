@@ -13,7 +13,7 @@ func _process(_delta):
 	if interactables_in_range.size() == 0:
 		return
 	
-	var closest_interactable = null
+	var closest_interactable: Interactable = null
 	var shortest_distance = 9999
 	for interactable in interactables_in_range:
 		var distance = interactable.area.global_position.distance_squared_to(player.global_position)
@@ -25,6 +25,9 @@ func _process(_delta):
 	if active_interactable != []:
 		active_interactable[0].set_inactive()
 	closest_interactable.set_active()
+	
+	if Input.is_action_just_pressed("interact"):
+		closest_interactable.emit_interact()
 
 
 func on_interactable_entered(interactable: Interactable):
