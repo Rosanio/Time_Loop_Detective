@@ -4,9 +4,9 @@
 [ext_resource type="Script" path="res://scenes/npc/npc.gd" id="1_vdw1b"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p5y6n"]
-size = Vector2(10, 11)
+size = Vector2(14, 15)
 
-[node name="NPC" type="CharacterBody2D"]
+[node name="NPC" type="Area2D"]
 script = ExtResource("1_vdw1b")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

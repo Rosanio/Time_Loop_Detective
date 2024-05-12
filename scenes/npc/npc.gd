@@ -1,6 +1,26 @@
-extends CharacterBody2D
+extends Area2D
 
 const SPEED = 1
+const SCHEDULE = [
+	{
+		"time": {
+			"hour": 9,
+			"minute": 0,
+			"am_pm": "AM"
+		},
+		"coords": Vector2i(51, 26)
+	},
+	{
+		"time": {
+			"hour": 0,
+			"minute": 3,
+			"am_pm": "PM"
+		},
+		"coords": Vector2i(248, 407)
+	}
+]
+
+@export var world_time_manager: Node
 
 @onready var tile_map = $"../TileMap"
 
@@ -27,11 +47,11 @@ func _ready():
 			if tile_data == null or tile_data.get_custom_data("walkable") == false:
 				astar_grid.set_point_solid(tile_position)
 	
-	move_to(Vector2i(51, 26))
+	world_time_manager.on_tick.connect(on_world_time_tick)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	if current_id_path.is_empty():
 		return
 		
@@ -41,6 +61,16 @@ func _process(delta):
 	if global_position == target_position:
 		current_id_path.pop_front()
 
+
+func on_world_time_tick(time):
+	for event in SCHEDULE:
+		if is_time_equal(time, event["time"]):
+			move_to(event["coords"])
+
+
+func is_time_equal(time1, time2):
+	return time1["hour"] == time2["hour"] && time1["minute"] == time2["minute"] && time1["am_pm"] == time2["am_pm"]
+
 func move_to(destination: Vector2i):
 	var id_path = astar_grid.get_id_path(
 		tile_map.local_to_map(global_position),
@@ -49,3 +79,5 @@ func move_to(destination: Vector2i):
 	
 	if id_path.is_empty() == false:
 		current_id_path = id_path
+
+
