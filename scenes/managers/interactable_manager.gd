@@ -13,13 +13,7 @@ func _process(_delta):
 	if interactables_in_range.size() == 0:
 		return
 	
-	var closest_interactable: Interactable = null
-	var shortest_distance = 9999
-	for interactable in interactables_in_range:
-		var distance = interactable.area.global_position.distance_squared_to(player.global_position)
-		if (distance < shortest_distance):
-			shortest_distance = distance
-			closest_interactable = interactable
+	var closest_interactable = get_closest_interactable()
 	
 	var active_interactable = interactables_in_range.filter(func(i): return i.active == true)
 	if active_interactable != []:
@@ -37,3 +31,14 @@ func on_interactable_entered(interactable: Interactable):
 func on_interactable_left(interactable: Interactable):
 	interactables_in_range = interactables_in_range.filter(func(i): return i != interactable)
 	interactable.set_inactive()
+
+
+func get_closest_interactable():
+	var closest_interactable: Interactable = null
+	var shortest_distance = 9999
+	for interactable in interactables_in_range:
+		var distance = interactable.area.global_position.distance_squared_to(player.global_position)
+		if (distance < shortest_distance):
+			shortest_distance = distance
+			closest_interactable = interactable
+	return closest_interactable
