@@ -1,9 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://b1qk5r7g3ucss"]
+[gd_scene load_steps=5 format=3 uid="uid://b1qk5r7g3ucss"]
 
 [ext_resource type="Texture2D" uid="uid://bqja0171wsy22" path="res://scenes/house/House.png" id="1_di6sx"]
+[ext_resource type="PackedScene" uid="uid://bkfcp7snwtu3h" path="res://scenes/components/interactable_component.tscn" id="2_3uig1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jymcw"]
 size = Vector2(46, 35.3333)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fr31y"]
+size = Vector2(20, 8.66667)
 
 [node name="House" type="StaticBody2D"]
 position = Vector2(0.5, 0)
@@ -16,3 +20,19 @@ texture = ExtResource("1_di6sx")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.333335, -19)
 shape = SubResource("RectangleShape2D_jymcw")
+
+[node name="InteractableComponent" parent="." node_paths=PackedStringArray("area") instance=ExtResource("2_3uig1")]
+offset_left = -0.333333
+offset_top = -21.3333
+offset_right = -0.333333
+offset_bottom = -21.3333
+area = NodePath("../InteractableDetectionArea")
+
+[node name="InteractableDetectionArea" type="Area2D" parent="."]
+position = Vector2(0, -2)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableDetectionArea"]
+position = Vector2(0, 1.66667)
+shape = SubResource("RectangleShape2D_fr31y")

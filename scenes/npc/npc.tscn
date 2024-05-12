@@ -1,13 +1,21 @@
-[gd_scene load_steps=4 format=3 uid="uid://b3c2w6viu71"]
+[gd_scene load_steps=6 format=3 uid="uid://b3c2w6viu71"]
 
 [ext_resource type="Texture2D" uid="uid://dd88ogf10lggw" path="res://scenes/npc/NPC.png" id="1_t2l7o"]
 [ext_resource type="Script" path="res://scenes/npc/npc.gd" id="1_vdw1b"]
+[ext_resource type="PackedScene" uid="uid://bkfcp7snwtu3h" path="res://scenes/components/interactable_component.tscn" id="3_iwfbb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p5y6n"]
 size = Vector2(14, 15)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_t4gqb"]
+
 [node name="NPC" type="Area2D"]
 script = ExtResource("1_vdw1b")
+
+[node name="InteractableComponent" parent="." node_paths=PackedStringArray("area") instance=ExtResource("3_iwfbb")]
+offset_top = -13.0
+offset_bottom = -13.0
+area = NodePath("../InteractableDetectionArea")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 1.5)
@@ -15,3 +23,10 @@ shape = SubResource("RectangleShape2D_p5y6n")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_t2l7o")
+
+[node name="InteractableDetectionArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableDetectionArea"]
+shape = SubResource("CircleShape2D_t4gqb")
