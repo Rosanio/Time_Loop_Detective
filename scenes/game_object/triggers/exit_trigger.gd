@@ -1,4 +1,4 @@
-extends StaticBody2D
+extends Node
 
 
 func _ready():
@@ -6,4 +6,4 @@ func _ready():
 
 
 func on_interact():
-	get_tree().change_scene_to_file("res://scenes/main/house_interior.tscn")
+	get_tree().change_scene_to_file("res://scenes/main/main.tscn")
