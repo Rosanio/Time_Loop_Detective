@@ -1,6 +1,6 @@
 extends Area2D
 
-const SPEED = 1
+const SPEED = 0.5
 const SCHEDULE = [
 	{
 		"time": {
@@ -84,5 +84,3 @@ func move_to(destination: Vector2i):
 	
 	if id_path.is_empty() == false:
 		current_id_path = id_path
-
-

@@ -18,7 +18,8 @@ func _process(_delta):
 	var active_interactable = interactables_in_range.filter(func(i): return i.active == true)
 	if active_interactable != []:
 		active_interactable[0].set_inactive()
-	closest_interactable.set_active()
+	if closest_interactable:
+		closest_interactable.set_active()
 	
 	if Input.is_action_just_pressed("interact"):
 		closest_interactable.emit_interact()
