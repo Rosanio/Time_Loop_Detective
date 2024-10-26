@@ -21,6 +21,7 @@ const SCHEDULE = [
 ]
 
 @export var world_time_manager: Node
+@export var dialog_context: DialogContextResolver
 
 @onready var tile_map = $"../TileMap"
 
@@ -63,7 +64,10 @@ func _process(_delta):
 
 
 func on_interact():
-	print("NPC interacted with")
+	# Need to show dialog for the specific NPC interacted with
+	# Each NPC could have a sub-node which contains the logic for their specific dialog options
+	# Sub-node could call a manager which takes care of showing the correct text and prompts on the UI
+	dialog_context.GetDialogForCurrentContext()
 
 
 func on_world_time_tick(time):

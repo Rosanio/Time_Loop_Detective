@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://cugcbhfeadfen"]
+
+[ext_resource type="PackedScene" uid="uid://nx0n5cd1mvfi" path="res://scenes/other/dialog_context_resolver.tscn" id="1_nfh72"]
+[ext_resource type="Script" path="res://scenes/other/npc_dialog_context_resolver.gd" id="2_8mumf"]
+
+[node name="NPCDialogContextResolver" instance=ExtResource("1_nfh72")]
+script = ExtResource("2_8mumf")
