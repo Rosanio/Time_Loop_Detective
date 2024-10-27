@@ -64,9 +64,6 @@ func _process(_delta):
 
 
 func on_interact():
-	# Need to show dialog for the specific NPC interacted with
-	# Each NPC could have a sub-node which contains the logic for their specific dialog options
-	# Sub-node could call a manager which takes care of showing the correct text and prompts on the UI
 	dialog_context.GetDialogForCurrentContext()
 
 

@@ -49,25 +49,33 @@ sources/3 = SubResource("TileSetAtlasSource_1a6s5")
 sources/4 = SubResource("TileSetAtlasSource_mof6a")
 
 [node name="Main" type="Node"]
+process_mode = 3
 script = ExtResource("1_huir3")
 
 [node name="WorldTimeUI" parent="." node_paths=PackedStringArray("world_time_manager") instance=ExtResource("6_0d03v")]
+process_mode = 1
 world_time_manager = NodePath("../WorldTimeManager")
 
 [node name="DialogBoxUI" parent="." instance=ExtResource("3_xrmvm")]
+process_mode = 3
 script = ExtResource("4_dxtxc")
 
+[node name="DialogManager" parent="." instance=ExtResource("5_rgc28")]
+process_mode = 2
+
 [node name="InteractableManager" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_ovuf3")]
+process_mode = 1
 player = NodePath("../Player")
 
-[node name="DialogManager" parent="." instance=ExtResource("5_rgc28")]
-
 [node name="WorldTimeManager" parent="." instance=ExtResource("3_4insc")]
+process_mode = 1
 
 [node name="Player" parent="." instance=ExtResource("1_4jwgh")]
+process_mode = 1
 position = Vector2(-11, 324)
 
 [node name="NPC" parent="." node_paths=PackedStringArray("world_time_manager", "dialog_context") instance=ExtResource("5_x5t4j")]
+process_mode = 1
 position = Vector2(55, 413)
 world_time_manager = NodePath("../WorldTimeManager")
 dialog_context = NodePath("NPCDialogContextResolver")
