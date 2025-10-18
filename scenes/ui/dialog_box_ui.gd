@@ -19,6 +19,7 @@ func _ready():
 
 
 func show_dialog(dialog: String):
+	clear_buttons()
 	show_dialog_box()
 	label.size.y = LABEL_FULL_HEIGHT
 	label.text = dialog
@@ -37,8 +38,8 @@ func show_dialog_prompt(dialog_prompt: Dictionary):
 		)
 		button.text = option
 		button_container.add_child(button)
+		button.connect("pressed", Callable(self, "_on_prompt_selected").bind(current_index))
 		current_index += 1
-
 
 
 func hide_dialog():
@@ -47,3 +48,12 @@ func hide_dialog():
 
 func show_dialog_box():
 	if !dialog_box.visible: dialog_box.set_visible(true)
+
+
+func _on_prompt_selected(index: int):
+	GameEvents.emit_dialog_prompt_chosen(index)
+
+
+func clear_buttons():
+	for button in button_container.get_children():
+		button.queue_free()

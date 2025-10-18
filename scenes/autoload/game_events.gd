@@ -6,6 +6,7 @@ signal interactable_area_exited(interactable: Interactable)
 signal show_dialog(dialog: String)
 signal show_dialog_prompt(dialog_prompt: Dictionary)
 signal hide_dialog()
+signal dialog_prompt_chosen(index: int)
 
 
 func emit_interactable_area_entered(interactable: Interactable):
@@ -26,3 +27,7 @@ func emit_show_dialog_prompt(dialog_prompt: Dictionary):
 
 func emit_hide_dialog():
 	hide_dialog.emit()
+
+
+func emit_dialog_prompt_chosen(index: int):
+	dialog_prompt_chosen.emit(index)
