@@ -2,7 +2,9 @@ extends Node
 
 signal interactable_area_entered(interactable: Interactable)
 signal interactable_area_exited(interactable: Interactable)
+
 signal show_dialog(dialog: String)
+signal show_dialog_prompt(dialog_prompt: Dictionary)
 signal hide_dialog()
 
 
@@ -16,6 +18,10 @@ func emit_interactable_area_exited(interactable: Interactable):
 
 func emit_show_dialog(dialog: String):
 	show_dialog.emit(dialog)
+
+
+func emit_show_dialog_prompt(dialog_prompt: Dictionary):
+	show_dialog_prompt.emit(dialog_prompt)
 
 
 func emit_hide_dialog():
