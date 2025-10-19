@@ -10,8 +10,17 @@ func _ready():
 
 
 func _process(_delta):
-	if Input.is_action_just_pressed("interact"):
+	if Input.is_action_just_pressed("interact") and current_dialog[current_dialog_index]["type"] != "prompt":
 		update_dialog()
+
+
+func _unhandled_input(event: InputEvent):
+	if event is InputEventKey and event.pressed and not event.echo:
+		if current_dialog[current_dialog_index]["type"] == "prompt":
+			if event.keycode >= KEY_1 and event.keycode <= KEY_9:
+				var prompt_index = event.keycode - KEY_1
+				if prompt_index <  current_dialog[current_dialog_index]["options"].size():
+					update_dialog(prompt_index)
 
 
 func update_dialog(prompt_index: int = -1):
@@ -41,8 +50,6 @@ func process_current_dialog_branch(prompt_index: int = -1):
 	elif type == 'prompt':
 		GameEvents.emit_show_dialog_prompt(current_dialog[current_dialog_index])
 	elif type == "prompt-response":
-		if prompt_index < 0:
-			print("Missing prompt_index")
 		GameEvents.emit_show_dialog(current_dialog[current_dialog_index]["options"][prompt_index])
 	else:
 		print("Not yet implemented")

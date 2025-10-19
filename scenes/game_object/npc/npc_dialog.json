@@ -1,0 +1,23 @@
+{
+	"dialog": [
+		{
+			"text": "It's a nice day isn't it?",
+			"type": "basic"
+		}, {
+			"options": [
+				"Ride my bike",
+				"Stay inside",
+				"Beat up random girls who pass me on the street"
+			],
+			"text": "What do you like to do on days like this?",
+			"type": "prompt"
+		}, {
+			"options": [
+				"Wow me too!",
+				"Oh...",
+				"Ahhhh! Someone help!"
+			],
+			"type": "prompt-response"
+		}
+	]
+}
