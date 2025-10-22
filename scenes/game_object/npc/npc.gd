@@ -20,16 +20,19 @@ const SCHEDULE = [
 	}
 ]
 
-@export var world_time_manager: Node
 @export var dialog_context: DialogContextResolver
+@export var sprite_texture: Texture2D
 
+@onready var sprite = $Sprite2D
 @onready var tile_map = $"../TileMap"
+@onready var world_time_manager: Node = $"../WorldTimeManager"
 
 var astar_grid: AStarGrid2D
 var current_id_path: Array[Vector2i]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	sprite.texture = sprite_texture
 	astar_grid = AStarGrid2D.new()
 	astar_grid.region = tile_map.get_used_rect()
 	astar_grid.cell_size = Vector2i(16, 16)

@@ -1,7 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://b3c2w6viu71"]
+[gd_scene load_steps=5 format=3 uid="uid://b3c2w6viu71"]
 
-[ext_resource type="Texture2D" uid="uid://dd88ogf10lggw" path="res://scenes/game_object/npc/NPC.png" id="1_t2l7o"]
-[ext_resource type="Script" path="res://scenes/game_object/npc/npc.gd" id="1_vdw1b"]
+[ext_resource type="Script" uid="uid://dvn2n567ue71u" path="res://scenes/game_object/npc/npc.gd" id="1_vdw1b"]
 [ext_resource type="PackedScene" uid="uid://bkfcp7snwtu3h" path="res://scenes/components/interactable_component.tscn" id="3_iwfbb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p5y6n"]
@@ -22,7 +21,6 @@ position = Vector2(0, 1.5)
 shape = SubResource("RectangleShape2D_p5y6n")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_t2l7o")
 
 [node name="InteractableDetectionArea" type="Area2D" parent="."]
 collision_layer = 0

@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-@export var world_time_manager: Node
+@onready var world_time_manager: Node = $"../WorldTimeManager"
 
 func _ready():
 	world_time_manager.on_tick.connect(update_world_clock)

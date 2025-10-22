@@ -46,10 +46,10 @@ func show_dialog(dialog: Array):
 func process_current_dialog_branch(prompt_index: int = -1):
 	var type = current_dialog[current_dialog_index]["type"]
 	if type == 'basic':
-		GameEvents.emit_show_dialog(current_dialog[current_dialog_index]["text"])
+		GameEvents.emit_show_dialog_text(current_dialog[current_dialog_index]["text"])
 	elif type == 'prompt':
 		GameEvents.emit_show_dialog_prompt(current_dialog[current_dialog_index])
 	elif type == "prompt-response":
-		GameEvents.emit_show_dialog(current_dialog[current_dialog_index]["options"][prompt_index])
+		GameEvents.emit_show_dialog_text(current_dialog[current_dialog_index]["options"][prompt_index])
 	else:
 		print("Not yet implemented")

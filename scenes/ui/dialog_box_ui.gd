@@ -13,12 +13,12 @@ const BUTTON_HEIGHT = 20
 
 
 func _ready():
-	GameEvents.show_dialog.connect(show_dialog)
+	GameEvents.show_dialog_text.connect(show_dialog_text)
 	GameEvents.show_dialog_prompt.connect(show_dialog_prompt)
 	GameEvents.hide_dialog.connect(hide_dialog)
 
 
-func show_dialog(dialog: String):
+func show_dialog_text(dialog: String):
 	clear_buttons()
 	show_dialog_box()
 	label.size.y = LABEL_FULL_HEIGHT

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bq2b31f513oyg"]
 
-[ext_resource type="Script" path="res://scenes/managers/world_time_manager.gd" id="1_vw62g"]
+[ext_resource type="Script" uid="uid://p2nyxm058x86" path="res://scenes/managers/world_time_manager.gd" id="1_vw62g"]
 
 [node name="WorldTimeManager" type="Node"]
 script = ExtResource("1_vw62g")
