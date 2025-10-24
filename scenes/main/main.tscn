@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://b1lqpa67x60k5" path="res://scenes/ui/world_time_ui.tscn" id="6_0d03v"]
 [ext_resource type="PackedScene" uid="uid://cugcbhfeadfen" path="res://scenes/other/npc_dialog_context_resolver.tscn" id="8_uf5k4"]
 [ext_resource type="Texture2D" uid="uid://d2kiixcwg4og2" path="res://scenes/main/Wall_Side_Tile.png" id="10_ksre8"]
-[ext_resource type="Texture2D" uid="uid://dd88ogf10lggw" path="res://scenes/game_object/npc/Jenna/jenna.png" id="10_ou6is"]
+[ext_resource type="Texture2D" uid="uid://dd88ogf10lggw" path="res://scenes/game_object/npc/jenna/jenna.png" id="10_ou6is"]
 [ext_resource type="Texture2D" uid="uid://cfbnj717pglr5" path="res://scenes/main/Wall_Top_Tile.png" id="11_phbwb"]
 [ext_resource type="Texture2D" uid="uid://b2hbsof3blgws" path="res://scenes/main/Wood_Floor_Tile.png" id="12_w6er2"]
 [ext_resource type="PackedScene" uid="uid://c6b12ouqein02" path="res://scenes/game_object/triggers/exit_trigger.tscn" id="13_2k5sl"]
@@ -80,6 +80,7 @@ process_mode = 1
 position = Vector2(55, 413)
 dialog_context = NodePath("NPCDialogContextResolver")
 sprite_texture = ExtResource("10_ou6is")
+schedule_json_path = "res://scenes/game_object/npc/jenna/jenna_schedule.json"
 
 [node name="NPCDialogContextResolver" parent="Jenna" instance=ExtResource("8_uf5k4")]
 dialog_json_path = "res://scenes/game_object/npc/Jenna/jenna_dialog.json"
@@ -112,9 +113,10 @@ position = Vector2(1681, 356.945)
 position = Vector2(55, 399.52)
 
 [node name="Henry" parent="." node_paths=PackedStringArray("dialog_context") instance=ExtResource("5_x5t4j")]
-position = Vector2(138, 373)
+position = Vector2(762, 407)
 dialog_context = NodePath("NPCDialogContextResolver")
 sprite_texture = ExtResource("19_necax")
+schedule_json_path = "res://scenes/game_object/npc/henry/henry_schedule.json"
 
 [node name="NPCDialogContextResolver" parent="Henry" instance=ExtResource("8_uf5k4")]
 dialog_json_path = "res://scenes/game_object/npc/henry/henry_dialog.json"

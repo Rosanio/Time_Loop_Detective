@@ -1,0 +1,12 @@
+{
+	"schedule": [
+		{
+			"time": {
+				"hour": 8,
+				"minute": 1,
+				"am_pm": "AM"
+			},
+			"coords": [6, 25]
+		}
+	]
+}
