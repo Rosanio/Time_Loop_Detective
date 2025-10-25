@@ -21,6 +21,7 @@ position = Vector2(0, 1.5)
 shape = SubResource("RectangleShape2D_p5y6n")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+process_mode = 1
 
 [node name="InteractableDetectionArea" type="Area2D" parent="."]
 collision_layer = 0
