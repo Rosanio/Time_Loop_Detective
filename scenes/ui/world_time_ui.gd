@@ -1,11 +1,8 @@
 extends CanvasLayer
 
-@onready var world_time_manager: Node = $"../WorldTimeManager"
-
 func _ready():
-	world_time_manager.on_tick.connect(update_world_clock)
+	WorldTimeManager.on_tick.connect(update_world_clock)
 
 
-func update_world_clock(time: Dictionary):
-	var time_string = str(time["hour"]) + ":" + str(time["minute"]) + "0 " + time["am_pm"]
-	$TimeLabel.text = time_string
+func update_world_clock(time: TimeData):
+	$TimeLabel.text = time.to_string()

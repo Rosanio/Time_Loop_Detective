@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://d2kiixcwg4og2" path="res://scenes/main/Wall_Side_Tile.png" id="2_lmeyy"]
 [ext_resource type="PackedScene" uid="uid://cdm06dks5mjph" path="res://scenes/managers/interactable_manager.tscn" id="2_lwt2i"]
 [ext_resource type="Texture2D" uid="uid://cfbnj717pglr5" path="res://scenes/main/Wall_Top_Tile.png" id="3_ouff7"]
-[ext_resource type="PackedScene" uid="uid://bq2b31f513oyg" path="res://scenes/managers/world_time_manager.tscn" id="3_r5d4v"]
+[ext_resource type="PackedScene" uid="uid://bq2b31f513oyg" path="res://scenes/autoload/world_time_manager.tscn" id="3_r5d4v"]
 [ext_resource type="PackedScene" uid="uid://cam4mlsketva6" path="res://scenes/game_object/player/player.tscn" id="3_s203e"]
 [ext_resource type="PackedScene" uid="uid://c6b12ouqein02" path="res://scenes/game_object/triggers/exit_trigger.tscn" id="5_yj72t"]
 

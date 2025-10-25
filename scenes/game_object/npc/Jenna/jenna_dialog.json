@@ -1,5 +1,5 @@
 {
-	"dialog": [
+	"chilling": [
 		{
 			"text": "It's a nice day isn't it?",
 			"type": "basic"
@@ -18,6 +18,16 @@
 				"Ahhhh! Someone help!"
 			],
 			"type": "prompt-response"
+		}
+	],
+	"outside_house": [
+		{
+			"text": "Why are you hanging around outside my house?",
+			"type": "basic"
+		},
+		{
+			"text": "Are you like, some kind of creep or something?",
+			"type": "basic"
 		}
 	]
 }

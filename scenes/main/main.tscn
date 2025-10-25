@@ -1,10 +1,9 @@
-[gd_scene load_steps=26 format=4 uid="uid://n534qf2f87p"]
+[gd_scene load_steps=27 format=4 uid="uid://n534qf2f87p"]
 
 [ext_resource type="PackedScene" uid="uid://cam4mlsketva6" path="res://scenes/game_object/player/player.tscn" id="1_4jwgh"]
 [ext_resource type="Script" uid="uid://bpqrqg0q52e2h" path="res://scenes/main/main.gd" id="1_huir3"]
 [ext_resource type="Texture2D" uid="uid://crekhe06lkxqu" path="res://scenes/main/Grass_Tile.png" id="2_7hpwv"]
 [ext_resource type="Texture2D" uid="uid://do3t7u07jc1hn" path="res://scenes/main/Dirt_Tile.png" id="3_3qm3q"]
-[ext_resource type="PackedScene" uid="uid://bq2b31f513oyg" path="res://scenes/managers/world_time_manager.tscn" id="3_4insc"]
 [ext_resource type="PackedScene" uid="uid://cdm06dks5mjph" path="res://scenes/managers/interactable_manager.tscn" id="3_ovuf3"]
 [ext_resource type="PackedScene" uid="uid://c300p0v4eo740" path="res://scenes/ui/dialog_box_ui.tscn" id="3_xrmvm"]
 [ext_resource type="PackedScene" uid="uid://b1qk5r7g3ucss" path="res://scenes/game_object/house/house.tscn" id="4_732bg"]
@@ -12,13 +11,15 @@
 [ext_resource type="PackedScene" uid="uid://c48vkkpti7ksj" path="res://scenes/managers/dialog_manager.tscn" id="5_rgc28"]
 [ext_resource type="PackedScene" uid="uid://b3c2w6viu71" path="res://scenes/game_object/npc/npc.tscn" id="5_x5t4j"]
 [ext_resource type="PackedScene" uid="uid://b1lqpa67x60k5" path="res://scenes/ui/world_time_ui.tscn" id="6_0d03v"]
-[ext_resource type="PackedScene" uid="uid://cugcbhfeadfen" path="res://scenes/other/npc_dialog_context_resolver.tscn" id="8_uf5k4"]
 [ext_resource type="Texture2D" uid="uid://d2kiixcwg4og2" path="res://scenes/main/Wall_Side_Tile.png" id="10_ksre8"]
-[ext_resource type="Texture2D" uid="uid://dd88ogf10lggw" path="res://scenes/game_object/npc/jenna/jenna.png" id="10_ou6is"]
+[ext_resource type="Texture2D" uid="uid://bneoqx6f5optm" path="res://scenes/game_object/npc/jenna/jenna.png" id="10_ou6is"]
+[ext_resource type="PackedScene" uid="uid://nx0n5cd1mvfi" path="res://scenes/game_object/npc/dialog_context_resolver.tscn" id="11_pg34l"]
 [ext_resource type="Texture2D" uid="uid://cfbnj717pglr5" path="res://scenes/main/Wall_Top_Tile.png" id="11_phbwb"]
+[ext_resource type="Script" uid="uid://wg22elooeig0" path="res://scenes/game_object/npc/jenna/jenna_dialog_context_resolver.gd" id="12_m4h2d"]
 [ext_resource type="Texture2D" uid="uid://b2hbsof3blgws" path="res://scenes/main/Wood_Floor_Tile.png" id="12_w6er2"]
 [ext_resource type="PackedScene" uid="uid://c6b12ouqein02" path="res://scenes/game_object/triggers/exit_trigger.tscn" id="13_2k5sl"]
 [ext_resource type="Texture2D" uid="uid://bu1h0d6dohdvw" path="res://scenes/game_object/npc/henry/henry.png" id="19_necax"]
+[ext_resource type="Script" uid="uid://dckn8iqtv2myo" path="res://scenes/game_object/npc/henry/henry_dialog_context_resolver.gd" id="21_p8abn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dip5u"]
 texture = ExtResource("2_7hpwv")
@@ -68,9 +69,6 @@ process_mode = 2
 process_mode = 1
 player = NodePath("../Player")
 
-[node name="WorldTimeManager" parent="." instance=ExtResource("3_4insc")]
-process_mode = 1
-
 [node name="Player" parent="." instance=ExtResource("1_4jwgh")]
 process_mode = 1
 position = Vector2(-11, 324)
@@ -78,12 +76,13 @@ position = Vector2(-11, 324)
 [node name="Jenna" parent="." node_paths=PackedStringArray("dialog_context") instance=ExtResource("5_x5t4j")]
 process_mode = 1
 position = Vector2(55, 413)
-dialog_context = NodePath("NPCDialogContextResolver")
+dialog_context = NodePath("JennaDialogContextResolver")
 sprite_texture = ExtResource("10_ou6is")
 schedule_json_path = "res://scenes/game_object/npc/jenna/jenna_schedule.json"
 
-[node name="NPCDialogContextResolver" parent="Jenna" instance=ExtResource("8_uf5k4")]
-dialog_json_path = "res://scenes/game_object/npc/Jenna/jenna_dialog.json"
+[node name="JennaDialogContextResolver" parent="Jenna" instance=ExtResource("11_pg34l")]
+script = ExtResource("12_m4h2d")
+dialog_json_path = "res://scenes/game_object/npc/jenna/jenna_dialog.json"
 
 [node name="House2" parent="." instance=ExtResource("4_732bg")]
 position = Vector2(50, 7)
@@ -114,9 +113,10 @@ position = Vector2(55, 399.52)
 
 [node name="Henry" parent="." node_paths=PackedStringArray("dialog_context") instance=ExtResource("5_x5t4j")]
 position = Vector2(762, 407)
-dialog_context = NodePath("NPCDialogContextResolver")
+dialog_context = NodePath("HenryDialogContextResolver")
 sprite_texture = ExtResource("19_necax")
 schedule_json_path = "res://scenes/game_object/npc/henry/henry_schedule.json"
 
-[node name="NPCDialogContextResolver" parent="Henry" instance=ExtResource("8_uf5k4")]
+[node name="HenryDialogContextResolver" parent="Henry" instance=ExtResource("11_pg34l")]
+script = ExtResource("21_p8abn")
 dialog_json_path = "res://scenes/game_object/npc/henry/henry_dialog.json"

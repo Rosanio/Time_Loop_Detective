@@ -8,7 +8,6 @@ const SPEED = 0.5
 
 @onready var sprite = $Sprite2D
 @onready var tile_map = $"../TileMap"
-@onready var world_time_manager: Node = $"../WorldTimeManager"
 
 var astar_grid: AStarGrid2D
 var current_id_path: Array[Vector2i]
@@ -21,7 +20,7 @@ func _ready():
 	initialize_pathfinding()
 	load_schedule()
 	
-	world_time_manager.on_tick.connect(on_world_time_tick)
+	WorldTimeManager.on_tick.connect(on_world_time_tick)
 	($InteractableComponent as Interactable).interact.connect(on_interact)
 
 
@@ -37,12 +36,13 @@ func _process(_delta):
 
 
 func on_interact():
-	dialog_context.GetDialogForCurrentContext()
+	dialog_context.get_dialog_for_current_context()
 
 
-func on_world_time_tick(time):
+func on_world_time_tick(time: TimeData):
 	for event in schedule:
-		if is_time_equal(time, event["time"]):
+		var event_time: TimeData = TimeData.from_dict(event["time"])
+		if TimeData.is_time_equal(time, event_time):
 			move_to(event["coords"])
 
 
@@ -76,10 +76,6 @@ func load_schedule():
 			var y = event["coords"][1]
 			event["coords"] = Vector2i(x, y)
 		schedule = unformatted_schedule["schedule"]
-
-
-func is_time_equal(time1, time2):
-	return time1["hour"] == time2["hour"] && time1["minute"] == time2["minute"] && time1["am_pm"] == time2["am_pm"]
 
 
 func move_to(destination: Vector2i):

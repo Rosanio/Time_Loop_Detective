@@ -1,7 +1,17 @@
 {
 	"dialog": [
 		{
-			"text": "Who'chu wont?",
+			"text": "Wha'chu wont?",
+			"type": "basic"
+		}
+	],
+	"nighttime": [
+		{
+			"text": "Is'a bit late out bruv.",
+			"type": "basic"
+		},
+		{
+			"text": "Best wotch'er back.",
 			"type": "basic"
 		}
 	]
