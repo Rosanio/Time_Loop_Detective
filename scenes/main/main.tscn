@@ -33,16 +33,19 @@ texture = ExtResource("3_3qm3q")
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xajbq"]
 texture = ExtResource("10_ksre8")
 0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1a6s5"]
 texture = ExtResource("11_phbwb")
 0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mof6a"]
 texture = ExtResource("12_w6er2")
 0:0/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_eyxmt"]
+physics_layer_0/collision_layer = 1
 custom_data_layer_0/name = "walkable"
 custom_data_layer_0/type = 1
 sources/0 = SubResource("TileSetAtlasSource_dip5u")

@@ -14,7 +14,7 @@ var current_id_path: Array[Vector2i]
 
 var schedule: Array
 
-# Called when the node enters the scene tree for the first time.
+
 func _ready():
 	sprite.texture = sprite_texture
 	initialize_pathfinding()
