@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://ch4dv84tcikt3"]
+
+[ext_resource type="Texture2D" uid="uid://uxp7tf44mnut" path="res://scenes/game_object/house/door/door.png" id="1_e8orj"]
+[ext_resource type="Script" uid="uid://daodjisk8mtmp" path="res://scenes/game_object/house/door/door.gd" id="1_ywmwa"]
+[ext_resource type="PackedScene" uid="uid://bkfcp7snwtu3h" path="res://scenes/components/interactable_component.tscn" id="3_ltyqa"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ildf1"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e8orj"]
+size = Vector2(16, 16)
+
+[node name="Door" type="StaticBody2D"]
+script = ExtResource("1_ywmwa")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_e8orj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ildf1")
+
+[node name="InteractableComponent" parent="." node_paths=PackedStringArray("area") instance=ExtResource("3_ltyqa")]
+offset_top = -15.0
+offset_bottom = -15.0
+area = NodePath("../InteractableArea")
+
+[node name="InteractableArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableArea"]
+shape = SubResource("RectangleShape2D_e8orj")

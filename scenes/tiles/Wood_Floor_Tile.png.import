@@ -2,22 +2,24 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://do3t7u07jc1hn"
-path="res://.godot/imported/Dirt_Tile.png-b1274083bf2890a478ead2c9cfc2e136.ctex"
+uid="uid://db61labcvtvpp"
+path="res://.godot/imported/Wood_Floor_Tile.png-cb8ee265814c537d06a0e3a2fc5010f4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/main/Dirt_Tile.png"
-dest_files=["res://.godot/imported/Dirt_Tile.png-b1274083bf2890a478ead2c9cfc2e136.ctex"]
+source_file="res://scenes/tiles/Wood_Floor_Tile.png"
+dest_files=["res://.godot/imported/Wood_Floor_Tile.png-cb8ee265814c537d06a0e3a2fc5010f4.ctex"]
 
 [params]
 
 compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
+compress/uastc_level=0
+compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
@@ -25,6 +27,10 @@ mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
+process/channel_remap/red=0
+process/channel_remap/green=1
+process/channel_remap/blue=2
+process/channel_remap/alpha=3
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/normal_map_invert_y=false
