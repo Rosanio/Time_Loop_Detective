@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=4 uid="uid://n534qf2f87p"]
+[gd_scene load_steps=29 format=4 uid="uid://n534qf2f87p"]
 
 [ext_resource type="PackedScene" uid="uid://cam4mlsketva6" path="res://scenes/game_object/player/player.tscn" id="1_4jwgh"]
 [ext_resource type="Script" uid="uid://bpqrqg0q52e2h" path="res://scenes/main/main.gd" id="1_huir3"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cdm06dks5mjph" path="res://scenes/managers/interactable_manager.tscn" id="3_ovuf3"]
 [ext_resource type="PackedScene" uid="uid://c300p0v4eo740" path="res://scenes/ui/dialog_box_ui.tscn" id="3_xrmvm"]
 [ext_resource type="Script" uid="uid://ciblbn6is4fiv" path="res://scenes/ui/dialog_box_ui.gd" id="4_dxtxc"]
+[ext_resource type="PackedScene" uid="uid://d3p4jd1xtamap" path="res://scenes/ui/tab_menu_ui.tscn" id="5_pg34l"]
 [ext_resource type="PackedScene" uid="uid://c48vkkpti7ksj" path="res://scenes/managers/dialog_manager.tscn" id="5_rgc28"]
 [ext_resource type="PackedScene" uid="uid://b3c2w6viu71" path="res://scenes/game_object/npc/npc.tscn" id="5_x5t4j"]
 [ext_resource type="PackedScene" uid="uid://b1lqpa67x60k5" path="res://scenes/ui/world_time_ui.tscn" id="6_0d03v"]
@@ -71,6 +72,8 @@ process_mode = 1
 [node name="DialogBoxUI" parent="." instance=ExtResource("3_xrmvm")]
 process_mode = 3
 script = ExtResource("4_dxtxc")
+
+[node name="TabMenuUi" parent="." instance=ExtResource("5_pg34l")]
 
 [node name="DialogManager" parent="." instance=ExtResource("5_rgc28")]
 process_mode = 2

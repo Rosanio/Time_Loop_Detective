@@ -20,7 +20,7 @@
 			"type": "prompt-response"
 		}
 	],
-	"outside_house": [
+	"inside_house": [
 		{
 			"text": "What are you doing in my house?",
 			"type": "basic"

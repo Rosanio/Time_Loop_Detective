@@ -16,7 +16,7 @@ func _process(_delta):
 
 func _unhandled_input(event: InputEvent):
 	if event is InputEventKey and event.pressed and not event.echo:
-		if current_dialog[current_dialog_index]["type"] == "prompt":
+		if current_dialog and current_dialog[current_dialog_index]["type"] == "prompt":
 			if event.keycode >= KEY_1 and event.keycode <= KEY_9:
 				var prompt_index = event.keycode - KEY_1
 				if prompt_index <  current_dialog[current_dialog_index]["options"].size():

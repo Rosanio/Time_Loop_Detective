@@ -1,0 +1,50 @@
+[gd_scene load_steps=4 format=3 uid="uid://d3p4jd1xtamap"]
+
+[ext_resource type="Script" uid="uid://b7cp3nv1yldgm" path="res://scenes/ui/tab_menu_ui.gd" id="1_2y5yn"]
+[ext_resource type="PackedScene" uid="uid://vpeyp5mli7ei" path="res://scenes/ui/inventory_ui.tscn" id="2_prxj0"]
+[ext_resource type="Script" uid="uid://dq4n0lpx8lqkg" path="res://scenes/ui/inventory_ui.gd" id="3_2uj3a"]
+
+[node name="TabMenuUi" type="CanvasLayer"]
+script = ExtResource("1_2y5yn")
+
+[node name="TabMenu" type="ColorRect" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -308.0
+offset_top = -162.49998
+offset_right = 308.0
+offset_bottom = 162.49998
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6901961)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TabBar" type="TabBar" parent="TabMenu/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+current_tab = 0
+tab_count = 1
+tab_0/title = "Inventory"
+
+[node name="MarginContainer" type="MarginContainer" parent="TabMenu/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="InventoryUI" parent="TabMenu/VBoxContainer/MarginContainer" instance=ExtResource("2_prxj0")]
+layout_mode = 2
+script = ExtResource("3_2uj3a")
