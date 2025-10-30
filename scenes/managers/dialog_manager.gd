@@ -10,7 +10,7 @@ func _ready():
 
 
 func _process(_delta):
-	if Input.is_action_just_pressed("interact") and current_dialog[current_dialog_index]["type"] != "prompt":
+	if Input.is_action_just_pressed("interact") and current_dialog and current_dialog[current_dialog_index]["type"] != "prompt":
 		update_dialog()
 
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=4 uid="uid://n534qf2f87p"]
+[gd_scene load_steps=30 format=4 uid="uid://n534qf2f87p"]
 
 [ext_resource type="PackedScene" uid="uid://cam4mlsketva6" path="res://scenes/game_object/player/player.tscn" id="1_4jwgh"]
 [ext_resource type="Script" uid="uid://bpqrqg0q52e2h" path="res://scenes/main/main.gd" id="1_huir3"]
@@ -21,6 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://bu1h0d6dohdvw" path="res://scenes/game_object/npc/henry/henry.png" id="19_necax"]
 [ext_resource type="Script" uid="uid://dckn8iqtv2myo" path="res://scenes/game_object/npc/henry/henry_dialog_context_resolver.gd" id="21_p8abn"]
 [ext_resource type="PackedScene" uid="uid://ch4dv84tcikt3" path="res://scenes/game_object/house/door/door.tscn" id="21_pg34l"]
+[ext_resource type="PackedScene" uid="uid://doywf42ktofa4" path="res://scenes/game_object/items/key/key.tscn" id="22_m4h2d"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dip5u"]
 texture = ExtResource("2_7hpwv")
@@ -73,7 +74,8 @@ process_mode = 1
 process_mode = 3
 script = ExtResource("4_dxtxc")
 
-[node name="TabMenuUi" parent="." instance=ExtResource("5_pg34l")]
+[node name="TabMenuUi" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_pg34l")]
+player = NodePath("../Player")
 
 [node name="DialogManager" parent="." instance=ExtResource("5_rgc28")]
 process_mode = 2
@@ -114,10 +116,11 @@ schedule_json_path = "res://scenes/game_object/npc/henry/henry_schedule.json"
 script = ExtResource("21_p8abn")
 dialog_json_path = "res://scenes/game_object/npc/henry/henry_dialog.json"
 
-[node name="Door" parent="." node_paths=PackedStringArray("player") instance=ExtResource("21_pg34l")]
+[node name="Door" parent="." instance=ExtResource("21_pg34l")]
 position = Vector2(72, 392)
-player = NodePath("../Player")
 
-[node name="Door2" parent="." node_paths=PackedStringArray("player") instance=ExtResource("21_pg34l")]
+[node name="Door2" parent="." instance=ExtResource("21_pg34l")]
 position = Vector2(136, 8)
-player = NodePath("../Player")
+
+[node name="Key" parent="." instance=ExtResource("22_m4h2d")]
+position = Vector2(-58, 299)

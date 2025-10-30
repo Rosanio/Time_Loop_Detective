@@ -1,7 +1,5 @@
 extends StaticBody2D
 
-@export var player: CharacterBody2D
-
 @onready var collider: CollisionShape2D = $CollisionShape2D
 @onready var sprite: Sprite2D = $Sprite2D
 
@@ -12,15 +10,15 @@ func _ready():
 	($InteractableComponent as Interactable).interact.connect(on_interact)
 
 
-func on_interact():
+func on_interact(player: CharacterBody2D):
 	is_open = not is_open
 	if not is_open:
-		_ensure_player_clear()
+		_ensure_player_clear(player)
 	sprite.visible = !sprite.visible
 	collider.disabled = !collider.disabled
 
 
-func _ensure_player_clear():
+func _ensure_player_clear(player: CharacterBody2D):
 	var door_center = collider.global_position
 	var door_size = (collider.shape as RectangleShape2D).size
 	var door_position = door_center - Vector2(door_size / 2)

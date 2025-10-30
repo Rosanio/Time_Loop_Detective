@@ -22,7 +22,7 @@ func _process(_delta):
 		closest_interactable.set_active()
 	
 	if Input.is_action_just_pressed("interact"):
-		closest_interactable.emit_interact()
+		closest_interactable.emit_interact(player)
 
 
 func on_interactable_entered(interactable: Interactable):

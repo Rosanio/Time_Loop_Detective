@@ -1,24 +1,55 @@
-[gd_scene load_steps=3 format=3 uid="uid://vpeyp5mli7ei"]
+[gd_scene load_steps=5 format=3 uid="uid://vpeyp5mli7ei"]
 
 [sub_resource type="Theme" id="Theme_kd6oq"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_kd6oq"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_7nagc"]
+font_size = 12
+
 [sub_resource type="ImageTexture" id="ImageTexture_7nagc"]
 
-[node name="GridContainer" type="GridContainer"]
+[node name="GridContainer" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_vertical = 3
 theme = SubResource("Theme_kd6oq")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NameLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_kd6oq")
+
+[node name="DescriptionLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_7nagc")
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
 theme_override_constants/h_separation = 12
 theme_override_constants/v_separation = 12
 columns = 8
 
-[node name="Button" type="Button" parent="."]
+[node name="Button" type="Button" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 0
 disabled = true
 
-[node name="TextureRect" type="TextureRect" parent="Button"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/GridContainer/Button"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -28,14 +59,14 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ImageTexture_7nagc")
 
-[node name="Button2" type="Button" parent="."]
+[node name="Button2" type="Button" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 0
 disabled = true
 
-[node name="TextureRect" type="TextureRect" parent="Button2"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/GridContainer/Button2"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -45,14 +76,14 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ImageTexture_7nagc")
 
-[node name="Button3" type="Button" parent="."]
+[node name="Button3" type="Button" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 0
 disabled = true
 
-[node name="TextureRect" type="TextureRect" parent="Button3"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/GridContainer/Button3"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -62,14 +93,14 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ImageTexture_7nagc")
 
-[node name="Button4" type="Button" parent="."]
+[node name="Button4" type="Button" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 0
 disabled = true
 
-[node name="TextureRect" type="TextureRect" parent="Button4"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/GridContainer/Button4"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -79,14 +110,14 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ImageTexture_7nagc")
 
-[node name="Button5" type="Button" parent="."]
+[node name="Button5" type="Button" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 0
 disabled = true
 
-[node name="TextureRect" type="TextureRect" parent="Button5"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/GridContainer/Button5"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -96,14 +127,14 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ImageTexture_7nagc")
 
-[node name="Button6" type="Button" parent="."]
+[node name="Button6" type="Button" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 0
 disabled = true
 
-[node name="TextureRect" type="TextureRect" parent="Button6"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/GridContainer/Button6"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -113,14 +144,14 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ImageTexture_7nagc")
 
-[node name="Button7" type="Button" parent="."]
+[node name="Button7" type="Button" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 0
 disabled = true
 
-[node name="TextureRect" type="TextureRect" parent="Button7"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/GridContainer/Button7"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -130,14 +161,14 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ImageTexture_7nagc")
 
-[node name="Button8" type="Button" parent="."]
+[node name="Button8" type="Button" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 0
 disabled = true
 
-[node name="TextureRect" type="TextureRect" parent="Button8"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/GridContainer/Button8"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -147,14 +178,14 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ImageTexture_7nagc")
 
-[node name="Button9" type="Button" parent="."]
+[node name="Button9" type="Button" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 0
 disabled = true
 
-[node name="TextureRect" type="TextureRect" parent="Button9"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/GridContainer/Button9"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -164,14 +195,14 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ImageTexture_7nagc")
 
-[node name="Button10" type="Button" parent="."]
+[node name="Button10" type="Button" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 0
 disabled = true
 
-[node name="TextureRect" type="TextureRect" parent="Button10"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/GridContainer/Button10"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -181,14 +212,14 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ImageTexture_7nagc")
 
-[node name="Button11" type="Button" parent="."]
+[node name="Button11" type="Button" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 0
 disabled = true
 
-[node name="TextureRect" type="TextureRect" parent="Button11"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/GridContainer/Button11"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -198,14 +229,14 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ImageTexture_7nagc")
 
-[node name="Button12" type="Button" parent="."]
+[node name="Button12" type="Button" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 0
 disabled = true
 
-[node name="TextureRect" type="TextureRect" parent="Button12"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/GridContainer/Button12"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -215,14 +246,14 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ImageTexture_7nagc")
 
-[node name="Button13" type="Button" parent="."]
+[node name="Button13" type="Button" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 0
 disabled = true
 
-[node name="TextureRect" type="TextureRect" parent="Button13"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/GridContainer/Button13"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -232,14 +263,14 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ImageTexture_7nagc")
 
-[node name="Button14" type="Button" parent="."]
+[node name="Button14" type="Button" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 0
 disabled = true
 
-[node name="TextureRect" type="TextureRect" parent="Button14"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/GridContainer/Button14"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -249,14 +280,14 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ImageTexture_7nagc")
 
-[node name="Button15" type="Button" parent="."]
+[node name="Button15" type="Button" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 0
 disabled = true
 
-[node name="TextureRect" type="TextureRect" parent="Button15"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/GridContainer/Button15"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -266,14 +297,14 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ImageTexture_7nagc")
 
-[node name="Button16" type="Button" parent="."]
+[node name="Button16" type="Button" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 0
 disabled = true
 
-[node name="TextureRect" type="TextureRect" parent="Button16"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/GridContainer/Button16"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -283,14 +314,14 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ImageTexture_7nagc")
 
-[node name="Button17" type="Button" parent="."]
+[node name="Button17" type="Button" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 0
 disabled = true
 
-[node name="TextureRect" type="TextureRect" parent="Button17"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/GridContainer/Button17"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -300,14 +331,14 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ImageTexture_7nagc")
 
-[node name="Button18" type="Button" parent="."]
+[node name="Button18" type="Button" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 0
 disabled = true
 
-[node name="TextureRect" type="TextureRect" parent="Button18"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/GridContainer/Button18"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -317,14 +348,14 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ImageTexture_7nagc")
 
-[node name="Button19" type="Button" parent="."]
+[node name="Button19" type="Button" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 0
 disabled = true
 
-[node name="TextureRect" type="TextureRect" parent="Button19"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/GridContainer/Button19"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -334,14 +365,14 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ImageTexture_7nagc")
 
-[node name="Button20" type="Button" parent="."]
+[node name="Button20" type="Button" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 0
 disabled = true
 
-[node name="TextureRect" type="TextureRect" parent="Button20"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/GridContainer/Button20"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -351,14 +382,14 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ImageTexture_7nagc")
 
-[node name="Button21" type="Button" parent="."]
+[node name="Button21" type="Button" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 0
 disabled = true
 
-[node name="TextureRect" type="TextureRect" parent="Button21"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/GridContainer/Button21"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -368,14 +399,14 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ImageTexture_7nagc")
 
-[node name="Button22" type="Button" parent="."]
+[node name="Button22" type="Button" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 0
 disabled = true
 
-[node name="TextureRect" type="TextureRect" parent="Button22"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/GridContainer/Button22"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -385,14 +416,14 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ImageTexture_7nagc")
 
-[node name="Button23" type="Button" parent="."]
+[node name="Button23" type="Button" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 0
 disabled = true
 
-[node name="TextureRect" type="TextureRect" parent="Button23"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/GridContainer/Button23"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -402,14 +433,14 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ImageTexture_7nagc")
 
-[node name="Button24" type="Button" parent="."]
+[node name="Button24" type="Button" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 0
 disabled = true
 
-[node name="TextureRect" type="TextureRect" parent="Button24"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/GridContainer/Button24"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -419,14 +450,14 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ImageTexture_7nagc")
 
-[node name="Button25" type="Button" parent="."]
+[node name="Button25" type="Button" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 0
 disabled = true
 
-[node name="TextureRect" type="TextureRect" parent="Button25"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/GridContainer/Button25"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -436,14 +467,14 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ImageTexture_7nagc")
 
-[node name="Button26" type="Button" parent="."]
+[node name="Button26" type="Button" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 0
 disabled = true
 
-[node name="TextureRect" type="TextureRect" parent="Button26"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/GridContainer/Button26"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -453,14 +484,14 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ImageTexture_7nagc")
 
-[node name="Button27" type="Button" parent="."]
+[node name="Button27" type="Button" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 0
 disabled = true
 
-[node name="TextureRect" type="TextureRect" parent="Button27"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/GridContainer/Button27"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -470,14 +501,14 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ImageTexture_7nagc")
 
-[node name="Button28" type="Button" parent="."]
+[node name="Button28" type="Button" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 0
 disabled = true
 
-[node name="TextureRect" type="TextureRect" parent="Button28"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/GridContainer/Button28"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -487,14 +518,14 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ImageTexture_7nagc")
 
-[node name="Button29" type="Button" parent="."]
+[node name="Button29" type="Button" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 0
 disabled = true
 
-[node name="TextureRect" type="TextureRect" parent="Button29"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/GridContainer/Button29"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -504,14 +535,14 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ImageTexture_7nagc")
 
-[node name="Button30" type="Button" parent="."]
+[node name="Button30" type="Button" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 0
 disabled = true
 
-[node name="TextureRect" type="TextureRect" parent="Button30"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/GridContainer/Button30"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -521,14 +552,14 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ImageTexture_7nagc")
 
-[node name="Button31" type="Button" parent="."]
+[node name="Button31" type="Button" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 0
 disabled = true
 
-[node name="TextureRect" type="TextureRect" parent="Button31"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/GridContainer/Button31"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -538,14 +569,14 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ImageTexture_7nagc")
 
-[node name="Button32" type="Button" parent="."]
+[node name="Button32" type="Button" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 0
 disabled = true
 
-[node name="TextureRect" type="TextureRect" parent="Button32"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/GridContainer/Button32"]
 visible = false
 layout_mode = 1
 anchors_preset = 15

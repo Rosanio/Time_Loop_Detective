@@ -31,5 +31,5 @@ func set_inactive():
 	texture_rect.visible = false
 
 
-func emit_interact():
-	interact.emit()
+func emit_interact(player: CharacterBody2D):
+	interact.emit(player)

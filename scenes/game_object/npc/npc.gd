@@ -35,7 +35,7 @@ func _process(_delta):
 		current_id_path.pop_front()
 
 
-func on_interact():
+func on_interact(_player: CharacterBody2D):
 	dialog_context.get_dialog_for_current_context()
 
 

@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+@onready var inventory: Inventory = $InventoryComponent
+
 const SPEED = 80;
 
 func _ready():

@@ -1,0 +1,36 @@
+[gd_scene load_steps=7 format=3 uid="uid://doywf42ktofa4"]
+
+[ext_resource type="PackedScene" uid="uid://bkfcp7snwtu3h" path="res://scenes/components/interactable_component.tscn" id="1_n723p"]
+[ext_resource type="PackedScene" uid="uid://b3u2ubigb41hv" path="res://scenes/components/item_component.tscn" id="2_1y3p7"]
+[ext_resource type="Texture2D" uid="uid://hra2wgyuhbhq" path="res://scenes/game_object/items/key/key.png" id="2_elw3u"]
+[ext_resource type="Script" uid="uid://dtefkytsa3mir" path="res://scenes/game_object/items/item_data.gd" id="4_1y3p7"]
+
+[sub_resource type="Resource" id="Resource_3gqml"]
+script = ExtResource("4_1y3p7")
+name = "Jenna's Key"
+description = "The key to Jenna's front door"
+icon = ExtResource("2_elw3u")
+metadata/_custom_type_script = "uid://dtefkytsa3mir"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1y3p7"]
+size = Vector2(16, 16)
+
+[node name="Key" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="InteractableComponent" parent="." node_paths=PackedStringArray("area") instance=ExtResource("1_n723p")]
+offset_top = -10.0
+offset_bottom = -10.0
+area = NodePath("..")
+
+[node name="ItemComponent" parent="." node_paths=PackedStringArray("interactable") instance=ExtResource("2_1y3p7")]
+interactable = NodePath("../InteractableComponent")
+item_data = SubResource("Resource_3gqml")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_elw3u")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_1y3p7")

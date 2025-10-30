@@ -1,7 +1,6 @@
 extends Node
 
 
-@export var player: CharacterBody2D
 @export var exitSpawnPoint: Node2D
 
 @onready var camera: Camera2D = $"/root/Main/Player/Camera2D"
@@ -10,7 +9,7 @@ func _ready():
 	($InteractableComponent as Interactable).interact.connect(on_interact)
 
 
-func on_interact():
+func on_interact(player: CharacterBody2D):
 	# The only way I could find to reset the camera's drag offset was to disable it and enable it
 	# again. However, the game seems to only recognize it if you add a delay between disabling and
 	# enabling it. I think the compiler disregards a variable change if you set it back to the original
