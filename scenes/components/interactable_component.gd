@@ -1,24 +1,13 @@
+# This component must be the direct descendant of an Area2D to work properly.
+
 extends Node
 class_name Interactable
 
 signal interact
 
-@export var area: Area2D
+@onready var area: Area2D = get_parent()
 @onready var texture_rect: TextureRect = $TextureRect
 var active: bool = false
-
-
-func _ready():
-	area.area_entered.connect(on_area_entered)
-	area.area_exited.connect(on_area_exited)
-
-
-func on_area_entered(_other_area: Area2D):
-	GameEvents.emit_interactable_area_entered(self)
-
-
-func on_area_exited(_other_area: Area2D):
-	GameEvents.emit_interactable_area_exited(self)
 
 
 func set_active():
@@ -31,5 +20,5 @@ func set_inactive():
 	texture_rect.visible = false
 
 
-func emit_interact(player: CharacterBody2D):
-	interact.emit(player)
+func emit_interact(interactor: Node):
+	interact.emit(interactor)

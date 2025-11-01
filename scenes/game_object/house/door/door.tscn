@@ -19,14 +19,14 @@ texture = ExtResource("1_e8orj")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_ildf1")
 
-[node name="InteractableComponent" parent="." node_paths=PackedStringArray("area") instance=ExtResource("3_ltyqa")]
-offset_top = -15.0
-offset_bottom = -15.0
-area = NodePath("../InteractableArea")
-
 [node name="InteractableArea" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 2
+collision_layer = 2
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableArea"]
 shape = SubResource("RectangleShape2D_e8orj")
+
+[node name="InteractableComponent" parent="InteractableArea" node_paths=PackedStringArray("area") instance=ExtResource("3_ltyqa")]
+offset_top = -15.0
+offset_bottom = -15.0
+area = NodePath("..")

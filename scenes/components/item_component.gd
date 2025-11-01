@@ -9,5 +9,6 @@ func _ready():
 	interactable.interact.connect(on_interact)
 
 
-func on_interact(player: CharacterBody2D):
-	player.inventory.add_item(self)
+func on_interact(interactor: Node):
+	if interactor is Player:
+		interactor.inventory.add_item(self)

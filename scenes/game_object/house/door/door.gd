@@ -11,10 +11,17 @@ var is_open := false
 
 
 func _ready():
-	($InteractableComponent as Interactable).interact.connect(on_interact)
+	($InteractableArea/InteractableComponent as Interactable).interact.connect(on_interact)
 
 
-func on_interact(player: CharacterBody2D):
+func on_interact(interactor: Node):
+	if interactor is Player:
+		handle_player_interaction(interactor)
+	elif interactor is Npc:
+		handle_npc_interaction(interactor)
+
+
+func handle_player_interaction(player: Player):
 	if is_locked:
 		if player.inventory.has_key(self):
 			is_locked = false
@@ -23,12 +30,18 @@ func on_interact(player: CharacterBody2D):
 
 	is_open = not is_open
 	if not is_open:
-		_ensure_player_clear(player)
+		ensure_player_clear(player)
 	sprite.visible = !sprite.visible
 	collider.disabled = !collider.disabled
 
 
-func _ensure_player_clear(player: CharacterBody2D):
+func handle_npc_interaction(_npc: Npc):
+	sprite.visible = false
+	await get_tree().create_timer(0.5).timeout
+	sprite.visible = true
+
+
+func ensure_player_clear(player: Player):
 	var door_center = collider.global_position
 	var door_size = (collider.shape as RectangleShape2D).size
 	var door_position = door_center - Vector2(door_size / 2)

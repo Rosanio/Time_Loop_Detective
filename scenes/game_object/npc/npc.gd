@@ -1,9 +1,11 @@
 extends Area2D
+class_name Npc
 
 const SPEED = 0.5
 
 @export var dialog_context: DialogContextResolver
 @export var sprite_texture: Texture2D
+@export var starting_items: Array[ItemData]
 @export_file("*.json") var schedule_json_path: String
 
 @onready var sprite = $Sprite2D
@@ -21,22 +23,22 @@ func _ready():
 	load_schedule()
 	
 	WorldTimeManager.on_tick.connect(on_world_time_tick)
-	($InteractableComponent as Interactable).interact.connect(on_interact)
+	($InteractableDetectionArea/InteractableComponent as Interactable).interact.connect(on_interact)
+	$InteractableDetectionArea.area_entered.connect(interactable_area_entered)
+
+	for item in starting_items:
+		$InventoryComponent.inventory.append(item)
 
 
 func _process(_delta):
 	if current_id_path.is_empty():
 		return
-		
+
 	var target_position = tile_map.map_to_local((current_id_path.front()))
 	global_position = global_position.move_toward(target_position, SPEED)
-	
+
 	if global_position == target_position:
 		current_id_path.pop_front()
-
-
-func on_interact(_player: CharacterBody2D):
-	dialog_context.get_dialog_for_current_context()
 
 
 func on_world_time_tick(time: TimeData):
@@ -44,6 +46,16 @@ func on_world_time_tick(time: TimeData):
 		var event_time: TimeData = TimeData.from_dict(event["time"])
 		if TimeData.is_time_equal(time, event_time):
 			move_to(event["coords"])
+
+
+func on_interact(interactor: Node):
+	if interactor is Player:
+		dialog_context.get_dialog_for_current_context()
+
+
+func interactable_area_entered(other_area: Area2D):
+	var interactable: Interactable = other_area.get_node("InteractableComponent")
+	interactable.emit_interact(self)
 
 
 func initialize_pathfinding():
