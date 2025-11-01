@@ -1,4 +1,8 @@
 extends StaticBody2D
+class_name Door
+
+@export var id: String
+@export var is_locked: bool
 
 @onready var collider: CollisionShape2D = $CollisionShape2D
 @onready var sprite: Sprite2D = $Sprite2D
@@ -11,6 +15,12 @@ func _ready():
 
 
 func on_interact(player: CharacterBody2D):
+	if is_locked:
+		if player.inventory.has_key(self):
+			is_locked = false
+		else:
+			return
+
 	is_open = not is_open
 	if not is_open:
 		_ensure_player_clear(player)

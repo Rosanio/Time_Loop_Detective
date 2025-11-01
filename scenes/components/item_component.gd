@@ -2,7 +2,8 @@ extends Node
 class_name Item
 
 @export var interactable: Interactable
-@export var item_data: ItemData
+
+var item_data: ItemData
 
 func _ready():
 	interactable.interact.connect(on_interact)

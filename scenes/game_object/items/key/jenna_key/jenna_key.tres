@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="KeyItemData" load_steps=3 format=3 uid="uid://7aixjjgira70"]
+
+[ext_resource type="Texture2D" uid="uid://hra2wgyuhbhq" path="res://scenes/game_object/items/key/key.png" id="1_1foc4"]
+[ext_resource type="Script" uid="uid://ca00ckyevfqvi" path="res://scenes/game_object/items/key/key_item_data.gd" id="1_dkeuq"]
+
+[resource]
+script = ExtResource("1_dkeuq")
+door_id = "jenna_door"
+name = "Jenna's Key"
+description = "The key to Jenna's front door"
+icon = ExtResource("1_1foc4")
+metadata/_custom_type_script = "uid://ca00ckyevfqvi"
