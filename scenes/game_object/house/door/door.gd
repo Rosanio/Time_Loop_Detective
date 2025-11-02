@@ -26,6 +26,7 @@ func handle_player_interaction(player: Player):
 		if player.inventory.has_key(self):
 			is_locked = false
 		else:
+			GameEvents.emit_show_speech_bubble(player, "It's locked", 3)
 			return
 
 	is_open = not is_open

@@ -5,7 +5,6 @@ class_name SpeechBubble
 @onready var label: Label = $Panel/Label
 
 var speaker: Node2D = null
-var camera: Camera2D
 var text: String = ""
 
 func _ready():
@@ -13,7 +12,7 @@ func _ready():
 		printerr("SpeechBubble instantiated without speaker")
 		return
 
-	camera = get_viewport().get_camera_2d()
+	label.text = text
 	update_bubble_size()
 
 
