@@ -1,4 +1,4 @@
-extends CanvasLayer
+extends Control
 
 const LABEL_WIDTH = 288
 const LABEL_FULL_HEIGHT = 68

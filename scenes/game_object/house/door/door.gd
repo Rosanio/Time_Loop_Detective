@@ -35,7 +35,10 @@ func handle_player_interaction(player: Player):
 	collider.disabled = !collider.disabled
 
 
-func handle_npc_interaction(_npc: Npc):
+func handle_npc_interaction(npc: Npc):
+	if not npc.inventory.has_key(self):
+		npc.handle_missing_key(self)
+		return
 	sprite.visible = false
 	await get_tree().create_timer(0.5).timeout
 	sprite.visible = true

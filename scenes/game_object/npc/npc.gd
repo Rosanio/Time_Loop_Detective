@@ -3,25 +3,26 @@ class_name Npc
 
 const SPEED = 0.5
 
-@export var dialog_context: DialogContextResolver
 @export var sprite_texture: Texture2D
 @export var starting_items: Array[ItemData]
-@export_file("*.json") var schedule_json_path: String
 
 @onready var sprite = $Sprite2D
 @onready var tile_map = $"../TileMap"
+@onready var inventory: Inventory = $InventoryComponent
+@onready var behavior_context: BehaviorContextResolver = $BehaviorContextResolver
+@onready var dialog_context: DialogContextResolver = $DialogContextResolver
 
 var astar_grid: AStarGrid2D
 var current_id_path: Array[Vector2i]
 
-var schedule: Array
+var current_schedule: Array
 
 
 func _ready():
 	sprite.texture = sprite_texture
 	initialize_pathfinding()
-	load_schedule()
-	
+	behavior_context.run_initial_behavior()
+
 	WorldTimeManager.on_tick.connect(on_world_time_tick)
 	($InteractableDetectionArea/InteractableComponent as Interactable).interact.connect(on_interact)
 	$InteractableDetectionArea.area_entered.connect(interactable_area_entered)
@@ -42,7 +43,10 @@ func _process(_delta):
 
 
 func on_world_time_tick(time: TimeData):
-	for event in schedule:
+	if not current_schedule:
+		return
+
+	for event in current_schedule:
 		var event_time: TimeData = TimeData.from_dict(event["time"])
 		if TimeData.is_time_equal(time, event_time):
 			move_to(event["coords"])
@@ -78,16 +82,8 @@ func initialize_pathfinding():
 				astar_grid.set_point_solid(tile_position)
 
 
-func load_schedule():
-	var file := FileAccess.open(schedule_json_path, FileAccess.READ)
-	if file:
-		var text := file.get_as_text()
-		var unformatted_schedule = JSON.parse_string(text)
-		for event in unformatted_schedule["schedule"]:
-			var x = event["coords"][0]
-			var y = event["coords"][1]
-			event["coords"] = Vector2i(x, y)
-		schedule = unformatted_schedule["schedule"]
+func set_current_schedule(schedule: Array):
+	current_schedule = schedule
 
 
 func move_to(destination: Vector2i):
@@ -98,3 +94,10 @@ func move_to(destination: Vector2i):
 	
 	if id_path.is_empty() == false:
 		current_id_path = id_path
+
+
+func handle_missing_key(door: Door):
+	if current_schedule:
+		current_id_path.clear()
+		current_schedule.clear()
+		behavior_context.handle_missing_key(door)
