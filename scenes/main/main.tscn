@@ -1,8 +1,10 @@
-[gd_scene load_steps=33 format=4 uid="uid://n534qf2f87p"]
+[gd_scene load_steps=36 format=4 uid="uid://n534qf2f87p"]
 
 [ext_resource type="PackedScene" uid="uid://cam4mlsketva6" path="res://scenes/game_object/player/player.tscn" id="1_4jwgh"]
 [ext_resource type="Script" uid="uid://bpqrqg0q52e2h" path="res://scenes/main/main.gd" id="1_huir3"]
+[ext_resource type="Shader" uid="uid://ccbainnj4mj5p" path="res://scenes/shaders/vision_shader.gdshader" id="2_6llfj"]
 [ext_resource type="Texture2D" uid="uid://dqdgtyajllplu" path="res://scenes/tiles/Grass_Tile.png" id="2_7hpwv"]
+[ext_resource type="Script" uid="uid://blj5o6vky2mou" path="res://scenes/main/dark_overlay.gd" id="3_0bhws"]
 [ext_resource type="Texture2D" uid="uid://yuk4y6i12iex" path="res://scenes/tiles/Dirt_Tile.png" id="3_3qm3q"]
 [ext_resource type="PackedScene" uid="uid://c300p0v4eo740" path="res://scenes/ui/dialog_box_ui.tscn" id="3_xrmvm"]
 [ext_resource type="Script" uid="uid://ciblbn6is4fiv" path="res://scenes/ui/dialog_box_ui.gd" id="4_dxtxc"]
@@ -25,6 +27,10 @@
 [ext_resource type="Script" uid="uid://dckn8iqtv2myo" path="res://scenes/game_object/npc/henry/henry_dialog_context_resolver.gd" id="21_p8abn"]
 [ext_resource type="PackedScene" uid="uid://ch4dv84tcikt3" path="res://scenes/game_object/house/door/door.tscn" id="21_pg34l"]
 [ext_resource type="Script" uid="uid://bbxr1oh858xrw" path="res://scenes/game_object/npc/henry/henry_behavior_context_resolver.gd" id="23_p8abn"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0bhws"]
+shader = ExtResource("2_6llfj")
+shader_parameter/darkness = 0.8
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dip5u"]
 texture = ExtResource("2_7hpwv")
@@ -53,10 +59,14 @@ texture = ExtResource("12_w6er2")
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pg34l"]
 texture = ExtResource("18_r4lks")
 0:0/0 = 0
+0:0/0/physics_layer_1/polygon_0/points = PackedVector2Array(-5.0762777, 8, -5.043152, -8, -8, -8, -8, 8)
+0:0/0/physics_layer_1/polygon_1/points = PackedVector2Array(4.9285316, -8, 5.043148, 8, 8, 8, 8, -8)
 0:0/0/custom_data_0 = true
 
 [sub_resource type="TileSet" id="TileSet_eyxmt"]
-physics_layer_0/collision_layer = 4
+physics_layer_0/collision_layer = 12
+physics_layer_1/collision_layer = 8
+physics_layer_1/collision_mask = 0
 custom_data_layer_0/name = "walkable"
 custom_data_layer_0/type = 1
 sources/0 = SubResource("TileSetAtlasSource_dip5u")
@@ -71,6 +81,16 @@ process_mode = 3
 script = ExtResource("1_huir3")
 
 [node name="ActiveUILayer" type="CanvasLayer" parent="."]
+
+[node name="DarkOverlay" type="ColorRect" parent="ActiveUILayer"]
+material = SubResource("ShaderMaterial_0bhws")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.8)
+script = ExtResource("3_0bhws")
 
 [node name="WorldTimeUI" parent="ActiveUILayer" instance=ExtResource("6_0d03v")]
 process_mode = 1
@@ -87,6 +107,14 @@ script = ExtResource("4_dxtxc")
 
 [node name="TabMenuUi" parent="MenuUILayer" node_paths=PackedStringArray("player") instance=ExtResource("5_pg34l")]
 player = NodePath("../../Player")
+
+[node name="VisionViewport" type="SubViewport" parent="."]
+transparent_bg = true
+size = Vector2i(1280, 720)
+
+[node name="MaskRoot" type="Node2D" parent="VisionViewport"]
+
+[node name="MaskPolygon" type="Polygon2D" parent="VisionViewport/MaskRoot"]
 
 [node name="DialogManager" parent="." instance=ExtResource("5_rgc28")]
 process_mode = 2
