@@ -34,6 +34,5 @@ func item_added(item: ItemData, index: int):
 
 func button_focused(index: int):
 	var item = inventory.inventory[index]
-	print(item)
 	name_label.text = item.name
 	description_label.text = item.description

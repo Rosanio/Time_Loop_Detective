@@ -1,16 +1,16 @@
 extends Node2D
 
-var vision_radius: float = 500.0
-var ray_count: int = 512
+@export var vision_radius: float = 500.0
+@export var ray_count: int = 512
+
 var collision_mask: int = 8
 
 # Adaptive refinement
+@export var max_refinement_depth: int = 2
 var refinement_distance_threshold: float = 8.0
-var max_refinement_depth: int = 2
 
-@onready var mask_polygon: Polygon2D = get_tree().get_root().get_node("/root/Main/VisionViewport/MaskRoot/MaskPolygon")
 
-func _physics_process(_delta: float):
+func calculate_vision_polygon() -> PackedVector2Array:
 	var space_state = get_world_2d().direct_space_state
 
 	var angles: Array = []
@@ -28,12 +28,11 @@ func _physics_process(_delta: float):
 		if safe_points.size() == 0 or safe_points[-1].position.distance_to(point.position) > min_distance:
 			safe_points.append(point)
 
-	if mask_polygon:
-		var screen_points := PackedVector2Array()
-		var canvas_transform = get_viewport().get_canvas_transform()
-		for global_point in safe_points:
-			screen_points.append(canvas_transform * global_point.position)
-		mask_polygon.polygon = screen_points
+	var screen_points := PackedVector2Array()
+	var canvas_transform = get_viewport().get_canvas_transform()
+	for global_point in safe_points:
+		screen_points.append(canvas_transform * global_point.position)
+	return screen_points
 
 
 func cast_rays_recursive(state_space, angles: Array, depth: int, out_points: Array):

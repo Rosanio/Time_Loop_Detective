@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://do00kd3y0kn4f"]
-
-[ext_resource type="Script" uid="uid://bfu6f17nrfjyx" path="res://scenes/game_object/npc/behavior_context_resolver.gd" id="1_w4jfm"]
-
-[node name="BehaviorContextResolver" type="Node"]
-script = ExtResource("1_w4jfm")

@@ -1,6 +1,6 @@
-[gd_scene load_steps=37 format=4 uid="uid://n534qf2f87p"]
+[gd_scene load_steps=36 format=4 uid="uid://n534qf2f87p"]
 
-[ext_resource type="PackedScene" uid="uid://cam4mlsketva6" path="res://scenes/game_object/player/player.tscn" id="1_4jwgh"]
+[ext_resource type="PackedScene" uid="uid://cam4mlsketva6" path="res://scenes/game_object/characters/player/player.tscn" id="1_4jwgh"]
 [ext_resource type="Script" uid="uid://bpqrqg0q52e2h" path="res://scenes/main/main.gd" id="1_huir3"]
 [ext_resource type="Shader" uid="uid://ccbainnj4mj5p" path="res://scenes/shaders/vision_shader.gdshader" id="2_6llfj"]
 [ext_resource type="Texture2D" uid="uid://dqdgtyajllplu" path="res://scenes/tiles/Grass_Tile.png" id="2_7hpwv"]
@@ -10,24 +10,23 @@
 [ext_resource type="Script" uid="uid://ciblbn6is4fiv" path="res://scenes/ui/dialog_box_ui.gd" id="4_dxtxc"]
 [ext_resource type="PackedScene" uid="uid://d3p4jd1xtamap" path="res://scenes/ui/tab_menu_ui.tscn" id="5_pg34l"]
 [ext_resource type="PackedScene" uid="uid://c48vkkpti7ksj" path="res://scenes/managers/dialog_manager.tscn" id="5_rgc28"]
-[ext_resource type="PackedScene" uid="uid://b3c2w6viu71" path="res://scenes/game_object/npc/npc.tscn" id="5_x5t4j"]
+[ext_resource type="PackedScene" uid="uid://b3c2w6viu71" path="res://scenes/game_object/characters/npc/npc.tscn" id="5_x5t4j"]
 [ext_resource type="PackedScene" uid="uid://b1lqpa67x60k5" path="res://scenes/ui/world_time_ui.tscn" id="6_0d03v"]
 [ext_resource type="PackedScene" uid="uid://cgvvotgginrd7" path="res://scenes/managers/speech_bubble_manager.tscn" id="7_s17dp"]
 [ext_resource type="Script" uid="uid://dvl4nnh1rpvrn" path="res://scenes/managers/speech_bubble_manager.gd" id="8_37hlw"]
 [ext_resource type="Texture2D" uid="uid://dkq654buablb5" path="res://scenes/tiles/Wall_Side_Tile.png" id="10_ksre8"]
-[ext_resource type="Texture2D" uid="uid://bneoqx6f5optm" path="res://scenes/game_object/npc/jenna/jenna.png" id="10_ou6is"]
-[ext_resource type="PackedScene" uid="uid://nx0n5cd1mvfi" path="res://scenes/game_object/npc/dialog_context_resolver.tscn" id="11_pg34l"]
+[ext_resource type="Texture2D" uid="uid://bneoqx6f5optm" path="res://scenes/game_object/characters/npc/jenna/jenna.png" id="10_ou6is"]
+[ext_resource type="PackedScene" uid="uid://nx0n5cd1mvfi" path="res://scenes/game_object/characters/npc/dialog_context_resolver.tscn" id="11_pg34l"]
 [ext_resource type="Texture2D" uid="uid://bg5fukdv314pm" path="res://scenes/tiles/Wall_Top_Tile.png" id="11_phbwb"]
-[ext_resource type="Script" uid="uid://wg22elooeig0" path="res://scenes/game_object/npc/jenna/jenna_dialog_context_resolver.gd" id="12_m4h2d"]
+[ext_resource type="Script" uid="uid://wg22elooeig0" path="res://scenes/game_object/characters/npc/jenna/jenna_dialog_context_resolver.gd" id="12_m4h2d"]
 [ext_resource type="Texture2D" uid="uid://db61labcvtvpp" path="res://scenes/tiles/Wood_Floor_Tile.png" id="12_w6er2"]
-[ext_resource type="PackedScene" uid="uid://do00kd3y0kn4f" path="res://scenes/game_object/npc/behavior_context_resolver.tscn" id="13_pg34l"]
-[ext_resource type="Script" uid="uid://m61kd3hlxtqy" path="res://scenes/game_object/npc/jenna/jenna_behavior_context_resolver.gd" id="14_m4h2d"]
+[ext_resource type="PackedScene" uid="uid://do00kd3y0kn4f" path="res://scenes/game_object/characters/npc/behavior_context_resolver.tscn" id="13_pg34l"]
+[ext_resource type="Script" uid="uid://m61kd3hlxtqy" path="res://scenes/game_object/characters/npc/jenna/jenna_behavior_context_resolver.gd" id="14_m4h2d"]
 [ext_resource type="Texture2D" uid="uid://c3sj6lt1hfanc" path="res://scenes/tiles/Door_Tile.png" id="18_r4lks"]
-[ext_resource type="Texture2D" uid="uid://bu1h0d6dohdvw" path="res://scenes/game_object/npc/henry/henry.png" id="19_necax"]
-[ext_resource type="Script" uid="uid://dckn8iqtv2myo" path="res://scenes/game_object/npc/henry/henry_dialog_context_resolver.gd" id="21_p8abn"]
+[ext_resource type="Texture2D" uid="uid://bu1h0d6dohdvw" path="res://scenes/game_object/characters/npc/henry/henry.png" id="19_necax"]
+[ext_resource type="Script" uid="uid://dckn8iqtv2myo" path="res://scenes/game_object/characters/npc/henry/henry_dialog_context_resolver.gd" id="21_p8abn"]
 [ext_resource type="PackedScene" uid="uid://ch4dv84tcikt3" path="res://scenes/game_object/house/door/door.tscn" id="21_pg34l"]
-[ext_resource type="Script" uid="uid://bbxr1oh858xrw" path="res://scenes/game_object/npc/henry/henry_behavior_context_resolver.gd" id="23_p8abn"]
-[ext_resource type="PackedScene" uid="uid://doywf42ktofa4" path="res://scenes/game_object/items/key/key.tscn" id="28_62atk"]
+[ext_resource type="Script" uid="uid://bbxr1oh858xrw" path="res://scenes/game_object/characters/npc/henry/henry_behavior_context_resolver.gd" id="23_p8abn"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0bhws"]
 shader = ExtResource("2_6llfj")
@@ -146,12 +145,12 @@ sprite_texture = ExtResource("10_ou6is")
 
 [node name="DialogContextResolver" parent="Jenna" instance=ExtResource("11_pg34l")]
 script = ExtResource("12_m4h2d")
-dialog_json_path = "res://scenes/game_object/npc/jenna/jenna_dialog.json"
+dialog_json_path = "res://scenes/game_object/characters/npc/jenna/jenna_dialog.json"
 
 [node name="BehaviorContextResolver" parent="Jenna" node_paths=PackedStringArray("npc") instance=ExtResource("13_pg34l")]
 script = ExtResource("14_m4h2d")
 npc = NodePath("..")
-schedule_json_path = "res://scenes/game_object/npc/jenna/jenna_schedule.json"
+schedule_json_path = "res://scenes/game_object/characters/npc/jenna/jenna_schedule.json"
 
 [node name="Henry" parent="." instance=ExtResource("5_x5t4j")]
 process_mode = 1
@@ -160,16 +159,13 @@ sprite_texture = ExtResource("19_necax")
 
 [node name="DialogContextResolver" parent="Henry" instance=ExtResource("11_pg34l")]
 script = ExtResource("21_p8abn")
-dialog_json_path = "res://scenes/game_object/npc/henry/henry_dialog.json"
+dialog_json_path = "res://scenes/game_object/characters/npc/henry/henry_dialog.json"
 
 [node name="BehaviorContextResolver" parent="Henry" node_paths=PackedStringArray("npc") instance=ExtResource("13_pg34l")]
 script = ExtResource("23_p8abn")
 npc = NodePath("..")
-schedule_json_path = "res://scenes/game_object/npc/henry/henry_schedule.json"
+schedule_json_path = "res://scenes/game_object/characters/npc/henry/henry_schedule.json"
 
 [node name="Player" parent="." instance=ExtResource("1_4jwgh")]
 process_mode = 1
 position = Vector2(-61, 345)
-
-[node name="Key" parent="." instance=ExtResource("28_62atk")]
-position = Vector2(-57, 281)

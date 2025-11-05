@@ -25,8 +25,9 @@ func set_active():
 
 func set_inactive():
 	active = false
-	active_ui_layer.remove_child(texture_rect)
-	texture_rect = null
+	if texture_rect:
+		active_ui_layer.remove_child(texture_rect)
+		texture_rect = null
 
 
 func emit_interact(interactor: Node):

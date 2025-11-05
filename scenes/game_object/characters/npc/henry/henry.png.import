@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bneoqx6f5optm"
-path="res://.godot/imported/jenna.png-5474b53790120158d80aad102ce4443d.ctex"
+uid="uid://bu1h0d6dohdvw"
+path="res://.godot/imported/henry.png-9d1ea38c7fb61194ee0eca608527758c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/game_object/npc/jenna/jenna.png"
-dest_files=["res://.godot/imported/jenna.png-5474b53790120158d80aad102ce4443d.ctex"]
+source_file="res://scenes/game_object/characters/npc/henry/henry.png"
+dest_files=["res://.godot/imported/henry.png-9d1ea38c7fb61194ee0eca608527758c.ctex"]
 
 [params]
 

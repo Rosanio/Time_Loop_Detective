@@ -4,6 +4,9 @@ class_name Player
 const SPEED = 80;
 
 @onready var inventory: Inventory = $InventoryComponent
+@onready var vision_calculator = $VisionCalculator
+@onready var vision_viewport: Viewport = get_tree().get_root().get_node("/root/Main/VisionViewport")
+@onready var vision_mask_polygon: Polygon2D = get_tree().get_root().get_node("/root/Main/VisionViewport/MaskRoot/MaskPolygon")
 
 var interactables_in_range: Array[Interactable] = []
 var closest_interactable: Interactable
@@ -20,6 +23,11 @@ func _process(_delta):
 
 	if Input.is_action_just_pressed("interact") and closest_interactable:
 		closest_interactable.emit_interact(self)
+
+
+func _physics_process(_delta: float):
+	vision_mask_polygon.polygon = vision_calculator.calculate_vision_polygon()
+	hide_objects_out_of_vision()
 
 
 func interactable_area_entered(other_area: Area2D):
@@ -64,3 +72,12 @@ func get_closest_interactable():
 		if (distance < shortest_distance):
 			shortest_distance = distance
 			closest_interactable = interactable
+
+
+func hide_objects_out_of_vision():
+	var tex = vision_viewport.get_texture()
+	for obj in get_tree().get_nodes_in_group("VisionSensitive"):
+		var sprite: Sprite2D = obj.get_node("Sprite2D")
+		var mat := sprite.material
+		if mat:
+			mat.set_shader_parameter("vision_mask", tex)

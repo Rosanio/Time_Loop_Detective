@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bu1h0d6dohdvw"
-path="res://.godot/imported/henry.png-f66bf82ea5874a727ce6e83810285228.ctex"
+uid="uid://bag0qw7awh5au"
+path="res://.godot/imported/Player.png-b0205ac185df2af72e47bb93890ef090.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/game_object/npc/henry/henry.png"
-dest_files=["res://.godot/imported/henry.png-f66bf82ea5874a727ce6e83810285228.ctex"]
+source_file="res://scenes/game_object/characters/player/Player.png"
+dest_files=["res://.godot/imported/Player.png-b0205ac185df2af72e47bb93890ef090.ctex"]
 
 [params]
 

@@ -1,9 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://doywf42ktofa4"]
+[gd_scene load_steps=8 format=3 uid="uid://doywf42ktofa4"]
 
 [ext_resource type="Script" uid="uid://b5hrkyoihytag" path="res://scenes/game_object/items/key/key.gd" id="1_1y3p7"]
 [ext_resource type="PackedScene" uid="uid://bkfcp7snwtu3h" path="res://scenes/components/interactable_component.tscn" id="1_n723p"]
 [ext_resource type="PackedScene" uid="uid://b3u2ubigb41hv" path="res://scenes/components/item_component.tscn" id="2_1y3p7"]
 [ext_resource type="Texture2D" uid="uid://hra2wgyuhbhq" path="res://scenes/game_object/items/key/key.png" id="2_elw3u"]
+[ext_resource type="Shader" uid="uid://sneg4xi2yamd" path="res://scenes/shaders/hide_out_of_vision.gdshader" id="4_3gqml"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e7hlt"]
+shader = ExtResource("4_3gqml")
+shader_parameter/fade_strength = 1.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1y3p7"]
 size = Vector2(16, 16)
@@ -20,6 +25,7 @@ position = Vector2(-5, -15.98)
 interactable = NodePath("../InteractableComponent")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_e7hlt")
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_elw3u")
 

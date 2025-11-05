@@ -1,15 +1,21 @@
-[gd_scene load_steps=6 format=3 uid="uid://b3c2w6viu71"]
+[gd_scene load_steps=9 format=3 uid="uid://b3c2w6viu71"]
 
-[ext_resource type="Script" uid="uid://dvn2n567ue71u" path="res://scenes/game_object/npc/npc.gd" id="1_vdw1b"]
+[ext_resource type="Shader" uid="uid://sneg4xi2yamd" path="res://scenes/shaders/hide_out_of_vision.gdshader" id="1_4kmij"]
+[ext_resource type="Script" uid="uid://dvn2n567ue71u" path="res://scenes/game_object/characters/npc/npc.gd" id="1_vdw1b"]
 [ext_resource type="PackedScene" uid="uid://ckrnypgw5qrtn" path="res://scenes/components/inventory_component.tscn" id="3_3imb0"]
 [ext_resource type="PackedScene" uid="uid://bkfcp7snwtu3h" path="res://scenes/components/interactable_component.tscn" id="3_iwfbb"]
+[ext_resource type="PackedScene" uid="uid://do2iofmy1gcd3" path="res://scenes/game_object/characters/vision_calculator.tscn" id="4_3laj6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p5y6n"]
 size = Vector2(14, 15)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4kmij"]
+shader = ExtResource("1_4kmij")
+shader_parameter/fade_strength = 1.0
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_t4gqb"]
 
-[node name="NPC" type="Area2D"]
+[node name="NPC" type="Area2D" groups=["VisionSensitive"]]
 script = ExtResource("1_vdw1b")
 
 [node name="InventoryComponent" parent="." instance=ExtResource("3_3imb0")]
@@ -20,6 +26,7 @@ shape = SubResource("RectangleShape2D_p5y6n")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 process_mode = 1
+material = SubResource("ShaderMaterial_4kmij")
 
 [node name="InteractableDetectionArea" type="Area2D" parent="."]
 collision_layer = 2
@@ -30,3 +37,8 @@ shape = SubResource("CircleShape2D_t4gqb")
 
 [node name="InteractableComponent" parent="InteractableDetectionArea" instance=ExtResource("3_iwfbb")]
 position = Vector2(-4.885, -17.725)
+
+[node name="VisionSystem" parent="." instance=ExtResource("4_3laj6")]
+vision_radius = 200.0
+ray_count = 256
+max_refinement_depth = 0
