@@ -1,20 +1,8 @@
 [gd_scene load_steps=3 format=3 uid="uid://bkfcp7snwtu3h"]
 
 [ext_resource type="Texture2D" uid="uid://kwx73gbrnnmd" path="res://scenes/components/e_button.png" id="1_jueh6"]
-[ext_resource type="Script" path="res://scenes/components/interactable_component.gd" id="1_n1qcg"]
+[ext_resource type="Script" uid="uid://dbexxpoicpm4e" path="res://scenes/components/interactable_component.gd" id="1_n1qcg"]
 
-[node name="InteractableComponent" type="Control"]
-layout_mode = 3
-anchors_preset = 0
+[node name="InteractableComponent" type="Node2D"]
 script = ExtResource("1_n1qcg")
-
-[node name="TextureRect" type="TextureRect" parent="."]
-visible = false
-layout_mode = 0
-offset_left = -8.0
-offset_top = -8.0
-offset_right = 8.0
-offset_bottom = 8.0
-scale = Vector2(0.75, 0.75)
-pivot_offset = Vector2(8, 8)
-texture = ExtResource("1_jueh6")
+interact_texture = ExtResource("1_jueh6")

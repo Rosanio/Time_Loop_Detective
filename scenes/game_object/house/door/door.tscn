@@ -28,5 +28,4 @@ collision_mask = 0
 shape = SubResource("RectangleShape2D_e8orj")
 
 [node name="InteractableComponent" parent="InteractableArea" instance=ExtResource("3_ltyqa")]
-offset_top = -15.0
-offset_bottom = -15.0
+position = Vector2(-4.98, -20.015)
