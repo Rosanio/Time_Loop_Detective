@@ -14,6 +14,7 @@ var closest_interactable: Interactable
 func _ready():
 	$PlayerInteractableArea.area_entered.connect(interactable_area_entered)
 	$PlayerInteractableArea.area_exited.connect(interactable_area_exited)
+	($PlayerInteractableArea/InteractableComponent as Interactable).interact.connect(on_interact)
 
 
 func _process(_delta: float):
@@ -38,6 +39,13 @@ func interactable_area_exited(other_area: Area2D):
 	var interactable = other_area.get_node("InteractableComponent") as Interactable
 	interactables_in_range = interactables_in_range.filter(func(i): return i != interactable)
 	interactable.set_inactive()
+
+
+func on_interact(interactor: Node):
+	if interactor is not Npc:
+		return
+
+	interactor.handle_player_interact()
 
 
 func process_movement():

@@ -21,10 +21,12 @@ var vision_enabled: bool = false
 var tracked_entity: Node2D
 var pathfinding_mode: PathfindingMode = PathfindingMode.FOLLOW_PATH
 var current_schedule: Array
+var dialog_on_player_interact: String
 
 enum PathfindingMode {
 	FOLLOW_PATH,
-	FREEFORM
+	FREEFORM,
+	NONE
 }
 
 func _ready():
@@ -143,3 +145,11 @@ func handle_missing_key(door: Door):
 		nav_path.clear()
 		current_schedule.clear()
 		behavior_context.handle_missing_key(door)
+
+
+func handle_player_interact():
+	if tracked_entity is Player:
+		tracked_entity = null
+		pathfinding_mode = PathfindingMode.NONE
+		dialog_context.load_dialog_from_json(dialog_on_player_interact)
+		dialog_on_player_interact = ""

@@ -27,6 +27,7 @@ func load_schedule(schedule_key: String):
 		npc.set_current_schedule(unformatted_schedule[schedule_key])
 
 
-func seek_player():
+func seek_player(dialog):
 	npc.vision_enabled = true
 	npc.tracked_entity = player
+	npc.dialog_on_player_interact = dialog

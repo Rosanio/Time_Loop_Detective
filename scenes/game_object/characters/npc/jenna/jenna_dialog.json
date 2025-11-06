@@ -29,5 +29,26 @@
 			"text": "Are you like, some kind of creep or something?",
 			"type": "basic"
 		}
+	],
+	"missing_house_key": [
+		{
+			"text": "Hey!",
+			"type": "basic"
+		},
+		{
+			"text": "Did you take my key?",
+			"type": "prompt",
+			"options": [
+				"Yes",
+				"No"
+			]
+		},
+		{
+			"type": "prompt-response",
+			"options": [
+				"I knew it! Thief!",
+				"You liar! I know you have it!"
+			]
+		}
 	]
 }

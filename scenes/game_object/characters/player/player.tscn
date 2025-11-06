@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://cam4mlsketva6"]
+[gd_scene load_steps=8 format=3 uid="uid://cam4mlsketva6"]
 
 [ext_resource type="Script" uid="uid://c56d2nkrcbqno" path="res://scenes/game_object/characters/player/player.gd" id="1_mdw07"]
 [ext_resource type="Texture2D" uid="uid://bag0qw7awh5au" path="res://scenes/game_object/characters/player/Player.png" id="1_yx8kd"]
+[ext_resource type="PackedScene" uid="uid://bkfcp7snwtu3h" path="res://scenes/components/interactable_component.tscn" id="3_jr1un"]
 [ext_resource type="PackedScene" uid="uid://ckrnypgw5qrtn" path="res://scenes/components/inventory_component.tscn" id="3_s3670"]
 [ext_resource type="PackedScene" uid="uid://do2iofmy1gcd3" path="res://scenes/game_object/characters/vision_calculator.tscn" id="4_hi68p"]
 
@@ -32,11 +33,14 @@ drag_right_margin = 0.4
 drag_bottom_margin = 0.4
 
 [node name="PlayerInteractableArea" type="Area2D" parent="."]
-collision_layer = 0
+collision_layer = 2
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerInteractableArea"]
 shape = SubResource("RectangleShape2D_mydcc")
+
+[node name="InteractableComponent" parent="PlayerInteractableArea" instance=ExtResource("3_jr1un")]
+position = Vector2(155.3002, 75.70302)
 
 [node name="InventoryComponent" parent="." instance=ExtResource("3_s3670")]
 
