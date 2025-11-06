@@ -57,9 +57,9 @@ func update_active_interactable():
 	get_closest_interactable()
 
 	var active_interactable = interactables_in_range.filter(func(i): return i.active == true)
-	if active_interactable != []:
+	if active_interactable != [] and active_interactable[0] != closest_interactable:
 		active_interactable[0].set_inactive()
-	if closest_interactable:
+	if closest_interactable and not closest_interactable.active:
 		closest_interactable.set_active()
 
 

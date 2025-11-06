@@ -13,6 +13,10 @@ signal interact
 var texture_rect: TextureRect
 var active: bool = false
 
+func _process(_delta: float):
+	if texture_rect:
+		texture_rect.global_position = get_global_transform_with_canvas().get_origin()
+
 
 func set_active():
 	active = true
