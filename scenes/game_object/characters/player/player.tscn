@@ -11,6 +11,7 @@ size = Vector2(10, 11)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mydcc"]
 
 [node name="Player" type="CharacterBody2D"]
+collision_layer = 0
 collision_mask = 5
 script = ExtResource("1_mdw07")
 

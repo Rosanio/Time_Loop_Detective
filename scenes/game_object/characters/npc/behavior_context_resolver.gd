@@ -4,6 +4,8 @@ class_name BehaviorContextResolver
 @export var npc: Npc
 @export_file("*.json") var schedule_json_path: String
 
+@onready var player: Player = $"/root/Main/Player"
+
 # Should be overridden by inheriting class
 func run_initial_behavior():
 	pass
@@ -23,3 +25,8 @@ func load_schedule(schedule_key: String):
 			var y = event["coords"][1]
 			event["coords"] = Vector2i(x, y)
 		npc.set_current_schedule(unformatted_schedule[schedule_key])
+
+
+func seek_player():
+	npc.vision_enabled = true
+	npc.tracked_entity = player

@@ -11,13 +11,12 @@ const SPEED = 80;
 var interactables_in_range: Array[Interactable] = []
 var closest_interactable: Interactable
 
-
 func _ready():
 	$PlayerInteractableArea.area_entered.connect(interactable_area_entered)
 	$PlayerInteractableArea.area_exited.connect(interactable_area_exited)
 
 
-func _process(_delta):
+func _process(_delta: float):
 	process_movement()
 	update_active_interactable()
 

@@ -1,22 +1,31 @@
-extends Area2D
+extends CharacterBody2D
 class_name Npc
 
-const SPEED = 0.5
+const SPEED = 90
 
 @export var sprite_texture: Texture2D
 @export var starting_items: Array[ItemData]
 
 @onready var sprite = $Sprite2D
-@onready var tile_map = $"../TileMap"
+@onready var nav_region = $"../NavigationRegion2D"
+@onready var nav_agent = $NavigationAgent2D
+@onready var tile_map = $"../NavigationRegion2D/TileMap"
 @onready var inventory: Inventory = $InventoryComponent
 @onready var behavior_context: BehaviorContextResolver = $BehaviorContextResolver
 @onready var dialog_context: DialogContextResolver = $DialogContextResolver
+@onready var vision_calculator := $VisionCalculator
 
 var astar_grid: AStarGrid2D
-var current_id_path: Array[Vector2i]
-
+var nav_path: Array
+var vision_enabled: bool = false
+var tracked_entity: Node2D
+var pathfinding_mode: PathfindingMode = PathfindingMode.FOLLOW_PATH
 var current_schedule: Array
 
+enum PathfindingMode {
+	FOLLOW_PATH,
+	FREEFORM
+}
 
 func _ready():
 	sprite.texture = sprite_texture
@@ -31,15 +40,9 @@ func _ready():
 		$InventoryComponent.inventory.append(item)
 
 
-func _process(_delta):
-	if current_id_path.is_empty():
-		return
-
-	var target_position = tile_map.map_to_local((current_id_path.front()))
-	global_position = global_position.move_toward(target_position, SPEED)
-
-	if global_position == target_position:
-		current_id_path.pop_front()
+func _physics_process(_delta: float):
+	check_for_tracked_entity()
+	move_along_path()
 
 
 func on_world_time_tick(time: TimeData):
@@ -49,7 +52,7 @@ func on_world_time_tick(time: TimeData):
 	for event in current_schedule:
 		var event_time: TimeData = TimeData.from_dict(event["time"])
 		if TimeData.is_time_equal(time, event_time):
-			move_to(event["coords"])
+			move_to_tile(event["coords"])
 
 
 func on_interact(interactor: Node):
@@ -81,23 +84,62 @@ func initialize_pathfinding():
 			if tile_data == null or tile_data.get_custom_data("walkable") == false:
 				astar_grid.set_point_solid(tile_position)
 
+	nav_agent.set_navigation_map(nav_region.get_navigation_map())
+
 
 func set_current_schedule(schedule: Array):
 	current_schedule = schedule
 
 
-func move_to(destination: Vector2i):
+func check_for_tracked_entity():
+	if not vision_enabled or not tracked_entity:
+		return
+	var vision_polygon: PackedVector2Array = vision_calculator.calculate_vision_polygon()
+	var entity_screen_position = get_viewport().canvas_transform * tracked_entity.global_position
+	if Geometry2D.is_point_in_polygon(entity_screen_position, vision_polygon):
+		move_to_tracked_entity()
+		vision_enabled = false
+
+
+func move_to_tile(destination: Vector2i):
 	var id_path = astar_grid.get_id_path(
 		tile_map.local_to_map(global_position),
 		destination
 	).slice(1)
 	
 	if id_path.is_empty() == false:
-		current_id_path = id_path
+		nav_path = id_path
+
+
+func move_to_tracked_entity():
+	pathfinding_mode = PathfindingMode.FREEFORM
+
+
+func move_along_path():
+	if pathfinding_mode == PathfindingMode.FOLLOW_PATH:
+		if nav_path.is_empty():
+			return
+
+		var target_position: Vector2 = tile_map.map_to_local(nav_path.front())
+		move_towards(target_position)
+
+		if global_position.distance_to(target_position) < 1:
+			nav_path.pop_front()
+	elif pathfinding_mode == PathfindingMode.FREEFORM:
+		nav_agent.target_position = tracked_entity.global_position
+		if not nav_agent.is_navigation_finished():
+			var next_point: Vector2 = nav_agent.get_next_path_position()
+			move_towards(next_point)
+
+
+func move_towards(target: Vector2):
+	var direction = (target - global_position).normalized()
+	velocity = direction * SPEED
+	move_and_slide()
 
 
 func handle_missing_key(door: Door):
 	if current_schedule:
-		current_id_path.clear()
+		nav_path.clear()
 		current_schedule.clear()
 		behavior_context.handle_missing_key(door)
