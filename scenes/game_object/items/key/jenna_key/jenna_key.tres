@@ -6,6 +6,7 @@
 [resource]
 script = ExtResource("1_dkeuq")
 door_id = "jenna_door"
+id = "jenna_door_key"
 name = "Jenna's Key"
 description = "The key to Jenna's front door"
 icon = ExtResource("1_1foc4")

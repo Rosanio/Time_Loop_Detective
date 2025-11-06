@@ -21,6 +21,7 @@ func _ready():
 
 func connect_inventory_signals():
 	inventory.item_added.connect(item_added)
+	inventory.item_removed.connect(item_removed)
 
 
 func item_added(item: ItemData, index: int):
@@ -30,6 +31,15 @@ func item_added(item: ItemData, index: int):
 	var texture: TextureRect = button.get_node("TextureRect")
 	texture.visible = true
 	texture.texture = item.icon
+
+
+func item_removed(index: int):
+	var button: Button = inventory_slots[index] as Button
+	var texture: TextureRect = button.get_node("TextureRect")
+	texture.texture = null
+	texture.visible = false
+	button.focus_mode = Control.FOCUS_NONE
+	button.disabled = true
 
 
 func button_focused(index: int):

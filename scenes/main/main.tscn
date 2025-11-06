@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=4 uid="uid://n534qf2f87p"]
+[gd_scene load_steps=43 format=4 uid="uid://n534qf2f87p"]
 
 [ext_resource type="PackedScene" uid="uid://cam4mlsketva6" path="res://scenes/game_object/characters/player/player.tscn" id="1_4jwgh"]
 [ext_resource type="Script" uid="uid://bpqrqg0q52e2h" path="res://scenes/main/main.gd" id="1_huir3"]
@@ -27,6 +27,8 @@
 [ext_resource type="Script" uid="uid://dckn8iqtv2myo" path="res://scenes/game_object/characters/npc/henry/henry_dialog_context_resolver.gd" id="21_p8abn"]
 [ext_resource type="PackedScene" uid="uid://ch4dv84tcikt3" path="res://scenes/game_object/house/door/door.tscn" id="21_pg34l"]
 [ext_resource type="Script" uid="uid://bbxr1oh858xrw" path="res://scenes/game_object/characters/npc/henry/henry_behavior_context_resolver.gd" id="23_p8abn"]
+[ext_resource type="PackedScene" uid="uid://doywf42ktofa4" path="res://scenes/game_object/items/key/key.tscn" id="28_62atk"]
+[ext_resource type="Resource" uid="uid://7aixjjgira70" path="res://scenes/game_object/items/key/jenna_key/jenna_key.tres" id="29_i7in8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0bhws"]
 shader = ExtResource("2_6llfj")
@@ -189,8 +191,8 @@ dialog_json_path = "res://scenes/game_object/characters/npc/jenna/jenna_dialog.j
 
 [node name="BehaviorContextResolver" parent="Jenna" node_paths=PackedStringArray("npc") instance=ExtResource("13_pg34l")]
 script = ExtResource("14_m4h2d")
-schedule_json_path = "res://scenes/game_object/characters/npc/jenna/jenna_schedule.json"
 npc = NodePath("..")
+schedule_json_path = "res://scenes/game_object/characters/npc/jenna/jenna_schedule.json"
 
 [node name="Henry" parent="." instance=ExtResource("5_x5t4j")]
 process_mode = 1
@@ -203,9 +205,13 @@ dialog_json_path = "res://scenes/game_object/characters/npc/henry/henry_dialog.j
 
 [node name="BehaviorContextResolver" parent="Henry" node_paths=PackedStringArray("npc") instance=ExtResource("13_pg34l")]
 script = ExtResource("23_p8abn")
-schedule_json_path = "res://scenes/game_object/characters/npc/henry/henry_schedule.json"
 npc = NodePath("..")
+schedule_json_path = "res://scenes/game_object/characters/npc/henry/henry_schedule.json"
 
 [node name="Player" parent="." instance=ExtResource("1_4jwgh")]
 process_mode = 1
 position = Vector2(-61, 345)
+
+[node name="Key" parent="." instance=ExtResource("28_62atk")]
+position = Vector2(-106, 311)
+item_data = ExtResource("29_i7in8")

@@ -26,6 +26,7 @@ func show_dialog_text(dialog: String):
 
 
 func show_dialog_prompt(dialog_prompt: Dictionary):
+	clear_buttons()
 	show_dialog_box()
 	label.size.y = LABEL_PROMPT_HEIGHT
 	label.text = dialog_prompt["text"]

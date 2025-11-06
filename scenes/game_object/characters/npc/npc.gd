@@ -151,5 +151,9 @@ func handle_player_interact():
 	if tracked_entity is Player:
 		tracked_entity = null
 		pathfinding_mode = PathfindingMode.NONE
-		dialog_context.load_dialog_from_json(dialog_on_player_interact)
+		load_dialog(dialog_on_player_interact)
 		dialog_on_player_interact = ""
+
+
+func load_dialog(dialog_key: String):
+	dialog_context.load_dialog_from_json(dialog_key)

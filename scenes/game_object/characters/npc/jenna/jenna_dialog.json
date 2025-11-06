@@ -44,11 +44,72 @@
 			]
 		},
 		{
-			"type": "prompt-response",
+			"type": "prompt-branch",
 			"options": [
-				"I knew it! Thief!",
-				"You liar! I know you have it!"
+				"yes_stole_key",
+				"no_stole_key"
 			]
+		}
+	],
+	"yes_stole_key": [
+		{
+			"text": "I knew it! Thief!",
+			"type": "basic"
+		}
+	],
+	"no_stole_key": [
+		{
+			"text": "Oh? So then you won't mind if I check your pockets?",
+			"type": "prompt",
+			"options": [
+				"Go ahead",
+				"No shot"
+			]
+		},
+		{
+			"type": "prompt-action",
+			"options": [
+				{
+					"action": "check_player_for_door_key",
+					"args": []
+				},
+				{
+					"action": "load_dialog",
+					"args": [
+						"accuse_of_stealing_key"
+					]
+				}
+			]
+		}
+	],
+	"accuse_of_stealing_key": [
+		{
+			"text": "You're a liar! I know you stole my key!",
+			"type": "basic"
+		}
+	],
+	"player_does_have_key": [
+		{
+			"text": "You do have it!",
+			"type": "basic"
+		},
+		{
+			"text": "Give it back you liar!",
+			"type": "basic"
+		}
+	],
+	"player_does_not_have_key": [
+		{
+			"text": "I guess you don't have it...",
+			"type": "basic"
+		},
+		{
+			"text": "...Sorry, that was out of line",
+			"type": "basic"
+		},
+		{
+			"text": "Let me know if you see it around",
+			"type": "basic"
 		}
 	]
 }
