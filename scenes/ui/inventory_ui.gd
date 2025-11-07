@@ -8,15 +8,24 @@ class_name InventoryMenuUI
 			connect_inventory_signals()
 
 @onready var grid_container: GridContainer = $VBoxContainer/GridContainer
-@onready var name_label: Label = $VBoxContainer/NameLabel
+@onready var name_label: Label = $VBoxContainer/HeaderRow/NameLabel
 @onready var description_label: Label = $VBoxContainer/DescriptionLabel
 
 var inventory_slots: Array[Node]
+var focused_item: ItemData
 
 func _ready():
 	inventory_slots = grid_container.get_children()
 	for i in range(inventory_slots.size()):
 		inventory_slots[i].focus_entered.connect(Callable(self, "button_focused").bind(i))
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if InputManager.current_context != InputManager.Context.INVENTORY:
+		return
+
+	if event.is_action_pressed("drop_item"):
+		inventory.drop_item(focused_item)
 
 
 func connect_inventory_signals():
@@ -43,6 +52,6 @@ func item_removed(index: int):
 
 
 func button_focused(index: int):
-	var item = inventory.inventory[index]
-	name_label.text = item.name
-	description_label.text = item.description
+	focused_item = inventory.inventory[index]
+	name_label.text = focused_item.name
+	description_label.text = focused_item.description

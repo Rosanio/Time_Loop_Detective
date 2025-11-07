@@ -4,6 +4,8 @@ class_name Inventory
 signal item_added
 signal item_removed
 
+@onready var items_container: Node = $"/root/Main/Items"
+
 var inventory: Array[ItemData]
 
 func add_item(item: Item):
@@ -18,6 +20,17 @@ func add_item_data(item_data: ItemData):
 
 func emit_item_added(item: ItemData, index: int):
 	item_added.emit(item, index)
+
+
+func drop_item(item_data: ItemData):
+	var item_scene = load(item_data.scene_path)
+	var item = item_scene.instantiate()
+	item.item_data = item_data
+	item.global_position = get_parent().global_position
+	items_container.add_child(item)
+
+	var item_index = inventory.find_custom(func(i): return i.id == item_data.id)
+	remove_item(item_index)
 
 
 func remove_item(item_index: int):

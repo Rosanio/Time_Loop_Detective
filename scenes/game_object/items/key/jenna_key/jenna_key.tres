@@ -10,4 +10,5 @@ id = "jenna_door_key"
 name = "Jenna's Key"
 description = "The key to Jenna's front door"
 icon = ExtResource("1_1foc4")
+scene_path = "res://scenes/game_object/items/key/key.tscn"
 metadata/_custom_type_script = "uid://ca00ckyevfqvi"

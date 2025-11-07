@@ -21,5 +21,9 @@ func _process(_delta: float):
 func toggle_tab_menu():
 	tab_menu.visible = not tab_menu.visible
 	get_tree().paused = tab_menu.visible
+	if tab_menu.visible:
+		InputManager.current_context = InputManager.Context.INVENTORY
+	else:
+		InputManager.current_context = InputManager.Context.WORLD
 	if inventory_menu.inventory_slots.size() > 0:
 		(inventory_menu.inventory_slots[0] as Button).grab_focus()

@@ -27,9 +27,26 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="NameLabel" type="Label" parent="VBoxContainer"]
+[node name="HeaderRow" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="VBoxContainer/HeaderRow"]
+layout_mode = 2
+size_flags_horizontal = 0
 label_settings = SubResource("LabelSettings_kd6oq")
+
+[node name="ActionPrompts" type="HBoxContainer" parent="VBoxContainer/HeaderRow"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_constants/separation = 16
+
+[node name="UseLabel" type="Label" parent="VBoxContainer/HeaderRow/ActionPrompts"]
+layout_mode = 2
+text = "E - Use"
+
+[node name="DropLabel" type="Label" parent="VBoxContainer/HeaderRow/ActionPrompts"]
+layout_mode = 2
+text = "Q - Drop"
 
 [node name="DescriptionLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2

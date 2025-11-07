@@ -47,10 +47,12 @@ func show_dialog_prompt(dialog_prompt: Dictionary):
 
 func hide_dialog():
 	dialog_box.set_visible(false)
+	InputManager.current_context = InputManager.Context.WORLD
 
 
 func show_dialog_box():
 	if !dialog_box.visible: dialog_box.set_visible(true)
+	InputManager.current_context = InputManager.Context.DIALOG
 
 
 func _on_prompt_selected(index: int):

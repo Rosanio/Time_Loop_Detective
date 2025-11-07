@@ -18,6 +18,9 @@ func _ready():
 
 
 func _process(_delta: float):
+	if InputManager.current_context != InputManager.Context.WORLD:
+		return
+
 	process_movement()
 	update_active_interactable()
 

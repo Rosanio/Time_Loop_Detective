@@ -11,11 +11,17 @@ func _ready():
 
 
 func _process(_delta):
+	if InputManager.current_context != InputManager.Context.DIALOG:
+		return
+
 	if Input.is_action_just_pressed("interact") and current_dialog and current_dialog[current_dialog_index]["type"] != "prompt":
 		update_dialog()
 
 
 func _unhandled_input(event: InputEvent):
+	if InputManager.current_context != InputManager.Context.DIALOG:
+		return
+
 	if event is InputEventKey and event.pressed and not event.echo:
 		if current_dialog and current_dialog[current_dialog_index]["type"] == "prompt":
 			if event.keycode >= KEY_1 and event.keycode <= KEY_9:
