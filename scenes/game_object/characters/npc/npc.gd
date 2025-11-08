@@ -9,7 +9,7 @@ const SPEED = 90
 @onready var sprite = $Sprite2D
 @onready var nav_region = $"/root/Main/NavigationRegion2D"
 @onready var nav_agent = $NavigationAgent2D
-@onready var tile_map = $"/root/Main/NavigationRegion2D/TileMap"
+@onready var tile_map: TileMapLayer = $"/root/Main/NavigationRegion2D/TileMap"
 @onready var inventory: Inventory = $InventoryComponent
 @onready var behavior_context: BehaviorContextResolver = $BehaviorContextResolver
 @onready var dialog_context: DialogContextResolver = $DialogContextResolver
@@ -19,15 +19,15 @@ var astar_grid: AStarGrid2D
 var nav_path: Array
 var vision_enabled: bool = false
 var tracked_entity: Node2D
-var pathfinding_mode: PathfindingMode = PathfindingMode.FOLLOW_PATH
+var pathfinding_mode: PathfindingMode = PathfindingMode.ASTAR
 var current_schedule: Array
 var dialog_on_player_interact: String
 var desired_item_ids: Array[String] = []
 var sought_entities: Array[Node2D] = []
 
 enum PathfindingMode {
-	FOLLOW_PATH,
-	FREEFORM,
+	ASTAR,
+	NAVMESH,
 	NONE
 }
 
@@ -56,7 +56,7 @@ func on_world_time_tick(time: TimeData):
 	for event in current_schedule:
 		var event_time: TimeData = TimeData.from_dict(event["time"])
 		if TimeData.is_time_equal(time, event_time):
-			move_to_tile(event["coords"])
+			follow_path_to_tile(event["coords"])
 
 
 func on_interact(interactor: Node):
@@ -91,10 +91,6 @@ func initialize_pathfinding():
 	nav_agent.set_navigation_map(nav_region.get_navigation_map())
 
 
-func set_current_schedule(schedule: Array):
-	current_schedule = schedule
-
-
 func check_for_sought_entities():
 	if not vision_enabled:
 		return
@@ -111,12 +107,13 @@ func check_for_sought_entities():
 		var entity_screen_position = get_viewport().canvas_transform * entity.global_position
 		if Geometry2D.is_point_in_polygon(entity_screen_position, vision_polygon):
 			tracked_entity = entity
-			pathfinding_mode = PathfindingMode.FREEFORM
+			pathfinding_mode = PathfindingMode.NAVMESH
 			vision_enabled = false
 			break
 
 
-func move_to_tile(destination: Vector2i):
+func follow_path_to_tile(destination: Vector2i):
+	pathfinding_mode = PathfindingMode.ASTAR
 	var id_path = astar_grid.get_id_path(
 		tile_map.local_to_map(global_position),
 		destination
@@ -127,7 +124,7 @@ func move_to_tile(destination: Vector2i):
 
 
 func move_along_path():
-	if pathfinding_mode == PathfindingMode.FOLLOW_PATH:
+	if pathfinding_mode == PathfindingMode.ASTAR:
 		if nav_path.is_empty():
 			return
 
@@ -136,11 +133,10 @@ func move_along_path():
 
 		if global_position.distance_to(target_position) < 1:
 			nav_path.pop_front()
-	elif pathfinding_mode == PathfindingMode.FREEFORM:
-		if not tracked_entity:
-			return
+	elif pathfinding_mode == PathfindingMode.NAVMESH:
+		if tracked_entity:
+			nav_agent.target_position = tracked_entity.global_position
 
-		nav_agent.target_position = tracked_entity.global_position
 		if not nav_agent.is_navigation_finished():
 			var next_point: Vector2 = nav_agent.get_next_path_position()
 			move_towards(next_point)
@@ -173,8 +169,52 @@ func handle_item_interact(item: Item):
 	var tracked_item = tracked_entity.get_node_or_null("ItemComponent") as Item
 	if tracked_item and tracked_item.item_data.id == item.item_data.id:
 		tracked_entity = null
+		pathfinding_mode = PathfindingMode.NONE
 		behavior_context.handle_item_found(item)
 
 
 func load_dialog(dialog_key: String):
 	dialog_context.load_dialog_from_json(dialog_key)
+
+
+func return_to_path():
+	nav_agent.target_position = find_nearest_path_tile()
+	pathfinding_mode = PathfindingMode.NAVMESH
+	await nav_agent.navigation_finished
+
+
+func find_nearest_path_tile():
+	var best_tile = null
+	var min_distance = 9999
+	var current_tile = tile_map.local_to_map(global_position)
+	var tile_data = tile_map.get_cell_tile_data(current_tile)
+	if tile_data.get_custom_data("walkable"): return current_tile
+	for x in range(current_tile.x - 3, current_tile.x + 4):
+		for y in range(current_tile.y - 3, current_tile.y + 4):
+			tile_data = tile_map.get_cell_tile_data(Vector2(x, y))
+			if tile_data.get_custom_data("walkable"):
+				var tile_global_position = tile_map.map_to_local(Vector2(x, y))
+				var distance = global_position.distance_to(tile_global_position)
+				if distance < min_distance:
+					min_distance = distance
+					best_tile = Vector2(x, y)
+	if not best_tile:
+		printerr("Closest path tile in range of 5 not found")
+	return tile_map.map_to_local(best_tile)
+
+
+func resume_schedule():
+	if not current_schedule:
+		printerr("No schedule loaded")
+
+	for i in range(0, current_schedule.size() - 1):
+		var current_event = current_schedule[i]
+		if i == current_schedule.size() + 1:
+			follow_path_to_tile(current_event["coords"])
+			break
+
+		var current_time = TimeData.from_dict(current_event["time"])
+		var next_time = TimeData.from_dict(current_schedule[i + 1]["time"])
+		if WorldTimeManager.get_current_time().is_in_range(current_time, next_time):
+			follow_path_to_tile(current_event["coords"])
+			break

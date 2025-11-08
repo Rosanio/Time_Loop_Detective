@@ -81,6 +81,13 @@ drop_item={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="Door"
+2d_physics/layer_2="Interactables"
+2d_physics/layer_3="Walls"
+2d_physics/layer_4="Vision"
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0

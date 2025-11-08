@@ -18,6 +18,9 @@ func handle_item_found(item: Item):
 		npc.inventory.add_item(item)
 		GameEvents.emit_show_speech_bubble(npc, "Here it is!")
 		await get_tree().create_timer(3).timeout
+		await npc.return_to_path()
+		load_schedule("schedule")
+		npc.resume_schedule()
 
 
 func check_player_for_door_key():
