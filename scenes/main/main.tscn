@@ -185,30 +185,32 @@ is_locked = true
 [node name="Door" parent="." instance=ExtResource("21_pg34l")]
 position = Vector2(72, 392)
 
-[node name="Jenna" parent="." instance=ExtResource("5_x5t4j")]
+[node name="Npcs" type="Node" parent="."]
+
+[node name="Jenna" parent="Npcs" instance=ExtResource("5_x5t4j")]
 process_mode = 1
 position = Vector2(55, 413)
 sprite_texture = ExtResource("10_ou6is")
 
-[node name="DialogContextResolver" parent="Jenna" instance=ExtResource("11_pg34l")]
+[node name="DialogContextResolver" parent="Npcs/Jenna" instance=ExtResource("11_pg34l")]
 script = ExtResource("12_m4h2d")
 dialog_json_path = "res://scenes/game_object/characters/npc/jenna/jenna_dialog.json"
 
-[node name="BehaviorContextResolver" parent="Jenna" node_paths=PackedStringArray("npc") instance=ExtResource("13_pg34l")]
+[node name="BehaviorContextResolver" parent="Npcs/Jenna" node_paths=PackedStringArray("npc") instance=ExtResource("13_pg34l")]
 script = ExtResource("14_m4h2d")
 npc = NodePath("..")
 schedule_json_path = "res://scenes/game_object/characters/npc/jenna/jenna_schedule.json"
 
-[node name="Henry" parent="." instance=ExtResource("5_x5t4j")]
+[node name="Henry" parent="Npcs" instance=ExtResource("5_x5t4j")]
 process_mode = 1
 position = Vector2(762, 407)
 sprite_texture = ExtResource("19_necax")
 
-[node name="DialogContextResolver" parent="Henry" instance=ExtResource("11_pg34l")]
+[node name="DialogContextResolver" parent="Npcs/Henry" instance=ExtResource("11_pg34l")]
 script = ExtResource("21_p8abn")
 dialog_json_path = "res://scenes/game_object/characters/npc/henry/henry_dialog.json"
 
-[node name="BehaviorContextResolver" parent="Henry" node_paths=PackedStringArray("npc") instance=ExtResource("13_pg34l")]
+[node name="BehaviorContextResolver" parent="Npcs/Henry" node_paths=PackedStringArray("npc") instance=ExtResource("13_pg34l")]
 script = ExtResource("23_p8abn")
 npc = NodePath("..")
 schedule_json_path = "res://scenes/game_object/characters/npc/henry/henry_schedule.json"

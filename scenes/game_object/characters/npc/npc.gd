@@ -7,9 +7,9 @@ const SPEED = 90
 @export var starting_items: Array[ItemData]
 
 @onready var sprite = $Sprite2D
-@onready var nav_region = $"../NavigationRegion2D"
+@onready var nav_region = $"/root/Main/NavigationRegion2D"
 @onready var nav_agent = $NavigationAgent2D
-@onready var tile_map = $"../NavigationRegion2D/TileMap"
+@onready var tile_map = $"/root/Main/NavigationRegion2D/TileMap"
 @onready var inventory: Inventory = $InventoryComponent
 @onready var behavior_context: BehaviorContextResolver = $BehaviorContextResolver
 @onready var dialog_context: DialogContextResolver = $DialogContextResolver
@@ -22,6 +22,8 @@ var tracked_entity: Node2D
 var pathfinding_mode: PathfindingMode = PathfindingMode.FOLLOW_PATH
 var current_schedule: Array
 var dialog_on_player_interact: String
+var desired_item_ids: Array[String] = []
+var sought_entities: Array[Node2D] = []
 
 enum PathfindingMode {
 	FOLLOW_PATH,
@@ -43,7 +45,7 @@ func _ready():
 
 
 func _physics_process(_delta: float):
-	check_for_tracked_entity()
+	check_for_sought_entities()
 	move_along_path()
 
 
@@ -93,14 +95,25 @@ func set_current_schedule(schedule: Array):
 	current_schedule = schedule
 
 
-func check_for_tracked_entity():
-	if not vision_enabled or not tracked_entity:
+func check_for_sought_entities():
+	if not vision_enabled:
 		return
+
+	for item_id in desired_item_ids:
+		var item = ItemsRegistry.get_item(item_id)
+		if item != null:
+			sought_entities.push_front(item)
+	if sought_entities.size() == 0:
+		return
+
 	var vision_polygon: PackedVector2Array = vision_calculator.calculate_vision_polygon()
-	var entity_screen_position = get_viewport().canvas_transform * tracked_entity.global_position
-	if Geometry2D.is_point_in_polygon(entity_screen_position, vision_polygon):
-		move_to_tracked_entity()
-		vision_enabled = false
+	for entity in sought_entities:
+		var entity_screen_position = get_viewport().canvas_transform * entity.global_position
+		if Geometry2D.is_point_in_polygon(entity_screen_position, vision_polygon):
+			tracked_entity = entity
+			pathfinding_mode = PathfindingMode.FREEFORM
+			vision_enabled = false
+			break
 
 
 func move_to_tile(destination: Vector2i):
@@ -108,13 +121,9 @@ func move_to_tile(destination: Vector2i):
 		tile_map.local_to_map(global_position),
 		destination
 	).slice(1)
-	
+
 	if id_path.is_empty() == false:
 		nav_path = id_path
-
-
-func move_to_tracked_entity():
-	pathfinding_mode = PathfindingMode.FREEFORM
 
 
 func move_along_path():

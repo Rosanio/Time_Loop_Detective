@@ -3,7 +3,7 @@ class_name DialogContextResolver
 
 @export_file("*.json") var dialog_json_path: String
 
-@onready var dialog_manager: DialogManager = $"../../DialogManager"
+@onready var dialog_manager: DialogManager = $"/root/Main/DialogManager"
 @onready var npc: Npc = get_parent()
 
 # Should be overridden by inheriting class

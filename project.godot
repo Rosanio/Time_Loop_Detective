@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 GameEvents="*res://scenes/autoload/game_events.gd"
 WorldTimeManager="*res://scenes/autoload/world_time_manager.tscn"
 InputManager="*res://scenes/managers/input_manager.tscn"
+ItemsRegistry="*res://scenes/managers/items_registry.tscn"
 
 [debug]
 

@@ -29,5 +29,5 @@ func load_schedule(schedule_key: String):
 
 func seek_player(dialog):
 	npc.vision_enabled = true
-	npc.tracked_entity = player
+	npc.sought_entities.append(player)
 	npc.dialog_on_player_interact = dialog

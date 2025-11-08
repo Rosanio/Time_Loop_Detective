@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://3f31j1juaxet"]
+
+[ext_resource type="Script" uid="uid://dxkmu00v31j1w" path="res://scenes/managers/items_registry.gd" id="1_focwx"]
+
+[node name="ItemsRegistry" type="Node"]
+script = ExtResource("1_focwx")
