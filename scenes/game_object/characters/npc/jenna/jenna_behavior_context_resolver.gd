@@ -13,6 +13,13 @@ func handle_missing_key(door: Door):
 		seek_player("missing_house_key")
 
 
+func handle_item_found(item: Item):
+	if item.item_data.id == "jenna_door_key":
+		npc.inventory.add_item(item)
+		GameEvents.emit_show_speech_bubble(npc, "Here it is!")
+		await get_tree().create_timer(3).timeout
+
+
 func check_player_for_door_key():
 	var door_key_item_id = "jenna_door_key"
 	if player.inventory.has_item(door_key_item_id):

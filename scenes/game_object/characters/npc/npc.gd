@@ -137,6 +137,9 @@ func move_along_path():
 		if global_position.distance_to(target_position) < 1:
 			nav_path.pop_front()
 	elif pathfinding_mode == PathfindingMode.FREEFORM:
+		if not tracked_entity:
+			return
+
 		nav_agent.target_position = tracked_entity.global_position
 		if not nav_agent.is_navigation_finished():
 			var next_point: Vector2 = nav_agent.get_next_path_position()
@@ -162,6 +165,15 @@ func handle_player_interact():
 		pathfinding_mode = PathfindingMode.NONE
 		load_dialog(dialog_on_player_interact)
 		dialog_on_player_interact = ""
+
+
+func handle_item_interact(item: Item):
+	if not tracked_entity: return
+
+	var tracked_item = tracked_entity.get_node_or_null("ItemComponent") as Item
+	if tracked_item and tracked_item.item_data.id == item.item_data.id:
+		tracked_entity = null
+		behavior_context.handle_item_found(item)
 
 
 func load_dialog(dialog_key: String):

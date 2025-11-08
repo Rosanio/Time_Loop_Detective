@@ -15,6 +15,10 @@ func handle_missing_key(_door: Door):
 	pass
 
 
+func handle_item_found(_item: Item):
+	pass
+
+
 func load_schedule(schedule_key: String):
 	var file := FileAccess.open(schedule_json_path, FileAccess.READ)
 	if file:

@@ -15,3 +15,5 @@ func _ready():
 func on_interact(interactor: Node):
 	if interactor is Player:
 		interactor.inventory.add_item(self)
+	elif interactor is Npc:
+		interactor.handle_item_interact(self)
