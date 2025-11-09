@@ -44,10 +44,20 @@
 			]
 		},
 		{
-			"type": "prompt-branch",
+			"type": "prompt-action",
 			"options": [
-				"yes_stole_key",
-				"no_stole_key"
+				{
+					"action": "get_help_from_henry",
+					"args": [
+						"yes_stole_key"
+					]
+				},
+				{
+					"action": "load_dialog",
+					"args": [
+						"no_stole_key"
+					]
+				}
 			]
 		}
 	],
@@ -74,7 +84,7 @@
 					"args": []
 				},
 				{
-					"action": "load_dialog",
+					"action": "get_help_from_henry",
 					"args": [
 						"accuse_of_stealing_key"
 					]

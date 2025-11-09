@@ -15,6 +15,7 @@ const SPEED = 90
 @onready var behavior_context: BehaviorContextResolver = $BehaviorContextResolver
 @onready var dialog_context: DialogContextResolver = $DialogContextResolver
 @onready var vision_calculator := $VisionCalculator
+@onready var npc_container := $"/root/Main/Npcs"
 
 var astar_grid: AStarGrid2D
 var nav_path: Array
@@ -219,3 +220,10 @@ func resume_schedule():
 		if WorldTimeManager.get_current_time().is_in_range(current_time, next_time):
 			follow_path_to_tile(current_event["coords"])
 			break
+
+
+func track_npc(other_npc_name: String):
+	for npc in npc_container.get_children():
+		if npc.npc_name == other_npc_name:
+			tracked_entity = npc
+			pathfinding_mode = PathfindingMode.NAVMESH

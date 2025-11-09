@@ -20,6 +20,7 @@ func handle_item_found(item: Item):
 		await get_tree().create_timer(3).timeout
 		return_to_path_and_resume_schedule("schedule")
 
+
 func check_player_for_door_key():
 	var door_key_item_id = "jenna_door_key"
 	if player.inventory.has_item(door_key_item_id):
@@ -28,3 +29,10 @@ func check_player_for_door_key():
 		return_to_path_and_resume_schedule("schedule")
 	else:
 		npc.load_dialog("player_does_not_have_key")
+
+
+func get_help_from_henry(dialog: String):
+	npc.track_npc("Henry")
+	npc.load_dialog(dialog)
+	await GameEvents.hide_dialog
+	GameEvents.emit_show_speech_bubble(npc, "Henry! Help!")
