@@ -3,6 +3,7 @@ class_name Npc
 
 const SPEED = 90
 
+@export var npc_name: String
 @export var sprite_texture: Texture2D
 @export var starting_items: Array[ItemData]
 

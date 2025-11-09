@@ -8,7 +8,8 @@ const BUTTON_HEIGHT = 20
 
 
 @onready var dialog_box: ColorRect = $DialogBox
-@onready var label: Label = $'./DialogBox/VBoxContainer/DialogLabel'
+@onready var name_label: Label = $"./DialogBox/VBoxContainer/NameLabel"
+@onready var dialog_label: Label = $'./DialogBox/VBoxContainer/DialogLabel'
 @onready var button_container: VBoxContainer = $'./DialogBox/VBoxContainer/ButtonContainer'
 
 
@@ -18,18 +19,18 @@ func _ready():
 	GameEvents.hide_dialog.connect(hide_dialog)
 
 
-func show_dialog_text(dialog: String):
+func show_dialog_text(dialog: String, speaker: String):
 	clear_buttons()
-	show_dialog_box()
-	label.size.y = LABEL_FULL_HEIGHT
-	label.text = dialog
+	show_dialog_box(speaker)
+	dialog_label.size.y = LABEL_FULL_HEIGHT
+	dialog_label.text = dialog
 
 
-func show_dialog_prompt(dialog_prompt: Dictionary):
+func show_dialog_prompt(dialog_prompt: Dictionary, speaker: String):
 	clear_buttons()
-	show_dialog_box()
-	label.size.y = LABEL_PROMPT_HEIGHT
-	label.text = dialog_prompt["text"]
+	show_dialog_box(speaker)
+	dialog_label.size.y = LABEL_PROMPT_HEIGHT
+	dialog_label.text = dialog_prompt["text"]
 	var current_index = 0
 	for option in dialog_prompt["options"]:
 		var button: Button = Button.new()
@@ -50,8 +51,9 @@ func hide_dialog():
 	InputManager.current_context = InputManager.Context.WORLD
 
 
-func show_dialog_box():
+func show_dialog_box(speaker: String):
 	if !dialog_box.visible: dialog_box.set_visible(true)
+	name_label.text = speaker
 	InputManager.current_context = InputManager.Context.DIALOG
 
 

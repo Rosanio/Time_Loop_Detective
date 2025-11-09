@@ -1,4 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://c300p0v4eo740"]
+[gd_scene load_steps=3 format=3 uid="uid://c300p0v4eo740"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_65kpe"]
+font_size = 20
 
 [sub_resource type="LabelSettings" id="LabelSettings_dmv1d"]
 
@@ -34,10 +37,15 @@ offset_top = 10.0
 offset_right = 590.0
 offset_bottom = 51.0
 
+[node name="NameLabel" type="Label" parent="DialogBox/VBoxContainer"]
+layout_mode = 2
+text = "Jenna"
+label_settings = SubResource("LabelSettings_65kpe")
+
 [node name="DialogLabel" type="Label" parent="DialogBox/VBoxContainer"]
 custom_minimum_size = Vector2(300, 20)
 layout_mode = 2
-text = "Test"
+text = "It's a nice day out isn't it?"
 label_settings = SubResource("LabelSettings_dmv1d")
 autowrap_mode = 3
 

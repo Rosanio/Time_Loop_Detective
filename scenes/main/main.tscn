@@ -191,6 +191,7 @@ position = Vector2(72, 392)
 [node name="Jenna" parent="Npcs" instance=ExtResource("5_x5t4j")]
 process_mode = 1
 position = Vector2(55, 413)
+npc_name = "Jenna"
 sprite_texture = ExtResource("10_ou6is")
 
 [node name="DialogContextResolver" parent="Npcs/Jenna" instance=ExtResource("11_pg34l")]
@@ -205,6 +206,7 @@ schedule_json_path = "res://scenes/game_object/characters/npc/jenna/jenna_schedu
 [node name="Henry" parent="Npcs" instance=ExtResource("5_x5t4j")]
 process_mode = 1
 position = Vector2(762, 407)
+npc_name = "Henry"
 sprite_texture = ExtResource("19_necax")
 
 [node name="DialogContextResolver" parent="Npcs/Henry" instance=ExtResource("11_pg34l")]

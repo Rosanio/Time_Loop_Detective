@@ -16,4 +16,5 @@ func load_dialog_from_json(key: String):
 	if file:
 		var text := file.get_as_text()
 		var dialog = JSON.parse_string(text)
+		dialog_manager.speaker = npc.npc_name
 		dialog_manager.show_dialog(dialog[key], self)

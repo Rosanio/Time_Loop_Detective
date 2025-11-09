@@ -4,6 +4,7 @@ class_name DialogManager
 var current_dialog: Array = []
 var current_dialog_index: int = 0
 var current_dialog_context: DialogContextResolver
+var speaker: String
 
 
 func _ready():
@@ -56,11 +57,11 @@ func show_dialog(dialog: Array, dialog_context: DialogContextResolver):
 func process_current_dialog_branch(prompt_index: int = -1):
 	var type = current_dialog[current_dialog_index]["type"]
 	if type == 'basic':
-		GameEvents.emit_show_dialog_text(current_dialog[current_dialog_index]["text"])
+		GameEvents.emit_show_dialog_text(current_dialog[current_dialog_index]["text"], speaker)
 	elif type == 'prompt':
-		GameEvents.emit_show_dialog_prompt(current_dialog[current_dialog_index])
+		GameEvents.emit_show_dialog_prompt(current_dialog[current_dialog_index], speaker)
 	elif type == "prompt-response":
-		GameEvents.emit_show_dialog_text(current_dialog[current_dialog_index]["options"][prompt_index])
+		GameEvents.emit_show_dialog_text(current_dialog[current_dialog_index]["options"][prompt_index], speaker)
 	elif type == "prompt-branch":
 		current_dialog_context.load_dialog_from_json(current_dialog[current_dialog_index]["options"][prompt_index])
 	elif type == "prompt-action":
