@@ -7,18 +7,15 @@ func run_initial_behavior():
 
 func handle_missing_key(door: Door):
 	if door.id == "jenna_door":
-		GameEvents.emit_show_speech_bubble(npc, "Where's my key?")
-		await get_tree().create_timer(3).timeout
-		npc.desired_item_ids.append("jenna_door_key")
-		seek_player("missing_house_key")
-
-
-func handle_item_found(item: Item):
-	if item.item_data.id == "jenna_door_key":
-		npc.inventory.add_item(item)
-		GameEvents.emit_show_speech_bubble(npc, "Here it is!")
-		await get_tree().create_timer(3).timeout
-		return_to_path_and_resume_schedule("schedule")
+		await pause_and_show_speech_bubble("Where's my key?")
+		npc.seek_entities(true, ["jenna_door_key"])
+		var tracked_entity = await npc.tracked_entity_reached
+		if tracked_entity is Player:
+			npc.load_dialog("missing_house_key")
+		else:
+			npc.inventory.add_item(tracked_entity.item_component)
+			await pause_and_show_speech_bubble("Here it is!")
+			return_to_path_and_resume_schedule("schedule")
 
 
 func check_player_for_door_key():
@@ -32,7 +29,9 @@ func check_player_for_door_key():
 
 
 func get_help_from_henry(dialog: String):
-	npc.track_npc("Henry")
-	npc.load_dialog(dialog)
-	await GameEvents.hide_dialog
+	npc.move_to_npc("Henry")
+	await run_dialog_tree(dialog)
 	GameEvents.emit_show_speech_bubble(npc, "Henry! Help!")
+	var last_player_position = player.global_position
+	await npc.tracked_entity_reached
+	(npc.tracked_entity as Npc).behavior_context.request_help_getting_back_key(last_player_position)

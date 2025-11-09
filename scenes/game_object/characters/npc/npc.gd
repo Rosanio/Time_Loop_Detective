@@ -1,6 +1,8 @@
 extends CharacterBody2D
 class_name Npc
 
+signal tracked_entity_reached(tracked_entity: Node2D)
+
 const SPEED = 90
 
 @export var npc_name: String
@@ -9,13 +11,14 @@ const SPEED = 90
 
 @onready var sprite = $Sprite2D
 @onready var nav_region = $"/root/Main/NavigationRegion2D"
-@onready var nav_agent = $NavigationAgent2D
+@onready var nav_agent: NavigationAgent2D = $NavigationAgent2D
 @onready var tile_map: TileMapLayer = $"/root/Main/NavigationRegion2D/TileMap"
 @onready var inventory: Inventory = $InventoryComponent
 @onready var behavior_context: BehaviorContextResolver = $BehaviorContextResolver
 @onready var dialog_context: DialogContextResolver = $DialogContextResolver
 @onready var vision_calculator := $VisionCalculator
 @onready var npc_container := $"/root/Main/Npcs"
+@onready var player: Player = $"/root/Main/Player"
 
 var astar_grid: AStarGrid2D
 var nav_path: Array
@@ -24,7 +27,6 @@ var tracked_entity: Node2D
 var pathfinding_mode: PathfindingMode = PathfindingMode.ASTAR
 var current_schedule: Array
 var dialog_on_player_interact: String
-var desired_item_ids: Array[String] = []
 var sought_entities: Array[Node2D] = []
 
 enum PathfindingMode {
@@ -64,6 +66,9 @@ func on_world_time_tick(time: TimeData):
 func on_interact(interactor: Node):
 	if interactor is Player:
 		dialog_context.get_dialog_for_current_context()
+	elif interactor is Npc:
+		if tracked_entity and tracked_entity is Npc and tracked_entity.npc_name == interactor.npc_name:
+			emit_tracked_entity_reached()
 
 
 func interactable_area_entered(other_area: Area2D):
@@ -94,14 +99,7 @@ func initialize_pathfinding():
 
 
 func check_for_sought_entities():
-	if not vision_enabled:
-		return
-
-	for item_id in desired_item_ids:
-		var item = ItemsRegistry.get_item(item_id)
-		if item != null:
-			sought_entities.push_front(item)
-	if sought_entities.size() == 0:
+	if not vision_enabled or sought_entities.size() == 0:
 		return
 
 	var vision_polygon: PackedVector2Array = vision_calculator.calculate_vision_polygon()
@@ -159,10 +157,9 @@ func handle_missing_key(door: Door):
 
 func handle_player_interact():
 	if tracked_entity is Player:
+		emit_tracked_entity_reached()
 		tracked_entity = null
 		pathfinding_mode = PathfindingMode.NONE
-		load_dialog(dialog_on_player_interact)
-		dialog_on_player_interact = ""
 
 
 func handle_item_interact(item: Item):
@@ -170,9 +167,9 @@ func handle_item_interact(item: Item):
 
 	var tracked_item = tracked_entity.get_node_or_null("ItemComponent") as Item
 	if tracked_item and tracked_item.item_data.id == item.item_data.id:
+		emit_tracked_entity_reached()
 		tracked_entity = null
 		pathfinding_mode = PathfindingMode.NONE
-		behavior_context.handle_item_found(item)
 
 
 func load_dialog(dialog_key: String):
@@ -222,8 +219,23 @@ func resume_schedule():
 			break
 
 
-func track_npc(other_npc_name: String):
+func move_to_npc(other_npc_name: String):
 	for npc in npc_container.get_children():
 		if npc.npc_name == other_npc_name:
 			tracked_entity = npc
 			pathfinding_mode = PathfindingMode.NAVMESH
+
+
+func emit_tracked_entity_reached():
+	tracked_entity_reached.emit(tracked_entity)
+
+
+func seek_entities(include_player: bool, items: Array = []):
+	for item_id in items:
+		var item = ItemsRegistry.get_item(item_id)
+		if item != null:
+			sought_entities.push_front(item)
+
+	if include_player:
+		sought_entities.append(player)
+	vision_enabled = true

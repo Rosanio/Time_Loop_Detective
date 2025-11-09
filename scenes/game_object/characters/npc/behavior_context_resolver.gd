@@ -15,10 +15,6 @@ func handle_missing_key(_door: Door):
 	pass
 
 
-func handle_item_found(_item: Item):
-	pass
-
-
 func load_schedule(schedule_key: String):
 	var file := FileAccess.open(schedule_json_path, FileAccess.READ)
 	if file:
@@ -31,12 +27,6 @@ func load_schedule(schedule_key: String):
 		npc.current_schedule = unformatted_schedule[schedule_key]
 
 
-func seek_player(dialog):
-	npc.vision_enabled = true
-	npc.sought_entities.append(player)
-	npc.dialog_on_player_interact = dialog
-
-
 func return_to_path_and_resume_schedule(schedule_key: String):
 	await npc.return_to_path()
 	load_schedule(schedule_key)
@@ -46,3 +36,8 @@ func return_to_path_and_resume_schedule(schedule_key: String):
 func run_dialog_tree(dialog_key: String):
 	npc.load_dialog(dialog_key)
 	await GameEvents.hide_dialog
+
+
+func pause_and_show_speech_bubble(text: String, duration: int = 3):
+	GameEvents.emit_show_speech_bubble(npc, text, duration)
+	await get_tree().create_timer(duration).timeout

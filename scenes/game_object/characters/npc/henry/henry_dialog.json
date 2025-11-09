@@ -14,5 +14,11 @@
 			"text": "Best wotch'er back.",
 			"type": "basic"
 		}
+	],
+	"get_back_jenna_key": [
+		{
+			"text": "Lass says you got som'in belongs to 'er",
+			"type": "basic"
+		}
 	]
 }

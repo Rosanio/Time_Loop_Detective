@@ -2,7 +2,7 @@ extends Node
 
 signal show_dialog_text(dialog: String, speaker: String)
 signal show_dialog_prompt(dialog_prompt: Dictionary, speaker: String)
-signal hide_dialog()
+signal hide_dialog
 signal dialog_prompt_chosen(index: int)
 signal show_speech_bubble(speaker: Node, text: String, duration: int)
 
