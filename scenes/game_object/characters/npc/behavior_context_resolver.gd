@@ -35,3 +35,14 @@ func seek_player(dialog):
 	npc.vision_enabled = true
 	npc.sought_entities.append(player)
 	npc.dialog_on_player_interact = dialog
+
+
+func return_to_path_and_resume_schedule(schedule_key: String):
+	await npc.return_to_path()
+	load_schedule(schedule_key)
+	npc.resume_schedule()
+
+
+func run_dialog_tree(dialog_key: String):
+	npc.load_dialog(dialog_key)
+	await GameEvents.hide_dialog

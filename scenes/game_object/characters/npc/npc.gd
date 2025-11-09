@@ -189,8 +189,8 @@ func find_nearest_path_tile():
 	var current_tile = tile_map.local_to_map(global_position)
 	var tile_data = tile_map.get_cell_tile_data(current_tile)
 	if tile_data.get_custom_data("walkable"): return current_tile
-	for x in range(current_tile.x - 3, current_tile.x + 4):
-		for y in range(current_tile.y - 3, current_tile.y + 4):
+	for x in range(current_tile.x - 7, current_tile.x + 8):
+		for y in range(current_tile.y - 7, current_tile.y + 8):
 			tile_data = tile_map.get_cell_tile_data(Vector2(x, y))
 			if tile_data.get_custom_data("walkable"):
 				var tile_global_position = tile_map.map_to_local(Vector2(x, y))
