@@ -38,7 +38,7 @@ func show_dialog_prompt(dialog_prompt: Dictionary, speaker: String):
 			DIALOG_BOX_PADDING,
 			DIALOG_BOX_PADDING + LABEL_PROMPT_HEIGHT + (BUTTON_HEIGHT * current_index)
 		)
-		var format_button_text = "%d. " + option
+		var format_button_text = "%d. " + option["text"]
 		button.text = format_button_text % (current_index + 1)
 		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		button_container.add_child(button)

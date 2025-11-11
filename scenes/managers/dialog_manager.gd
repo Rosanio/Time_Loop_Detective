@@ -59,6 +59,7 @@ func process_current_dialog_branch(prompt_index: int = -1):
 	if type == 'basic':
 		GameEvents.emit_show_dialog_text(current_dialog[current_dialog_index]["text"], speaker)
 	elif type == 'prompt':
+		remove_invalid_prompt_options()
 		GameEvents.emit_show_dialog_prompt(current_dialog[current_dialog_index], speaker)
 	elif type == "prompt-response":
 		GameEvents.emit_show_dialog_text(current_dialog[current_dialog_index]["options"][prompt_index], speaker)
@@ -66,13 +67,30 @@ func process_current_dialog_branch(prompt_index: int = -1):
 		current_dialog_context.load_dialog_from_json(current_dialog[current_dialog_index]["options"][prompt_index])
 	elif type == "prompt-action":
 		var method_name = current_dialog[current_dialog_index]["options"][prompt_index]["action"]
-		if current_dialog_context.npc.has_method(method_name):
-			var method = Callable(current_dialog_context.npc, method_name)
-			method.callv(current_dialog[current_dialog_index]["options"][prompt_index]["args"])
-		elif current_dialog_context.npc.behavior_context.has_method(method_name):
-			var method = Callable(current_dialog_context.npc.behavior_context, method_name)
-			method.callv(current_dialog[current_dialog_index]["options"][prompt_index]["args"])
-		else:
-			printerr("Method " + method_name + " could not be found on npc or behavior_context")
+		call_method(method_name, current_dialog[current_dialog_index]["options"][prompt_index]["args"])
 	else:
 		print("Not yet implemented")
+
+
+func call_method(method_name: String, args: Array):
+	if current_dialog_context.npc.has_method(method_name):
+		var method = Callable(current_dialog_context.npc, method_name)
+		return await method.callv(args)
+	elif current_dialog_context.npc.behavior_context.has_method(method_name):
+		var method = Callable(current_dialog_context.npc.behavior_context, method_name)
+		return await method.callv(args)
+	else:
+		printerr("Method " + method_name + " could not be found on npc or behavior_context")
+		return null
+
+
+func remove_invalid_prompt_options():
+	var options = current_dialog[current_dialog_index]["options"]
+	var invalid_indicies = []
+	for i in range(options.size()):
+		if options[i].has("condition"):
+			if not await call_method(options[i]["condition"]["method"], options[i]["condition"]["args"]):
+				invalid_indicies.append(i)
+	for index in invalid_indicies:
+		current_dialog[current_dialog_index]["options"].remove_at(index)
+		current_dialog[current_dialog_index + 1]["options"].remove_at(index)

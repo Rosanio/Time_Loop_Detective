@@ -5,9 +5,15 @@
 			"type": "basic"
 		}, {
 			"options": [
-				"Ride my bike",
-				"Stay inside",
-				"Beat up random girls who pass me on the street"
+				{
+					"text": "Ride my bike"
+				},
+				{
+					"text": "Stay inside"
+				},
+				{
+					"text": "Beat up random girls who pass me on the street"
+				}
 			],
 			"text": "What do you like to do on days like this?",
 			"type": "prompt"
@@ -39,8 +45,12 @@
 			"text": "Did you take my key?",
 			"type": "prompt",
 			"options": [
-				"Yes",
-				"No"
+				{
+					"text": "Yes"
+				},
+				{
+					"text": "No"
+				}
 			]
 		},
 		{
@@ -72,8 +82,12 @@
 			"text": "Oh? So then you won't mind if I check your pockets?",
 			"type": "prompt",
 			"options": [
-				"Go ahead",
-				"No shot"
+				{
+					"text": "Go ahead"
+				},
+				{
+					"text": "No shot"
+				}
 			]
 		},
 		{

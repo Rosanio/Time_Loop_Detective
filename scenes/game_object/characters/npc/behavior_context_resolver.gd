@@ -5,6 +5,7 @@ class_name BehaviorContextResolver
 @export_file("*.json") var schedule_json_path: String
 
 @onready var player: Player = $"/root/Main/Player"
+@onready var npc_container: Node = $"/root/Main/Npcs"
 
 # Should be overridden by inheriting class
 func run_initial_behavior():
@@ -41,3 +42,7 @@ func run_dialog_tree(dialog_key: String):
 func pause_and_show_speech_bubble(text: String, duration: int = 3):
 	GameEvents.emit_show_speech_bubble(npc, text, duration)
 	await get_tree().create_timer(duration).timeout
+
+
+func player_has_item(item_key: String):
+	return player.inventory.has_item(item_key)

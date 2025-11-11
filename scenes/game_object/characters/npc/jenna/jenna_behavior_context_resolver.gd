@@ -20,7 +20,7 @@ func handle_missing_key(door: Door):
 
 func check_player_for_door_key():
 	var door_key_item_id = "jenna_door_key"
-	if player.inventory.has_item(door_key_item_id):
+	if player_has_item(door_key_item_id):
 		player.inventory.transfer_item_to(door_key_item_id, npc.inventory)
 		await run_dialog_tree("player_does_have_key")
 		return_to_path_and_resume_schedule("schedule")

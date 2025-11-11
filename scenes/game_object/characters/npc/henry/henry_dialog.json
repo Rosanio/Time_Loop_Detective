@@ -19,6 +19,54 @@
 		{
 			"text": "Lass says you got som'in belongs to 'er",
 			"type": "basic"
+		},
+		{
+			"text": "Jus 'and it ova mate...",
+			"type": "basic"
+		},
+		{
+			"text": "This can go good for ya, or it can go real bad",
+			"type": "prompt",
+			"options": [
+				{
+					"text": "Fine, here",
+					"condition": {
+						"method": "player_has_item",
+						"args": [
+							"jenna_door_key"
+						]
+					}
+				},
+				{
+					"text": "I don't have it"
+				},
+				{
+					"text": "Over my dead body"
+				}
+			]
+		},
+		{
+			"type": "prompt-action",
+			"options": [
+				{
+					"action": "return_key_to_jenna",
+					"args": []
+				},
+				{
+					"action": "check_player_for_jenna_door_key",
+					"args": []
+				},
+				{
+					"action": "knock_out_player",
+					"args": []
+				}
+			]
+		}
+	],
+	"jenna_key_returned": [
+		{
+			"text": "Much obliged",
+			"type": "basic"
 		}
 	]
 }

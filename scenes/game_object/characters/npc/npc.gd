@@ -187,7 +187,7 @@ func find_nearest_path_tile():
 	var min_distance = 9999
 	var current_tile = tile_map.local_to_map(global_position)
 	var tile_data = tile_map.get_cell_tile_data(current_tile)
-	if tile_data.get_custom_data("walkable"): return current_tile
+	if tile_data.get_custom_data("walkable"): return tile_map.map_to_local(current_tile)
 	for x in range(current_tile.x - 7, current_tile.x + 8):
 		for y in range(current_tile.y - 7, current_tile.y + 8):
 			tile_data = tile_map.get_cell_tile_data(Vector2(x, y))
@@ -206,9 +206,9 @@ func resume_schedule():
 	if not current_schedule:
 		printerr("No schedule loaded")
 
-	for i in range(0, current_schedule.size() - 1):
+	for i in range(current_schedule.size()):
 		var current_event = current_schedule[i]
-		if i == current_schedule.size() + 1:
+		if i + 1 == current_schedule.size():
 			follow_path_to_tile(current_event["coords"])
 			break
 
