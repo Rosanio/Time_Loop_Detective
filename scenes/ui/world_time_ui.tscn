@@ -1,6 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://b1lqpa67x60k5"]
+[gd_scene load_steps=5 format=3 uid="uid://b1lqpa67x60k5"]
 
 [ext_resource type="Script" uid="uid://bb0irpcab36im" path="res://scenes/ui/world_time_ui.gd" id="1_43isr"]
+[ext_resource type="FontFile" uid="uid://68o86gnriqhl" path="res://fonts/OpenSans-VariableFont_wdth,wght.ttf" id="2_e3loe"]
+
+[sub_resource type="FontVariation" id="FontVariation_e3loe"]
+base_font = ExtResource("2_e3loe")
+variation_embolden = 0.5
 
 [sub_resource type="LabelSettings" id="LabelSettings_wvll8"]
 
@@ -30,5 +35,6 @@ offset_right = 31.0
 offset_bottom = 23.0
 grow_horizontal = 2
 size_flags_horizontal = 0
+theme_override_fonts/font = SubResource("FontVariation_e3loe")
 text = "8:00 AM"
 label_settings = SubResource("LabelSettings_wvll8")

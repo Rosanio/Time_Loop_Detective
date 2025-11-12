@@ -1,10 +1,12 @@
 extends Node
 class_name DialogManager
 
-var current_dialog: Array = []
+var current_dialog_tree: Array = []
 var current_dialog_index: int = 0
 var current_dialog_context: DialogContextResolver
 var speaker: String
+
+@onready var dialog_box := $/root/Main/ActiveUILayer/DialogBoxUI
 
 
 func _ready():
@@ -15,7 +17,7 @@ func _process(_delta):
 	if InputManager.current_context != InputManager.Context.DIALOG:
 		return
 
-	if Input.is_action_just_pressed("interact") and current_dialog and current_dialog[current_dialog_index]["type"] != "prompt":
+	if Input.is_action_just_pressed("interact") and current_dialog_tree and current_dialog_tree[current_dialog_index]["type"] != "prompt":
 		update_dialog()
 
 
@@ -24,17 +26,17 @@ func _unhandled_input(event: InputEvent):
 		return
 
 	if event is InputEventKey and event.pressed and not event.echo:
-		if current_dialog and current_dialog[current_dialog_index]["type"] == "prompt":
+		if current_dialog_tree and current_dialog_tree[current_dialog_index]["type"] == "prompt":
 			if event.keycode >= KEY_1 and event.keycode <= KEY_9:
 				var prompt_index = event.keycode - KEY_1
-				if prompt_index <  current_dialog[current_dialog_index]["options"].size():
+				if prompt_index <  current_dialog_tree[current_dialog_index]["options"].size():
 					update_dialog(prompt_index)
 
 
 func update_dialog(prompt_index: int = -1):
 	current_dialog_index += 1
-	if current_dialog_index >= current_dialog.size():
-		current_dialog = []
+	if current_dialog_index >= current_dialog_tree.size():
+		current_dialog_tree = []
 		current_dialog_index = 0
 		current_dialog_context = null
 		GameEvents.emit_hide_dialog()
@@ -47,7 +49,7 @@ func update_dialog(prompt_index: int = -1):
 
 
 func show_dialog(dialog: Array, dialog_context: DialogContextResolver):
-	current_dialog = dialog
+	current_dialog_tree = dialog
 	current_dialog_context = dialog_context
 	current_dialog_index = 0
 	process_current_dialog_branch()
@@ -55,19 +57,22 @@ func show_dialog(dialog: Array, dialog_context: DialogContextResolver):
 
 
 func process_current_dialog_branch(prompt_index: int = -1):
-	var type = current_dialog[current_dialog_index]["type"]
+	var current_dialog = current_dialog_tree[current_dialog_index]
+	var type = current_dialog["type"]
 	if type == 'basic':
-		GameEvents.emit_show_dialog_text(current_dialog[current_dialog_index]["text"], speaker)
+		dialog_box.show_dialog_text(current_dialog["text"], speaker)
 	elif type == 'prompt':
 		remove_invalid_prompt_options()
-		GameEvents.emit_show_dialog_prompt(current_dialog[current_dialog_index], speaker)
+		dialog_box.show_dialog_prompt(current_dialog, speaker)
 	elif type == "prompt-response":
-		GameEvents.emit_show_dialog_text(current_dialog[current_dialog_index]["options"][prompt_index], speaker)
+		dialog_box.show_dialog_text(current_dialog["options"][prompt_index], speaker)
 	elif type == "prompt-branch":
-		current_dialog_context.load_dialog_from_json(current_dialog[current_dialog_index]["options"][prompt_index])
+		current_dialog_context.load_dialog_from_json(current_dialog["options"][prompt_index])
 	elif type == "prompt-action":
-		var method_name = current_dialog[current_dialog_index]["options"][prompt_index]["action"]
-		call_method(method_name, current_dialog[current_dialog_index]["options"][prompt_index]["args"])
+		var method_name = current_dialog["options"][prompt_index]["action"]
+		call_method(method_name, current_dialog["options"][prompt_index]["args"])
+	elif type == "narration":
+		dialog_box.show_dialog_text(current_dialog["text"], "")
 	else:
 		print("Not yet implemented")
 
@@ -85,12 +90,12 @@ func call_method(method_name: String, args: Array):
 
 
 func remove_invalid_prompt_options():
-	var options = current_dialog[current_dialog_index]["options"]
+	var options = current_dialog_tree[current_dialog_index]["options"]
 	var invalid_indicies = []
 	for i in range(options.size()):
 		if options[i].has("condition"):
 			if not await call_method(options[i]["condition"]["method"], options[i]["condition"]["args"]):
 				invalid_indicies.append(i)
 	for index in invalid_indicies:
-		current_dialog[current_dialog_index]["options"].remove_at(index)
-		current_dialog[current_dialog_index + 1]["options"].remove_at(index)
+		current_dialog_tree[current_dialog_index]["options"].remove_at(index)
+		current_dialog_tree[current_dialog_index + 1]["options"].remove_at(index)

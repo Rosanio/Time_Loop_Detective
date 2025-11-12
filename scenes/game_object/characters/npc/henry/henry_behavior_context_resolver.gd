@@ -21,3 +21,7 @@ func return_key_to_jenna():
 			break
 	await run_dialog_tree("jenna_key_returned")
 	return_to_path_and_resume_schedule("schedule")
+
+
+func check_player_for_jenna_door_key():
+	await run_dialog_tree("check_player_for_jenna_door_key")

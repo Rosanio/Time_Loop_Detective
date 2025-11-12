@@ -68,5 +68,15 @@
 			"text": "Much obliged",
 			"type": "basic"
 		}
+	],
+	"check_player_for_jenna_door_key": [
+		{
+			"text": "We'll see about that",
+			"type": "basic"
+		},
+		{
+			"text": "Henry grabs your arm and begins riffling through your pockets.",
+			"type": "narration"
+		}
 	]
 }
