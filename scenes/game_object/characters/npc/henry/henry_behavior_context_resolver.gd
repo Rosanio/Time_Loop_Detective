@@ -12,6 +12,20 @@ func request_help_getting_back_key(last_known_player_position: Vector2):
 	npc.load_dialog("get_back_jenna_key")
 
 
+func player_returns_jenna_key():
+	return_key_to_jenna()
+	await run_dialog_tree("jenna_key_returned")
+	return_to_path_and_resume_schedule("schedule")
+
+
+func check_player_for_jenna_door_key():
+	await run_dialog_tree("check_player_for_jenna_door_key")
+	if player.inventory.has_item("jenna_door_key"):
+		return_key_to_jenna()
+		await run_dialog_tree("found_jenna_key_on_player")
+		return_to_path_and_resume_schedule("schedule")
+
+
 func return_key_to_jenna():
 	var npcs = npc_container.get_children()
 	for other_npc in npcs:
@@ -19,9 +33,3 @@ func return_key_to_jenna():
 			player.inventory.transfer_item_to("jenna_door_key", other_npc.inventory)
 			other_npc.behavior_context.return_to_path_and_resume_schedule("schedule")
 			break
-	await run_dialog_tree("jenna_key_returned")
-	return_to_path_and_resume_schedule("schedule")
-
-
-func check_player_for_jenna_door_key():
-	await run_dialog_tree("check_player_for_jenna_door_key")

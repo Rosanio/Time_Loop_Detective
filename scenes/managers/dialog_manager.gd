@@ -39,11 +39,11 @@ func update_dialog(prompt_index: int = -1):
 		current_dialog_tree = []
 		current_dialog_index = 0
 		current_dialog_context = null
-		GameEvents.emit_hide_dialog()
 		# Briefly delay unpausing so that the interact input event doesn't trigger the dialog box to
 		# re-open
-		await get_tree().create_timer(0.01).timeout
+		await get_tree().process_frame
 		get_tree().paused = false
+		GameEvents.emit_hide_dialog()
 	else:
 		process_current_dialog_branch(prompt_index)
 
