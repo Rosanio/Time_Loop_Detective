@@ -46,3 +46,11 @@ func pause_and_show_speech_bubble(text: String, duration: int = 3):
 
 func player_has_item(item_key: String):
 	return player.inventory.has_item(item_key)
+
+
+func get_other_npc(other_npc_name: String):
+	var npcs = npc_container.get_children()
+	for other_npc in npcs:
+		if other_npc.npc_name == other_npc_name:
+			return other_npc
+	return null

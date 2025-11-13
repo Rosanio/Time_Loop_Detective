@@ -65,7 +65,6 @@ texture = ExtResource("3_3qm3q")
 0:0/0 = 0
 0:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_62atk")
 0:0/0/custom_data_0 = true
-0:0/0/custom_data_1 = true
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xajbq"]
 texture = ExtResource("10_ksre8")
@@ -110,8 +109,6 @@ physics_layer_1/collision_mask = 0
 navigation_layer_0/layers = 0
 custom_data_layer_0/name = "walkable"
 custom_data_layer_0/type = 1
-custom_data_layer_1/name = "path"
-custom_data_layer_1/type = 1
 sources/0 = SubResource("TileSetAtlasSource_dip5u")
 sources/1 = SubResource("TileSetAtlasSource_ioubm")
 sources/2 = SubResource("TileSetAtlasSource_xajbq")

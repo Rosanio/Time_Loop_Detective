@@ -92,5 +92,15 @@
 			"text": "I'm keepin' an eye on you bruv",
 			"type": "basic"
 		}
+	],
+	"did_not_find_jenna_key": [
+		{
+			"text": "Soz you don' 'ave it...",
+			"type": "basic"
+		},
+		{
+			"text": "Sorry for the trouble mate",
+			"type": "basic"
+		}
 	]
 }

@@ -177,6 +177,7 @@ func load_dialog(dialog_key: String):
 
 
 func return_to_path():
+	tracked_entity = null
 	nav_agent.target_position = find_nearest_path_tile()
 	pathfinding_mode = PathfindingMode.NAVMESH
 	await nav_agent.navigation_finished
@@ -187,11 +188,11 @@ func find_nearest_path_tile():
 	var min_distance = 9999
 	var current_tile = tile_map.local_to_map(global_position)
 	var tile_data = tile_map.get_cell_tile_data(current_tile)
-	if tile_data.get_custom_data("walkable"): return tile_map.map_to_local(current_tile)
+	if tile_data.get_custom_data("path"): return tile_map.map_to_local(current_tile)
 	for x in range(current_tile.x - 7, current_tile.x + 8):
 		for y in range(current_tile.y - 7, current_tile.y + 8):
 			tile_data = tile_map.get_cell_tile_data(Vector2(x, y))
-			if tile_data.get_custom_data("walkable"):
+			if tile_data.get_custom_data("path"):
 				var tile_global_position = tile_map.map_to_local(Vector2(x, y))
 				var distance = global_position.distance_to(tile_global_position)
 				if distance < min_distance:

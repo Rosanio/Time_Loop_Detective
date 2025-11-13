@@ -24,12 +24,13 @@ func check_player_for_jenna_door_key():
 		return_key_to_jenna()
 		await run_dialog_tree("found_jenna_key_on_player")
 		return_to_path_and_resume_schedule("schedule")
+	else:
+		await run_dialog_tree("did_not_find_jenna_key")
+		return_to_path_and_resume_schedule("schedule")
+		get_other_npc("Jenna").behavior_context.return_to_path_and_resume_schedule("schedule")
 
 
 func return_key_to_jenna():
-	var npcs = npc_container.get_children()
-	for other_npc in npcs:
-		if other_npc.npc_name == "Jenna":
-			player.inventory.transfer_item_to("jenna_door_key", other_npc.inventory)
-			other_npc.behavior_context.return_to_path_and_resume_schedule("schedule")
-			break
+	var jenna = get_other_npc("Jenna")
+	player.inventory.transfer_item_to("jenna_door_key", jenna.inventory)
+	jenna.behavior_context.return_to_path_and_resume_schedule("schedule")
