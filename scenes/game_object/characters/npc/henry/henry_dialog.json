@@ -57,7 +57,7 @@
 					"args": []
 				},
 				{
-					"action": "knock_out_player",
+					"action": "knock_player_out",
 					"args": []
 				}
 			]
@@ -100,6 +100,20 @@
 		},
 		{
 			"text": "Sorry for the trouble mate",
+			"type": "basic"
+		}
+	],
+	"punch_player_and_take_key": [
+		{
+			"text": "He he, as you wish luv",
+			"type": "basic"
+		},
+		{
+			"text": "Before you can blink, you feel Henry's fist connect with your lower jaw, sending shockwaves through your head into the very depths of your consciousness",
+			"type": "narration"
+		},
+		{
+			"text": "Shoulda jus' 'anded it over you fookin' moppet",
 			"type": "basic"
 		}
 	]

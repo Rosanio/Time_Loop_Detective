@@ -34,3 +34,10 @@ func return_key_to_jenna():
 	var jenna = get_other_npc("Jenna")
 	player.inventory.transfer_item_to("jenna_door_key", jenna.inventory)
 	jenna.behavior_context.return_to_path_and_resume_schedule("schedule")
+
+
+func knock_player_out():
+	# TODO: Skip several hours once time mechanics are implemented
+	await run_dialog_tree("punch_player_and_take_key")
+	return_key_to_jenna()
+	return_to_path_and_resume_schedule("schedule")
