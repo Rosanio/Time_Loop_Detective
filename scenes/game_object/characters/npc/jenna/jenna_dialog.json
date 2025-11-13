@@ -135,5 +135,21 @@
 			"text": "Let me know if you see it around",
 			"type": "basic"
 		}
+	],
+	"resent_player_for_having_key": [
+		{
+			"text": "I don't know what you did with it, but I know you took my key!",
+			"type": "basic"
+		}
+	],
+	"ask_for_help_finding_key": [
+		{
+			"text": "Let me know if you see my key around",
+			"type": "basic"
+		},
+		{
+			"text": "I'd really hate to be stuck out here at night...",
+			"type": "basic"
+		}
 	]
 }

@@ -25,6 +25,7 @@ var nav_path: Array
 var vision_enabled: bool = false
 var tracked_entity: Node2D
 var pathfinding_mode: PathfindingMode = PathfindingMode.ASTAR
+var current_schedule_key: String
 var current_schedule: Array
 var dialog_on_player_interact: String
 var sought_entities: Array[Node2D] = []

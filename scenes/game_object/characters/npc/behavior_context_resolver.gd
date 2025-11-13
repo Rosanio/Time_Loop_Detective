@@ -25,6 +25,7 @@ func load_schedule(schedule_key: String):
 			var x = event["coords"][0]
 			var y = event["coords"][1]
 			event["coords"] = Vector2i(x, y)
+		npc.current_schedule_key = schedule_key
 		npc.current_schedule = unformatted_schedule[schedule_key]
 
 

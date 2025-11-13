@@ -27,7 +27,7 @@ func check_player_for_jenna_door_key():
 	else:
 		await run_dialog_tree("did_not_find_jenna_key")
 		return_to_path_and_resume_schedule("schedule")
-		get_other_npc("Jenna").behavior_context.return_to_path_and_resume_schedule("schedule")
+		get_other_npc("Jenna").behavior_context.didnt_get_key_back(true)
 
 
 func return_key_to_jenna():

@@ -16,5 +16,15 @@
 			},
 			"coords": [21, 25]
 		}
-	]
+	],
+	"missing_key": [
+		{
+			"time": {
+				"hour": 0,
+				"minute": 0,
+				"am_pm": "AM"
+			},
+			"coords": [6, 1]
+		}
+	],
 }
