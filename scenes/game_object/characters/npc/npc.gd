@@ -184,22 +184,31 @@ func return_to_path():
 
 
 func find_nearest_path_tile():
-	var best_tile = null
-	var min_distance = 9999
 	var current_tile = tile_map.local_to_map(global_position)
-	var tile_data = tile_map.get_cell_tile_data(current_tile)
-	if tile_data.get_custom_data("path"): return tile_map.map_to_local(current_tile)
-	for x in range(current_tile.x - 7, current_tile.x + 8):
-		for y in range(current_tile.y - 7, current_tile.y + 8):
-			tile_data = tile_map.get_cell_tile_data(Vector2(x, y))
-			if tile_data.get_custom_data("path"):
-				var tile_global_position = tile_map.map_to_local(Vector2(x, y))
-				var distance = global_position.distance_to(tile_global_position)
+	var current_tile_data = tile_map.get_cell_tile_data(current_tile)
+	if current_tile_data.get_custom_data("path"): return tile_map.map_to_local(current_tile)
+
+	var best_tile = null
+	var min_distance := INF
+	var check_radius := 1
+	while not best_tile:
+		for offset in range(-check_radius, check_radius + 1):
+			var candidate_tiles = [
+				Vector2i(current_tile.x + offset, current_tile.y - check_radius),
+				Vector2i(current_tile.x + offset, current_tile.y + check_radius),
+				Vector2i(current_tile.x - check_radius, current_tile.y + offset),
+				Vector2i(current_tile.x + check_radius, current_tile.y + offset),
+			]
+			for tile in candidate_tiles:
+				var tile_data = tile_map.get_cell_tile_data(tile)
+				if not tile_data or not tile_data.get_custom_data("path"):
+					continue
+				var tile_world_position = tile_map.map_to_local(tile)
+				var distance = global_position.distance_to(tile_world_position)
 				if distance < min_distance:
 					min_distance = distance
-					best_tile = Vector2(x, y)
-	if not best_tile:
-		printerr("Closest path tile in range of 5 not found")
+					best_tile = tile
+		check_radius += 1
 	return tile_map.map_to_local(best_tile)
 
 

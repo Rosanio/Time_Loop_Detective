@@ -76,7 +76,7 @@ func update_active_interactable():
 
 func get_closest_interactable():
 	closest_interactable = null
-	var shortest_distance = 9999
+	var shortest_distance = INF
 	for interactable in interactables_in_range:
 		var distance = interactable.area.global_position.distance_squared_to(global_position)
 		if (distance < shortest_distance):
