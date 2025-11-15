@@ -16,6 +16,10 @@ func handle_missing_key(_door: Door):
 	pass
 
 
+func sought_item_dropped_in_vision(_item: Item):
+	pass
+
+
 func load_schedule(schedule_key: String):
 	var file := FileAccess.open(schedule_json_path, FileAccess.READ)
 	if file:
@@ -55,3 +59,11 @@ func get_other_npc(other_npc_name: String):
 		if other_npc.npc_name == other_npc_name:
 			return other_npc
 	return null
+
+
+func tracked_entity_reached():
+	var expected_seek_id = npc.seek_id
+	var tracked_entity = await npc.tracked_entity_reached
+	if npc.seek_id != expected_seek_id:
+		return null
+	return tracked_entity

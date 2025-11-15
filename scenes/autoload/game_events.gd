@@ -3,6 +3,7 @@ extends Node
 signal hide_dialog
 signal dialog_prompt_chosen(index: int)
 signal show_speech_bubble(speaker: Node, text: String, duration: int)
+signal player_dropped_item(item: Item)
 
 
 func emit_hide_dialog():
@@ -15,3 +16,7 @@ func emit_dialog_prompt_chosen(index: int):
 
 func emit_show_speech_bubble(speaker: Node, text: String, duration: int = 3):
 	show_speech_bubble.emit(speaker, text, duration)
+
+
+func emit_player_dropped_item(item: Item):
+	player_dropped_item.emit(item)

@@ -8,3 +8,7 @@ func register_item(id: String, item: Node2D):
 
 func get_item(id: String):
 	return registry.get(id)
+
+
+func remove(id: String):
+	registry.erase(id)

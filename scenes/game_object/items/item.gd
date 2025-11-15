@@ -1,15 +1,13 @@
-extends Node
+extends Area2D
 class_name Item
 
-@export var interactable: Interactable
+@export var item_data: ItemData
 
-var item_data: ItemData
+@onready var interactable: Interactable = $InteractableComponent
 
 func _ready():
 	interactable.interact.connect(on_interact)
-	# Wait for item_data to be initialized
-	await get_tree().create_timer(0.01).timeout
-	ItemsRegistry.register_item(item_data.id, get_parent())
+	ItemsRegistry.register_item(item_data.id, self)
 
 
 func on_interact(interactor: Node):

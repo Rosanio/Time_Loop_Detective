@@ -74,7 +74,7 @@ func process_current_dialog_branch(prompt_index: int = -1):
 	elif type == "narration":
 		dialog_box.show_dialog_text(current_dialog["text"], "")
 	else:
-		print("Not yet implemented")
+		printerr("Not yet implemented")
 
 
 func call_method(method_name: String, args: Array):

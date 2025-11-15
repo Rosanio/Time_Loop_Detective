@@ -22,13 +22,14 @@ const SPEED = 90
 
 var astar_grid: AStarGrid2D
 var nav_path: Array
-var vision_enabled: bool = false
 var tracked_entity: Node2D
 var pathfinding_mode: PathfindingMode = PathfindingMode.ASTAR
 var current_schedule_key: String
 var current_schedule: Array
 var dialog_on_player_interact: String
+var desired_item_ids: Array[String] = []
 var sought_entities: Array[Node2D] = []
+var seek_id = 0
 
 enum PathfindingMode {
 	ASTAR,
@@ -44,6 +45,7 @@ func _ready():
 	WorldTimeManager.on_tick.connect(on_world_time_tick)
 	($InteractableDetectionArea/InteractableComponent as Interactable).interact.connect(on_interact)
 	$InteractableDetectionArea.area_entered.connect(interactable_area_entered)
+	GameEvents.player_dropped_item.connect(player_dropped_item)
 
 	for item in starting_items:
 		$InventoryComponent.inventory.append(item)
@@ -69,7 +71,7 @@ func on_interact(interactor: Node):
 		dialog_context.get_dialog_for_current_context()
 	elif interactor is Npc:
 		if tracked_entity and tracked_entity is Npc and tracked_entity.npc_name == interactor.npc_name:
-			emit_tracked_entity_reached()
+			emit_tracked_entity_reached(tracked_entity)
 
 
 func interactable_area_entered(other_area: Area2D):
@@ -100,7 +102,7 @@ func initialize_pathfinding():
 
 
 func check_for_sought_entities():
-	if not vision_enabled or sought_entities.size() == 0:
+	if sought_entities.size() == 0:
 		return
 
 	var vision_polygon: PackedVector2Array = vision_calculator.calculate_vision_polygon()
@@ -109,7 +111,6 @@ func check_for_sought_entities():
 		if Geometry2D.is_point_in_polygon(entity_screen_position, vision_polygon):
 			tracked_entity = entity
 			pathfinding_mode = PathfindingMode.NAVMESH
-			vision_enabled = false
 			break
 
 
@@ -158,19 +159,23 @@ func handle_missing_key(door: Door):
 
 func handle_player_interact():
 	if tracked_entity is Player:
-		emit_tracked_entity_reached()
+		var entity_clone = tracked_entity
+		sought_entities.erase(tracked_entity)
 		tracked_entity = null
 		pathfinding_mode = PathfindingMode.NONE
+		emit_tracked_entity_reached(entity_clone)
 
 
 func handle_item_interact(item: Item):
-	if not tracked_entity: return
+	if not tracked_entity or tracked_entity is not Item: return
 
-	var tracked_item = tracked_entity.get_node_or_null("ItemComponent") as Item
-	if tracked_item and tracked_item.item_data.id == item.item_data.id:
-		emit_tracked_entity_reached()
+	if tracked_entity and tracked_entity.item_data.id == item.item_data.id:
+		var entity_clone = tracked_entity
+		desired_item_ids.erase(tracked_entity.item_data.id)
+		sought_entities.erase(tracked_entity)
 		tracked_entity = null
 		pathfinding_mode = PathfindingMode.NONE
+		emit_tracked_entity_reached(entity_clone)
 
 
 func load_dialog(dialog_key: String):
@@ -237,16 +242,40 @@ func move_to_npc(other_npc_name: String):
 			pathfinding_mode = PathfindingMode.NAVMESH
 
 
-func emit_tracked_entity_reached():
-	tracked_entity_reached.emit(tracked_entity)
+func emit_tracked_entity_reached(entity: Node2D):
+	tracked_entity_reached.emit(entity)
 
 
 func seek_entities(include_player: bool, items: Array = []):
+	seek_id += 1
 	for item_id in items:
 		var item = ItemsRegistry.get_item(item_id)
 		if item != null:
 			sought_entities.push_front(item)
+		desired_item_ids.append(item_id)
 
 	if include_player:
 		sought_entities.append(player)
-	vision_enabled = true
+
+
+func stop_tracking(entity: Node2D):
+	sought_entities.erase(entity)
+
+
+func player_dropped_item(item: Item):
+	if desired_item_ids.size() == 0:
+		return
+
+	for sought_item in desired_item_ids:
+		if sought_item == item.item_data.id:
+			var vision_polygon: PackedVector2Array = vision_calculator.calculate_vision_polygon()
+			var location_screen_position = get_viewport().canvas_transform * item.global_position
+			if Geometry2D.is_point_in_polygon(location_screen_position, vision_polygon):
+				behavior_context.sought_item_dropped_in_vision(item)
+
+
+func override_tracked_entity(entity: Node2D):
+	seek_id += 1
+	sought_entities.clear()
+	tracked_entity = entity
+	pathfinding_mode = PathfindingMode.NAVMESH

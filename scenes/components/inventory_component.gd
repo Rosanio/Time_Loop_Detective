@@ -10,7 +10,8 @@ var inventory: Array[ItemData]
 
 func add_item(item: Item):
 	add_item_data(item.item_data)
-	item.get_parent().queue_free()
+	ItemsRegistry.remove(item.item_data.id)
+	item.queue_free()
 
 
 func add_item_data(item_data: ItemData):
@@ -28,6 +29,8 @@ func drop_item(item_data: ItemData):
 	item.item_data = item_data
 	item.global_position = get_parent().global_position
 	items_container.add_child(item)
+	if get_parent() is Player:
+		GameEvents.emit_player_dropped_item(item)
 
 	var item_index = inventory.find_custom(func(i): return i.id == item_data.id)
 	remove_item(item_index)
