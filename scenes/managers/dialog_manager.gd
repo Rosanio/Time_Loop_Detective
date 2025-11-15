@@ -17,7 +17,7 @@ func _process(_delta):
 	if InputManager.current_context != InputManager.Context.DIALOG:
 		return
 
-	if Input.is_action_just_pressed("interact") and current_dialog_tree and current_dialog_tree[current_dialog_index]["type"] != "prompt":
+	if Input.is_action_just_pressed("interact") and current_dialog_tree and not is_prompt_with_options():
 		update_dialog()
 
 
@@ -26,7 +26,7 @@ func _unhandled_input(event: InputEvent):
 		return
 
 	if event is InputEventKey and event.pressed and not event.echo:
-		if current_dialog_tree and current_dialog_tree[current_dialog_index]["type"] == "prompt":
+		if current_dialog_tree and is_prompt_with_options():
 			if event.keycode >= KEY_1 and event.keycode <= KEY_9:
 				var prompt_index = event.keycode - KEY_1
 				if prompt_index <  current_dialog_tree[current_dialog_index]["options"].size():
@@ -69,6 +69,9 @@ func process_current_dialog_branch(prompt_index: int = -1):
 	elif type == "prompt-branch":
 		current_dialog_context.load_dialog_from_json(current_dialog["options"][prompt_index])
 	elif type == "prompt-action":
+		if current_dialog["options"].size() == 0:
+			update_dialog()
+			return
 		var method_name = current_dialog["options"][prompt_index]["action"]
 		call_method(method_name, current_dialog["options"][prompt_index]["args"])
 	elif type == "narration":
@@ -99,3 +102,7 @@ func remove_invalid_prompt_options():
 	for index in invalid_indicies:
 		current_dialog_tree[current_dialog_index]["options"].remove_at(index)
 		current_dialog_tree[current_dialog_index + 1]["options"].remove_at(index)
+
+
+func is_prompt_with_options():
+	return current_dialog_tree[current_dialog_index]["type"] == "prompt" and current_dialog_tree[current_dialog_index]["options"].size() > 0

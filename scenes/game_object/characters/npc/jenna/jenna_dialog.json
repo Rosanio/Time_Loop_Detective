@@ -149,7 +149,27 @@
 		},
 		{
 			"text": "I'd really hate to be stuck out here at night...",
-			"type": "basic"
+			"type": "prompt",
+			"options": [
+				{
+					"text": "I found your key",
+					"condition": {
+						"method": "player_has_item",
+						"args": [
+							"jenna_door_key"
+						]
+					}
+				},
+			]
+		},
+		{
+			"type": "prompt-action",
+			"options": [
+				{
+					"action": "player_gives_back_key",
+					"args": []
+				}
+			]
 		}
 	],
 	"saw_player_drop_key": [
@@ -217,6 +237,16 @@
 	"player_gave_back_key_after_pick_up": [
 		{
 			"text": "It's rude to take things that don't belong to you",
+			"type": "basic"
+		}
+	],
+	"player_gave_back_key": [
+		{
+			"text": "Oh my gosh, thank you so much!",
+			"type": "basic"
+		},
+		{
+			"text": "I was really getting worried",
 			"type": "basic"
 		}
 	]

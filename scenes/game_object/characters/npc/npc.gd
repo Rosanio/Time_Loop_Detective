@@ -268,16 +268,22 @@ func player_dropped_item(item: Item):
 		return
 
 	for sought_item in desired_item_ids:
-		if sought_item == item.item_data.id and is_item_in_vision(item):
-			behavior_context.sought_item_dropped_in_vision(item)
+		if sought_item == item.item_data.id:
+			if is_item_in_vision(item):
+				behavior_context.sought_item_dropped_in_vision(item)
+			else:
+				sought_entities.append(item)
 
 
 func player_picked_up_item(item: Item):
 	if desired_item_ids.size() == 0:
 		return
 
-	for sought_item in desired_item_ids:
-		if sought_item == item.item_data.id and is_item_in_vision(item):
+	if sought_entities.has(item):
+		sought_entities.erase(item)
+
+	for desired_item in desired_item_ids:
+		if desired_item == item.item_data.id and is_item_in_vision(item):
 			behavior_context.sought_item_picked_up_in_vision(item)
 
 

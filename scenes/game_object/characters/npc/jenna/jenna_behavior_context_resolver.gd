@@ -68,6 +68,14 @@ func didnt_get_key_back(blames_player: bool):
 	return_to_path_and_resume_schedule("missing_key")
 
 
+func player_gives_back_key():
+	var door_key_item_id = "jenna_door_key"
+	if player_has_item(door_key_item_id):
+		player.inventory.transfer_item_to(door_key_item_id, npc.inventory)
+	await run_dialog_tree("player_gave_back_key")
+	return_to_path_and_resume_schedule("schedule")
+
+
 func player_gives_back_key_after_pick_up():
 	var door_key_item_id = "jenna_door_key"
 	if player_has_item(door_key_item_id):
