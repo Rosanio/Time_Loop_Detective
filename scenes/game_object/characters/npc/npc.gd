@@ -46,6 +46,7 @@ func _ready():
 	($InteractableDetectionArea/InteractableComponent as Interactable).interact.connect(on_interact)
 	$InteractableDetectionArea.area_entered.connect(interactable_area_entered)
 	GameEvents.player_dropped_item.connect(player_dropped_item)
+	GameEvents.player_picked_up_item.connect(player_picked_up_item)
 
 	for item in starting_items:
 		$InventoryComponent.inventory.append(item)
@@ -267,11 +268,23 @@ func player_dropped_item(item: Item):
 		return
 
 	for sought_item in desired_item_ids:
-		if sought_item == item.item_data.id:
-			var vision_polygon: PackedVector2Array = vision_calculator.calculate_vision_polygon()
-			var location_screen_position = get_viewport().canvas_transform * item.global_position
-			if Geometry2D.is_point_in_polygon(location_screen_position, vision_polygon):
-				behavior_context.sought_item_dropped_in_vision(item)
+		if sought_item == item.item_data.id and is_item_in_vision(item):
+			behavior_context.sought_item_dropped_in_vision(item)
+
+
+func player_picked_up_item(item: Item):
+	if desired_item_ids.size() == 0:
+		return
+
+	for sought_item in desired_item_ids:
+		if sought_item == item.item_data.id and is_item_in_vision(item):
+			behavior_context.sought_item_picked_up_in_vision(item)
+
+
+func is_item_in_vision(item: Item):
+	var vision_polygon: PackedVector2Array = vision_calculator.calculate_vision_polygon()
+	var location_screen_position = get_viewport().canvas_transform * item.global_position
+	return Geometry2D.is_point_in_polygon(location_screen_position, vision_polygon)
 
 
 func override_tracked_entity(entity: Node2D):

@@ -4,6 +4,7 @@ signal hide_dialog
 signal dialog_prompt_chosen(index: int)
 signal show_speech_bubble(speaker: Node, text: String, duration: int)
 signal player_dropped_item(item: Item)
+signal player_picked_up_item(item: Item)
 
 
 func emit_hide_dialog():
@@ -20,3 +21,7 @@ func emit_show_speech_bubble(speaker: Node, text: String, duration: int = 3):
 
 func emit_player_dropped_item(item: Item):
 	player_dropped_item.emit(item)
+
+
+func emit_player_picked_up_item(item: Item):
+	player_picked_up_item.emit(item)

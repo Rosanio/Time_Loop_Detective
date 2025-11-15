@@ -11,6 +11,8 @@ var inventory: Array[ItemData]
 func add_item(item: Item):
 	add_item_data(item.item_data)
 	ItemsRegistry.remove(item.item_data.id)
+	if get_parent() is Player:
+		GameEvents.emit_player_picked_up_item(item)
 	item.queue_free()
 
 

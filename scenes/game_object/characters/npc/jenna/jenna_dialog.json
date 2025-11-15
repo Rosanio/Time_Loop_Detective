@@ -176,5 +176,48 @@
 				"Well, at least you're honest"
 			]
 		}
+	],
+	"saw_player_pick_up_key": [
+		{
+			"text": "Hey! Give that back!",
+			"type": "basic"
+		},
+		{
+			"text": "I saw you take my key!",
+			"type": "prompt",
+			"options": [
+				{
+					"text": "Sure, here you go"
+				},
+				{
+					"text": "I don't know what you're talking about"
+				}
+			]
+		},
+		{
+			"type": "prompt-action",
+			"options": [
+				{
+					"action": "player_gives_back_key_after_pick_up",
+					"args": []
+				},
+				{
+					"action": "get_help_from_henry",
+					"args": ["player_wont_give_key_after_pick_up"]
+				}
+			]
+		}
+	],
+	"player_wont_give_key_after_pick_up": [
+		{
+			"text": "Give it back! What is wrong with you?!",
+			"type": "basic"
+		}
+	],
+	"player_gave_back_key_after_pick_up": [
+		{
+			"text": "It's rude to take things that don't belong to you",
+			"type": "basic"
+		}
 	]
 }

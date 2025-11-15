@@ -20,6 +20,10 @@ func sought_item_dropped_in_vision(_item: Item):
 	pass
 
 
+func sought_item_picked_up_in_vision(_item: Item):
+	pass
+
+
 func load_schedule(schedule_key: String):
 	var file := FileAccess.open(schedule_json_path, FileAccess.READ)
 	if file:

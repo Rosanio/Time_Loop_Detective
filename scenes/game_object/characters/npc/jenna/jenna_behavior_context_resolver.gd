@@ -34,6 +34,14 @@ func sought_item_dropped_in_vision(item: Item):
 		return_to_path_and_resume_schedule("schedule")
 
 
+func sought_item_picked_up_in_vision(item: Item):
+	if item.item_data.id == "jenna_door_key":
+		npc.override_tracked_entity(player)
+		var tracked_entity = await tracked_entity_reached()
+		if tracked_entity == null: return
+		npc.load_dialog("saw_player_pick_up_key")
+
+
 func check_player_for_door_key():
 	var door_key_item_id = "jenna_door_key"
 	if player_has_item(door_key_item_id):
@@ -58,3 +66,11 @@ func get_help_from_henry(dialog: String):
 func didnt_get_key_back(blames_player: bool):
 	thinks_player_has_key = blames_player
 	return_to_path_and_resume_schedule("missing_key")
+
+
+func player_gives_back_key_after_pick_up():
+	var door_key_item_id = "jenna_door_key"
+	if player_has_item(door_key_item_id):
+		player.inventory.transfer_item_to(door_key_item_id, npc.inventory)
+	await run_dialog_tree("player_gave_back_key_after_pick_up")
+	return_to_path_and_resume_schedule("schedule")
