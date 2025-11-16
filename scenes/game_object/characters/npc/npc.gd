@@ -72,8 +72,7 @@ func on_interact(interactor: Node):
 	if interactor is Player:
 		dialog_context.get_dialog_for_current_context()
 	elif interactor is Npc:
-		if tracked_entity and tracked_entity is Npc and tracked_entity.npc_name == interactor.npc_name:
-			emit_tracked_entity_reached(tracked_entity)
+		interactor.handle_npc_interact(self)
 
 
 func interactable_area_entered(other_area: Area2D):
@@ -111,8 +110,7 @@ func check_for_sought_entities():
 	for entity in sought_entities:
 		var entity_screen_position = get_viewport().canvas_transform * entity.global_position
 		if Geometry2D.is_point_in_polygon(entity_screen_position, vision_polygon):
-			tracked_entity = entity
-			pathfinding_mode = PathfindingMode.NAVMESH
+			set_tracked_entity(entity)
 			break
 
 
@@ -178,6 +176,13 @@ func handle_item_interact(item: Item):
 		tracked_entity = null
 		pathfinding_mode = PathfindingMode.NONE
 		emit_tracked_entity_reached(entity_clone)
+
+
+func handle_npc_interact(other_npc: Npc):
+	if not tracked_entity or tracked_entity is not Npc: return
+
+	if tracked_entity.npc_name == other_npc.npc_name:
+		emit_tracked_entity_reached(tracked_entity)
 
 
 func load_dialog(dialog_key: String):
@@ -248,8 +253,7 @@ func resume_schedule():
 func move_to_npc(other_npc_name: String):
 	for npc in npc_container.get_children():
 		if npc.npc_name == other_npc_name:
-			tracked_entity = npc
-			pathfinding_mode = PathfindingMode.NAVMESH
+			set_tracked_entity(npc)
 
 
 func emit_tracked_entity_reached(entity: Node2D):
@@ -266,20 +270,6 @@ func seek_entities(include_player: bool, items: Array = []):
 
 	if include_player:
 		sought_entities.append(player)
-
-	# If the NPC interactable area already overlaps with the sought entity, the interact event won't
-	# trigger. Doing a check now makes sure the flow continues in this case.
-	var overlapping_areas = interactable_detection_area.get_overlapping_areas()
-	for entity in sought_entities:
-		var interactable: Interactable = entity.find_child("InteractableComponent")
-		if interactable.area in overlapping_areas:
-			tracked_entity = entity
-			if entity is Player:
-				# Defer call in case tracked_entity_reached is being awaited by the caller
-				call_deferred("handle_player_interact")
-			elif entity is Item:
-				call_deferred("handle_item_interact", entity)
-			break
 
 
 func stop_tracking(entity: Node2D):
@@ -319,5 +309,17 @@ func is_item_in_vision(item: Item):
 func override_tracked_entity(entity: Node2D):
 	seek_id += 1
 	sought_entities.clear()
+	set_tracked_entity(entity)
+
+
+func set_tracked_entity(entity: Node2D):
 	tracked_entity = entity
 	pathfinding_mode = PathfindingMode.NAVMESH
+	var overlapping_areas = interactable_detection_area.get_overlapping_areas()
+	var interactable: Interactable = entity.find_child("InteractableComponent")
+	if interactable.area in overlapping_areas:
+		call_deferred("trigger_other_entity_interact", entity)
+
+
+func trigger_other_entity_interact(entity: Node):
+	entity.on_interact(self)

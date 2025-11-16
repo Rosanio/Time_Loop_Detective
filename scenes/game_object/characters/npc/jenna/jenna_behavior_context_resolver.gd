@@ -54,8 +54,8 @@ func check_player_for_door_key():
 
 
 func get_help_from_henry(dialog: String):
-	npc.move_to_npc("Henry")
 	await run_dialog_tree(dialog)
+	npc.move_to_npc("Henry")
 	GameEvents.emit_show_speech_bubble(npc, "Henry! Help!")
 	var last_player_position = player.global_position
 	var tracked_entity = await tracked_entity_reached()
