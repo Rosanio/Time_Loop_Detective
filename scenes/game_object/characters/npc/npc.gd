@@ -19,6 +19,7 @@ const SPEED = 90
 @onready var vision_calculator := $VisionCalculator
 @onready var npc_container := $"/root/Main/Npcs"
 @onready var player: Player = $"/root/Main/Player"
+@onready var interactable_detection_area: Area2D = $InteractableDetectionArea
 
 var astar_grid: AStarGrid2D
 var nav_path: Array
@@ -44,7 +45,7 @@ func _ready():
 
 	WorldTimeManager.on_tick.connect(on_world_time_tick)
 	($InteractableDetectionArea/InteractableComponent as Interactable).interact.connect(on_interact)
-	$InteractableDetectionArea.area_entered.connect(interactable_area_entered)
+	interactable_detection_area.area_entered.connect(interactable_area_entered)
 	GameEvents.player_dropped_item.connect(player_dropped_item)
 	GameEvents.player_picked_up_item.connect(player_picked_up_item)
 
@@ -235,6 +236,14 @@ func resume_schedule():
 			follow_path_to_tile(current_event["coords"])
 			break
 
+	# If the player resumes their schedule while already inside a door's interactable hitbox, the
+	# door's interact trigger won't fire and it won't appear to open. Check if the NPC is already
+	# overlapping the door and trigger it's interact logic if so.
+	var overlapping_areas = interactable_detection_area.get_overlapping_areas()
+	for area in overlapping_areas:
+		if area.owner is Door:
+			area.owner.on_interact(self)
+
 
 func move_to_npc(other_npc_name: String):
 	for npc in npc_container.get_children():
@@ -257,6 +266,20 @@ func seek_entities(include_player: bool, items: Array = []):
 
 	if include_player:
 		sought_entities.append(player)
+
+	# If the NPC interactable area already overlaps with the sought entity, the interact event won't
+	# trigger. Doing a check now makes sure the flow continues in this case.
+	var overlapping_areas = interactable_detection_area.get_overlapping_areas()
+	for entity in sought_entities:
+		var interactable: Interactable = entity.find_child("InteractableComponent")
+		if interactable.area in overlapping_areas:
+			tracked_entity = entity
+			if entity is Player:
+				# Defer call in case tracked_entity_reached is being awaited by the caller
+				call_deferred("handle_player_interact")
+			elif entity is Item:
+				call_deferred("handle_item_interact", entity)
+			break
 
 
 func stop_tracking(entity: Node2D):

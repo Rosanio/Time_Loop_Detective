@@ -178,7 +178,7 @@ tile_set = SubResource("TileSet_eyxmt")
 [node name="Items" type="Node" parent="."]
 
 [node name="Key" parent="Items" instance=ExtResource("28_62atk")]
-position = Vector2(158, 115)
+position = Vector2(129, 22)
 item_data = ExtResource("29_i7in8")
 
 [node name="JennasDoor" parent="." instance=ExtResource("21_pg34l")]
