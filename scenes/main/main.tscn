@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=4 uid="uid://n534qf2f87p"]
+[gd_scene load_steps=41 format=4 uid="uid://n534qf2f87p"]
 
 [ext_resource type="PackedScene" uid="uid://cam4mlsketva6" path="res://scenes/game_object/characters/player/player.tscn" id="1_4jwgh"]
 [ext_resource type="Script" uid="uid://bpqrqg0q52e2h" path="res://scenes/main/main.gd" id="1_huir3"]
@@ -27,8 +27,6 @@
 [ext_resource type="Script" uid="uid://dckn8iqtv2myo" path="res://scenes/game_object/characters/npc/henry/henry_dialog_context_resolver.gd" id="21_p8abn"]
 [ext_resource type="PackedScene" uid="uid://ch4dv84tcikt3" path="res://scenes/game_object/house/door/door.tscn" id="21_pg34l"]
 [ext_resource type="Script" uid="uid://bbxr1oh858xrw" path="res://scenes/game_object/characters/npc/henry/henry_behavior_context_resolver.gd" id="23_p8abn"]
-[ext_resource type="PackedScene" uid="uid://doywf42ktofa4" path="res://scenes/game_object/items/key/key.tscn" id="28_62atk"]
-[ext_resource type="Resource" uid="uid://7aixjjgira70" path="res://scenes/game_object/items/key/jenna_key/jenna_key.tres" id="29_i7in8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0bhws"]
 shader = ExtResource("2_6llfj")
@@ -176,10 +174,6 @@ tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAAAAAEAAQAAAAAAAAABAAEAAQAAAAA
 tile_set = SubResource("TileSet_eyxmt")
 
 [node name="Items" type="Node" parent="."]
-
-[node name="Key" parent="Items" instance=ExtResource("28_62atk")]
-position = Vector2(129, 22)
-item_data = ExtResource("29_i7in8")
 
 [node name="JennasDoor" parent="." instance=ExtResource("21_pg34l")]
 position = Vector2(136, 8)

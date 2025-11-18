@@ -10,15 +10,23 @@ func handle_missing_key(door: Door):
 	if door.id == "jenna_door":
 		await pause_and_show_speech_bubble("Where's my key?")
 		npc.seek_entities(true, ["jenna_door_key"])
-		var tracked_entity = await tracked_entity_reached()
-		if tracked_entity == null: return
-		elif tracked_entity is Player:
-			npc.load_dialog("missing_house_key")
+		var found_sought_entity = await npc.search_area(npc.global_position, 200, 100, 30)
+		if found_sought_entity:
+			var tracked_entity = await tracked_entity_reached()
+			if tracked_entity == null: return
+			elif tracked_entity is Player:
+				npc.load_dialog("missing_house_key")
+			else:
+				npc.inventory.add_item(tracked_entity)
+				npc.stop_tracking(player)
+				await pause_and_show_speech_bubble("Here it is!")
+				return_to_path_and_resume_schedule("schedule")
 		else:
-			npc.inventory.add_item(tracked_entity)
-			npc.stop_tracking(player)
-			await pause_and_show_speech_bubble("Here it is!")
-			return_to_path_and_resume_schedule("schedule")
+			return_to_path_and_resume_schedule("missing_key")
+			var tracked_entity = await tracked_entity_reached()
+			if tracked_entity == null: return
+			elif tracked_entity is Player:
+				npc.load_dialog("missing_house_key")
 
 
 func sought_item_dropped_in_vision(item: Item):

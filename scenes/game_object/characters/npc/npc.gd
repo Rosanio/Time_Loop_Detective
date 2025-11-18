@@ -31,6 +31,7 @@ var dialog_on_player_interact: String
 var desired_item_ids: Array[String] = []
 var sought_entities: Array[Node2D] = []
 var seek_id = 0
+var current_search_completer: Completer
 
 enum PathfindingMode {
 	ASTAR,
@@ -110,6 +111,8 @@ func check_for_sought_entities():
 	for entity in sought_entities:
 		var entity_screen_position = get_viewport().canvas_transform * entity.global_position
 		if Geometry2D.is_point_in_polygon(entity_screen_position, vision_polygon):
+			if current_search_completer:
+				current_search_completer.complete()
 			set_tracked_entity(entity)
 			break
 
@@ -323,3 +326,49 @@ func set_tracked_entity(entity: Node2D):
 
 func trigger_other_entity_interact(entity: Node):
 	entity.on_interact(self)
+
+
+func search_area(center_point: Vector2, radius: float, travel_distance: float, timeout: float):
+	if travel_distance > radius:
+		printerr("Cannot search area, travel distance is larger than searchable area radius")
+		return
+
+	current_search_completer = Completer.new()
+	var start_time = Time.get_unix_time_from_system()
+	while Time.get_unix_time_from_system() - start_time < timeout and not tracked_entity:
+		var next_target_position = null
+		while not next_target_position:
+			next_target_position = get_valid_target_position(center_point, radius, travel_distance)
+
+		pathfinding_mode = PathfindingMode.NAVMESH
+		nav_agent.target_position = next_target_position
+		await Completer.race([nav_agent.navigation_finished, current_search_completer.completed])
+		if current_search_completer.is_completed: return true
+		await Completer.race([get_tree().create_timer(3).timeout, current_search_completer.completed])
+		if current_search_completer.is_completed: return true
+
+	return tracked_entity != null
+
+func get_valid_target_position(center_point: Vector2, radius: float, travel_distance: float):
+	var angle = randf() * TAU
+	var direction = Vector2(cos(angle), sin(angle))
+	var hit = check_for_door_or_wall_collision(direction, travel_distance)
+	if not hit:
+		var potential_next_target = global_position + direction * travel_distance
+		if center_point.distance_to(potential_next_target) <= radius:
+			return potential_next_target
+	return null
+
+
+func check_for_door_or_wall_collision(direction: Vector2, distance: float):
+	var space_state = get_world_2d().direct_space_state
+	# Should check for a hit against walls or doors
+	var hit_check_collision_mask = 5
+	return space_state.intersect_ray(
+		PhysicsRayQueryParameters2D.create(
+			global_position,
+			global_position + direction * distance,
+			hit_check_collision_mask,
+			[]
+		)
+	)
