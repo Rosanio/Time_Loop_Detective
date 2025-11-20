@@ -1,11 +1,19 @@
 extends Node
 class_name BehaviorContextResolver
 
+enum NpcState {
+	FOLLOWING_SCHEDULE,
+	FLEEING,
+	OTHER
+}
+
 @export var npc: Npc
 @export_file("*.json") var schedule_json_path: String
 
 @onready var player: Player = $"/root/Main/Player"
 @onready var npc_container: Node = $"/root/Main/Npcs"
+
+var current_state: NpcState = NpcState.FOLLOWING_SCHEDULE
 
 # Should be overridden by inheriting class
 func run_initial_behavior():
@@ -40,6 +48,7 @@ func load_schedule(schedule_key: String):
 func return_to_path_and_resume_schedule(schedule_key: String):
 	await npc.return_to_path()
 	load_schedule(schedule_key)
+	current_state = NpcState.FOLLOWING_SCHEDULE
 	npc.resume_schedule()
 
 
@@ -71,3 +80,13 @@ func tracked_entity_reached():
 	if npc.seek_id != expected_seek_id:
 		return null
 	return tracked_entity
+
+
+func flee_from_player(timeout: float):
+	current_state = NpcState.FLEEING
+	await npc.flee_from_entity(player, timeout)
+
+
+func drop_item(item_id: String):
+	if npc.inventory.has_item(item_id):
+		npc.inventory.drop_item_by_id(item_id)

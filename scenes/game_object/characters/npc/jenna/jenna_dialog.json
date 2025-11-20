@@ -19,11 +19,42 @@
 			"type": "prompt"
 		}, {
 			"options": [
-				"Wow me too!",
-				"Oh...",
-				"Ahhhh! Someone help!"
+				{
+					"action": "load_dialog",
+					"args": ["ride_bike_response"]
+				},
+				{
+					"action": "load_dialog",
+					"args": ["stay_inside_response"]
+				},
+				{
+					"action": "flee_and_drop_key",
+					"args": []
+				}
 			],
-			"type": "prompt-response"
+			"type": "prompt-action"
+		}
+	],
+	"ride_bike_response": [
+		{
+			"text": "Wow me too!",
+			"type": "basic"
+		}
+	],
+	"stay_inside_response": [
+		{
+			"text": "Oh...",
+			"type": "basic"
+		}
+	],
+	"scream_and_run_away": [
+		{
+			"text": "Ahhh! Someone help!",
+			"type": "basic"
+		},
+		{
+			"text": "Jenna turns to flee from the madman before her. In her blind panic, she doesn't notice a small key slip out of her purse.",
+			"type": "narration"
 		}
 	],
 	"inside_house": [

@@ -21,17 +21,24 @@ const SPEED = 90
 @onready var player: Player = $"/root/Main/Player"
 @onready var interactable_detection_area: Area2D = $InteractableDetectionArea
 
+# Pathfinding
 var astar_grid: AStarGrid2D
 var nav_path: Array
-var tracked_entity: Node2D
 var pathfinding_mode: PathfindingMode = PathfindingMode.ASTAR
+var tracked_entity: Node2D
+# Schedule
 var current_schedule_key: String
 var current_schedule: Array
-var dialog_on_player_interact: String
+# Vision
 var desired_item_ids: Array[String] = []
 var sought_entities: Array[Node2D] = []
+# Async Event Handling
 var seek_id = 0
 var current_search_completer: Completer
+# Fleeing
+var chaser: Node2D = null
+var flee_distance: float = 200
+var chase_distance_threshold: float = 50
 
 enum PathfindingMode {
 	ASTAR,
@@ -56,6 +63,7 @@ func _ready():
 
 func _physics_process(_delta: float):
 	check_for_sought_entities()
+	check_for_chaser()
 	move_along_path()
 
 
@@ -117,6 +125,13 @@ func check_for_sought_entities():
 			break
 
 
+func check_for_chaser():
+	if chaser == null: return
+
+	if global_position.distance_to(chaser.global_position) < chase_distance_threshold:
+		update_flee_position()
+
+
 func follow_path_to_tile(destination: Vector2i):
 	pathfinding_mode = PathfindingMode.ASTAR
 	var id_path = astar_grid.get_id_path(
@@ -157,7 +172,7 @@ func handle_missing_key(door: Door):
 	if current_schedule:
 		nav_path.clear()
 		current_schedule.clear()
-		behavior_context.handle_missing_key(door)
+	behavior_context.handle_missing_key(door)
 
 
 func handle_player_interact():
@@ -247,10 +262,7 @@ func resume_schedule():
 	# If the player resumes their schedule while already inside a door's interactable hitbox, the
 	# door's interact trigger won't fire and it won't appear to open. Check if the NPC is already
 	# overlapping the door and trigger it's interact logic if so.
-	var overlapping_areas = interactable_detection_area.get_overlapping_areas()
-	for area in overlapping_areas:
-		if area.owner is Door:
-			area.owner.on_interact(self)
+	interact_with_overlapping_door()
 
 
 func move_to_npc(other_npc_name: String):
@@ -349,6 +361,7 @@ func search_area(center_point: Vector2, radius: float, travel_distance: float, t
 
 	return tracked_entity != null
 
+
 func get_valid_target_position(center_point: Vector2, radius: float, travel_distance: float):
 	var angle = randf() * TAU
 	var direction = Vector2(cos(angle), sin(angle))
@@ -372,3 +385,46 @@ func check_for_door_or_wall_collision(direction: Vector2, distance: float):
 			[]
 		)
 	)
+
+
+func flee_from_entity(entity: Node2D, timeout: float):
+	if current_schedule:
+		nav_path.clear()
+		current_schedule.clear()
+
+	chaser = entity
+	update_flee_position()
+	interact_with_overlapping_door()
+	await get_tree().create_timer(timeout).timeout
+	chaser = null
+
+
+func update_flee_position():
+	var direction: Vector2 = (global_position - chaser.global_position).normalized()
+	pathfinding_mode = PathfindingMode.NAVMESH
+	nav_agent.target_position = global_position + flee_distance * direction
+
+
+func flee_away_from_door(door: Door):
+	if chaser == null:
+		printerr("flee_away_from_door called when no chaser is set")
+
+	var direction_to_door = (global_position - door.global_position).normalized()
+	var direction_to_chaser = (global_position - door.global_position).normalized()
+	var new_direction: Vector2
+	if abs(direction_to_door.y) > abs(direction_to_door.x):
+		new_direction = Vector2(1, 0)
+		if direction_to_chaser.x > 0:
+			new_direction *= -1
+	else:
+		new_direction = Vector2(0, 1)
+		if direction_to_chaser.y > 0:
+			new_direction *= -1
+	nav_agent.target_position = global_position + flee_distance * new_direction
+
+
+func interact_with_overlapping_door():
+	var overlapping_areas = interactable_detection_area.get_overlapping_areas()
+	for area in overlapping_areas:
+		if area.owner is Door:
+			area.owner.on_interact(self)

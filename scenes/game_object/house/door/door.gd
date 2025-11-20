@@ -37,7 +37,7 @@ func handle_player_interaction(player: Player):
 
 
 func handle_npc_interaction(npc: Npc):
-	if not npc.inventory.has_key(self):
+	if is_locked and not npc.inventory.has_key(self):
 		npc.handle_missing_key(self)
 		return
 	sprite.visible = false

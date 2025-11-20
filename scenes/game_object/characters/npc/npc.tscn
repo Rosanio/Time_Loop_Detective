@@ -49,4 +49,5 @@ max_refinement_depth = 0
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 path_desired_distance = 2.0
+path_max_distance = 10.0
 radius = 12.0

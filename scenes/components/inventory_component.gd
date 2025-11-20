@@ -25,6 +25,13 @@ func emit_item_added(item: ItemData, index: int):
 	item_added.emit(item, index)
 
 
+func drop_item_by_id(item_id: String):
+	var items = inventory.filter(func(item_data): return item_data.id == item_id)
+	if items.size() != 1: return
+
+	drop_item(items[0])
+
+
 func drop_item(item_data: ItemData):
 	var item_scene = load(item_data.scene_path)
 	var item = item_scene.instantiate()
